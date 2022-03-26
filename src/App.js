@@ -1,10 +1,11 @@
-import React from 'react'
-import './App.css'
+import React from "react";
+import "./App.css";
+import LandingPage from "./pages/LandingPage";
 
 export default function App() {
-    return (
-        <div>
-            <h1>SchedulEasy</h1> 
-        </div>
-    );
+  return (
+    <div>
+      <LandingPage />
+    </div>
+  );
 }
