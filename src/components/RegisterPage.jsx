@@ -36,11 +36,17 @@ export default function SignUpPage() {
                 <p>
                     <label>Password</label><br/>
                     <input type="password" name="password" value={inputs.password || ""} 
-                            onChange={handleChange} requiredc />
+                            onChange={handleChange} required />
                 </p>
+                <p>
+                    <label>Date of birth</label><br/>
+                    <input type="date" name="birthdate" value={inputs.birthdate || ""} 
+                            onChange={handleChange} required />
+                </p><br/>
                 <p>
                     <input type="checkbox" name="checkbox" id="checkbox" required /> <span>I agree all statements in terms of service</span>.
                 </p>
+                <br/>
                 <p>
                     <button id="sub_btn" type="submit">Register</button>
                 </p>
