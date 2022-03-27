@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useState } from "react";
 
 import { Link } from 'react-router-dom'
 
 import '../App.css'
+import Navbar from '../components/Navbar';
 
 export default function SignInPage() {
 
@@ -22,6 +23,8 @@ export default function SignInPage() {
       }
 
     return (
+        <Fragment>
+        <Navbar/>
         <div className="text-center m-5-auto">
             <h2>Sign in</h2>
             <form action="/home" onSubmit={handleSubmit}>
@@ -45,5 +48,6 @@ export default function SignInPage() {
                 <p> <Link to="/register">Create an account</Link>.</p>
             </footer>
         </div>
+        </Fragment>
     )
 }

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useState } from "react";
 
 import { Link } from 'react-router-dom'
 
 import '../App.css'
+import Navbar from '../components/Navbar';
 
 export default function ForgetPasswordPage() {
     const [inputs, setInputs] = useState({});
@@ -20,6 +21,8 @@ export default function ForgetPasswordPage() {
         console.log(inputs);
       }
     return (
+        <Fragment>
+         <Navbar/>
         <div className="text-center m-5-auto">
             <h2>Reset your password</h2>
             <h5>Enter your email address and we will send you a new password</h5>
@@ -37,5 +40,6 @@ export default function ForgetPasswordPage() {
                 <p><Link to="/register">Create an account</Link>.</p>
             </footer>
         </div>
+        </Fragment>
     )
 }

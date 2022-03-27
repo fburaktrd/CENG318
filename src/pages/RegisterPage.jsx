@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useState } from "react";
-
 import '../App.css'
+import Navbar from '../components/Navbar';
 
 export default function SignUpPage() {
 
     const [inputs, setInputs] = useState({});
-
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -19,7 +18,8 @@ export default function SignUpPage() {
         console.log(inputs);
       }
     return (
-        
+        <Fragment>
+        <Navbar/>
         <div className="text-center m-5-auto">
             <h5>Create your personal account</h5>
             <form action="/home" onSubmit={handleSubmit}>
@@ -54,6 +54,7 @@ export default function SignUpPage() {
             <footer>
             </footer>
         </div>
+        </Fragment>
     )
 
 }
