@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import logo from "../components/Logo.png";
+import Navbar from "../components/Navbar";
 
 export default function SignInPage() {
   const [inputs, setInputs] = useState({});
@@ -21,6 +22,7 @@ export default function SignInPage() {
 
   return (
     <>
+      <Navbar/>
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
