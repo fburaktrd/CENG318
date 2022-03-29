@@ -40,7 +40,7 @@ export default function Modal({userName,navigate,route}) {
                   <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
-                  <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                  <Dialog.Title as="h5" className="text-lg leading-6 font-medium text-gray-900">
                     {`Welcome ${userName}!`}
                   </Dialog.Title>
                   <div className="mt-2">
@@ -58,7 +58,7 @@ export default function Modal({userName,navigate,route}) {
                     navigate(route);
                     setOpen(false)}}
                 >
-                  Go to Home Page ( or might be Crate your first event)
+                  Go to Home Page !
                 </button>
               </div>
             </div>
