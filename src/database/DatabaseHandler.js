@@ -1,4 +1,4 @@
-import { getDatabase,ref, set } from "firebase/database";
+import { get, getDatabase,child,ref, set } from "firebase/database";
 
 export class DatabaseHandler{
 
@@ -11,5 +11,11 @@ export class DatabaseHandler{
         birthDate: birthDate,
         majority: majority
     });
+    }
+
+    static async getUserName(userId){
+        let userName = (await get(child(ref(this.database),`users/${userId}/userName`))).val();
+        console.log(userName,"dbhandler");
+        return userName
     }
 }
