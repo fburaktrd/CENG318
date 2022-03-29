@@ -1,14 +1,17 @@
-import React,{useState,useContext} from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import logo from "../components/Logo.png";
 import Navbar from "../components/Navbar";
-import { signInWithPopup, signInWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
+import {
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { auth, provider } from "../database/firebase-config";
 import AuthContext from "../store/authContext";
 import { DatabaseHandler } from "../database/DatabaseHandler";
-
 
 export default function SignInPage() {
   const [inputs, setInputs] = useState({});
@@ -25,49 +28,53 @@ export default function SignInPage() {
     event.preventDefault();
     console.log(inputs);
     signInWithEmailAndPassword(auth, inputs.email, inputs.password)
-    .then(async (userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log(user);
-    const userName = await DatabaseHandler.getUserName(user.uid); // Critical ! I should look again. undefined
-    console.log(userName);
-    localStorage.setItem("uid",user.uid);
-    localStorage.setItem("userInfo",JSON.stringify({email:user.email,userName:userName}))
-    authCtx.onLogin();
-    navigate("/");
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode,errorMessage);
-  });
+      .then(async (userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        const userName = await DatabaseHandler.getUserName(user.uid); // Critical ! I should look again. undefined
+        console.log(userName);
+        localStorage.setItem("uid", user.uid);
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({ email: user.email, userName: userName })
+        );
+        authCtx.onLogin();
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   };
 
-  const googleHandler = ()=>{
-
-    signInWithPopup(auth,provider).then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const user = result.user;
-      console.log(user,user.uid);
-      localStorage.setItem("uid",user.uid);
-      localStorage.setItem("userInfo",JSON.stringify({
-        email: user.email,
-        userName: user.displayName
-      }))
-      authCtx.onLogin();
-      navigate("/");
-      
-    }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.email;
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      console.log(errorCode,errorMessage,email,credential);
-
-    });
-  }
-
+  const googleHandler = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        console.log(user, user.uid);
+        localStorage.setItem("uid", user.uid);
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            email: user.email,
+            userName: user.displayName,
+          })
+        );
+        authCtx.onLogin();
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(errorCode, errorMessage, email, credential);
+      });
+  };
 
   return (
     <>
@@ -131,7 +138,7 @@ export default function SignInPage() {
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-5">
                   <LockClosedIcon
-                    className="h-5 w-5 text-blue-500 group-hover:text-blue-700"
+                    className="h-7 w-7 text-blue-500 group-hover:text-blue-700"
                     aria-hidden="true"
                   />
                 </span>
@@ -139,15 +146,14 @@ export default function SignInPage() {
               </button>
               <br />
               <button
-                className="group relative w-full flex justify-center py-3 px-4 border border text-sm font-medium rounded-md text-black bg-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                type="button"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 onClick={googleHandler}
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-5">
-                <img
-                  src="https://img.icons8.com/ios-filled/30/000000/google-logo.png"
-                  alt="google icon"
-                />
+                  <img
+                    src="https://img.icons8.com/ios-filled/30/000000/google-logo.png"
+                    alt="google icon"
+                  />
                 </span>
                 Continue with Google
               </button>
