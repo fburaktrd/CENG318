@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { useState } from "react";
 import { auth } from '../database/firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -7,12 +7,16 @@ import Alert from '../UI/Alert';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { DatabaseHandler } from '../database/DatabaseHandler';
+import AuthContext from '../store/authContext';
+import Modal from '../UI/Modal';
 
 export default function SignUpPage() {
 
     const [inputs, setInputs] = useState({});
     const [error,setError] = useState({"isError":false});
+    const [registered,setRegistered] = useState(false);
     const navigate = useNavigate();
+    const authCtx = useContext(AuthContext);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -24,13 +28,18 @@ export default function SignUpPage() {
         event.preventDefault();
         const {email,userName,majority,birthDate} = inputs;
         console.log(email,userName,majority,birthDate);
+        
         createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
         .then((userCredential) => {
          
             const user = userCredential.user;
             console.log(userCredential,user);
             DatabaseHandler.registerUserData(user.uid,userName,email,birthDate,majority);
-            navigate("/");
+            setRegistered(true);
+            localStorage.setItem("uid",user.uid);
+            authCtx.onLogin(user.uid);
+            
+            ;
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -85,6 +94,7 @@ export default function SignUpPage() {
             </form>
             <footer>
             </footer>
+            {registered && <Modal userName={inputs.userName} navigate={navigate} route="/"/>}
             {error.isError && <Alert messages={[error.errorMessage]} title={error.errorCode} status={"err"}/>}
         </div>
         </Fragment>
