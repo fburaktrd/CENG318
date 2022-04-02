@@ -17,7 +17,7 @@ import Alert from "../UI/Alert";
 const initialError = {
   isError:false,
   errorCode: "",
-  errorMessage: [],
+  errorMessages: [],
 };
 
 export default function SignInPage() {
@@ -54,11 +54,12 @@ export default function SignInPage() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        setError({
+        
+        setError((error)=>({
           isError: true,
           errorCode:errorCode,
           errorMessages: [...error.errorMessages,errorMessage]
-        });
+        }));
         console.log(errorCode, errorMessage);
       });
   };
