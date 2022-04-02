@@ -12,9 +12,18 @@ import {
 import { auth, provider } from "../database/firebase-config";
 import AuthContext from "../store/authContext";
 import { DatabaseHandler } from "../database/DatabaseHandler";
+import Alert from "../UI/Alert";
+
+const initialError = {
+  isError:false,
+  errorCode: "",
+  errorMessage: [],
+};
 
 export default function SignInPage() {
   const [inputs, setInputs] = useState({});
+  const [error,setError] = useState(initialError);
+
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -45,6 +54,11 @@ export default function SignInPage() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        setError({
+          isError: true,
+          errorCode:errorCode,
+          errorMessages: [...error.errorMessages,errorMessage]
+        });
         console.log(errorCode, errorMessage);
       });
   };
@@ -118,7 +132,7 @@ export default function SignInPage() {
                 />
               </div>
             </div>
-
+            {error.isError && <Alert title={error.errorCode} status="err" messages={error.errorMessages}/>}
             <div className="flex items-center justify-between">
               <div className="flex items-center"></div>
               <div className="text-sm">
