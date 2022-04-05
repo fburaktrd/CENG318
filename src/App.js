@@ -1,43 +1,44 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./App.css";
-import LandingPage from "./pages/LandingPage";
+import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ForgetPasswordPage from "./pages/ForgetPasswordPage";
 import TeamPage from "./pages/TeamPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import EventPage from "./pages/EventPage";
+import AuthContext from "./store/authContext";
 
 export default function App() {
-  const [isLogged, setLogged] = useState(false);
+  const authCtx = useContext(AuthContext);
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
-          element={<LandingPage isLogged={isLogged} setLogged={setLogged} />}
+          element={<HomePage isLogged={authCtx.isLoggedIn} firstLoginG={authCtx.firstLoginG}/>}
         />
         <Route
           path="/loginPage"
-          element={<LoginPage isLogged={isLogged} setLogged={setLogged} />}
+          element={<LoginPage/>}
         />
         <Route
           path="/registerPage"
-          element={<RegisterPage isLogged={isLogged} setLogged={setLogged} />}
+          element={<RegisterPage/>}
         />
         <Route
           path="/forgetPasswordPage"
           element={
-            <ForgetPasswordPage isLogged={isLogged} setLogged={setLogged} />
+            <ForgetPasswordPage/>
           }
         />
         <Route
           path="/teamPage"
-          element={<TeamPage isLogged={isLogged} setLogged={setLogged} />}
+          element={<TeamPage/>}
         />
         <Route
           path="/eventPage"
-          element={<EventPage isLogged={isLogged} setLogged={setLogged} />}
+          element={<EventPage isLogged={authCtx.isLoggedIn} />}
         />
       </Routes>
     </BrowserRouter>

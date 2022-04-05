@@ -49,7 +49,7 @@ export default function SignInPage(props) {
           JSON.stringify({ email: user.email, userName: userName })
         );
         authCtx.onLogin();
-        props.setLogged(true);
+
         navigate("/");
       })
       .catch((error) => {
@@ -169,6 +169,7 @@ export default function SignInPage(props) {
               <br />
               <button
                 className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                type="button"
                 onClick={googleHandler}
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-5">

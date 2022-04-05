@@ -5,7 +5,7 @@ import { Notification } from "../UI/Notification";
 import EventCard from "../components/EventCard";
 import { Link } from "react-router-dom";
 
-const LandingPage = (props) => {
+const HomePage = (props) => {
   const onClickHandler = () => {
     <Link to="/eventPage"> </Link>;
   };
@@ -27,12 +27,11 @@ const LandingPage = (props) => {
     },
     // More event...
   ];
-  const authCtx = useContext(AuthContext);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   return (
     <>
-      <Navbar isLogged={props.isLogged} setLogged={props.setLogged} />
-      {authCtx.firstLoginG && (
+      <Navbar/>
+      {props.firstLoginG && (
         <Notification
           status="Succ"
           title={`Welcome ${userInfo.userName} !`}
@@ -69,7 +68,7 @@ const LandingPage = (props) => {
                 </div>
                 <div className="relative flex justify-center">
                   <span className="px-3 bg-white text-lg font-medium text-gray-900">
-                    Projects
+                    Events and Meetings
                   </span>
                 </div>
               </div>
@@ -96,4 +95,4 @@ const LandingPage = (props) => {
   );
 };
 
-export default LandingPage;
+export default HomePage;
