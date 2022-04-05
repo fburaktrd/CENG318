@@ -20,7 +20,7 @@ const people = [
   },
   {
     name: "Eşref Çağatay ",
-    role: "Frontend Developer",
+    role: "Front-End Developer",
     imageUrl:
       "https://pps.whatsapp.net/v/t61.24694-24/189895809_2050957751742382_4566830607694497516_n.jpg?ccb=11-4&oh=f7cec64c789626f3f6677526f71357fa&oe=624E3FB0",
     twitterUrl: "#",

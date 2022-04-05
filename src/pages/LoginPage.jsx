@@ -15,14 +15,14 @@ import { DatabaseHandler } from "../database/DatabaseHandler";
 import Alert from "../UI/Alert";
 
 const initialError = {
-  isError:false,
+  isError: false,
   errorCode: "",
   errorMessages: [],
 };
 
-export default function SignInPage() {
+export default function SignInPage(props) {
   const [inputs, setInputs] = useState({});
-  const [error,setError] = useState(initialError);
+  const [error, setError] = useState(initialError);
 
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -49,16 +49,17 @@ export default function SignInPage() {
           JSON.stringify({ email: user.email, userName: userName })
         );
         authCtx.onLogin();
+        props.setLogged(true);
         navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        
-        setError((error)=>({
+
+        setError((error) => ({
           isError: true,
-          errorCode:errorCode,
-          errorMessages: [...error.errorMessages,errorMessage]
+          errorCode: errorCode,
+          errorMessages: [...error.errorMessages, errorMessage],
         }));
         console.log(errorCode, errorMessage);
       });
@@ -133,7 +134,13 @@ export default function SignInPage() {
                 />
               </div>
             </div>
-            {error.isError && <Alert title={error.errorCode} status="err" messages={error.errorMessages}/>}
+            {error.isError && (
+              <Alert
+                title={error.errorCode}
+                status="err"
+                messages={error.errorMessages}
+              />
+            )}
             <div className="flex items-center justify-between">
               <div className="flex items-center"></div>
               <div className="text-sm">

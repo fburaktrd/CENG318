@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../store/authContext";
 import { Disclosure } from "@headlessui/react";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const authCtx = useContext(AuthContext);
 
   function classNames(...classes) {
@@ -14,8 +14,8 @@ const Navbar = () => {
   const navigation = [
     { name: "Home", to: "/", current: true },
     { name: "Team", to: "/teamPage", current: false },
-    { name: "???", to: "/", current: false },
-    { name: "???", to: "/", current: false },
+    { name: "???", to: "#", current: false },
+    { name: "???", to: "#", current: false },
   ];
 
   const unAuthorized = [
@@ -38,6 +38,7 @@ const Navbar = () => {
     <button
       onClick={() => {
         authCtx.onLogout();
+        props.setLogged(false);
       }}
       className="inline-flex items-center px-3 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-900 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     >
