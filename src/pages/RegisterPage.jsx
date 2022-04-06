@@ -23,12 +23,60 @@ export default function SignUpPage() {
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
-
+  const validateInput = (event) => {
+    let { name, value } = event.target;
+    setError(prev => {
+      const stateObj = { ...prev, [name]: "" };
+   
+      switch (name) {
+        case "userName":
+          if (!value) {
+            stateObj[name] = "Please enter Username.";
+          }
+          break;
+        case "email":
+          if (!value) {
+            stateObj[name] = "Please enter email.";
+          }
+          break;
+          case "birthDate":
+            if (!value) {
+              stateObj[name] = "Please enter email.";
+            }
+            break;
+        case "password":
+          if (!value) {
+            stateObj[name] = "Please enter Password.";
+          } else if (inputs.confirmPassword && value !== inputs.confirm_password) {
+            stateObj["confirmPassword"] = "Password and Confirm Password does not match.";
+          } else {
+            stateObj["confirmPassword"] = inputs.confirm_password ? "" : error.confirm_password;
+          }
+          break;
+   
+        case "confirm_password":
+          if (!value) {
+            stateObj[name] = "Please enter Confirm Password.";
+          } else if (inputs.password && value !== inputs.password) {
+            stateObj[name] = "Password and Confirm Password does not match.";
+          }
+          break;
+   
+        default:
+          break;
+      }
+   
+      return stateObj;
+    });
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     const { email, userName, majority, birthDate } = inputs;
     console.log(email, userName, majority, birthDate);
 
+    if(!userName) {
+      throw new Error("Please anter username");
+    }
     createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -55,6 +103,7 @@ export default function SignUpPage() {
         });
       });
 
+     
     console.log(inputs);
   };
   return (
@@ -82,11 +131,13 @@ export default function SignUpPage() {
                   name="userName"
                   value={inputs.userName}
                   onChange={handleChange}
+                  onBlur={validateInput}
                   required
                   className="appearance-none rounded-none rounded-t-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Username"
                 />
               </div>
+              {error.userName && <span className='err'>{error.userName}</span>}
               <div>
                 <label className="sr-only">Email address</label>
                 <input
@@ -98,6 +149,7 @@ export default function SignUpPage() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                 />
+                {error.email && <span className='err'>{error.email}</span>}
               </div>
               <div>
                 <label className="sr-only">Password</label>
@@ -106,10 +158,26 @@ export default function SignUpPage() {
                   name="password"
                   value={inputs.password || ""}
                   onChange={handleChange}
+                  onBlur={validateInput}
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
+                {error.password && <span className='err'>{error.password}</span>}
+              </div>
+              <div>
+                <label className="sr-only">Password</label>
+                <input
+                  type="password"
+                  name="confirm_password"
+                  value={inputs.confirm_password || ""}
+                  onChange={handleChange}
+                  onBlur={validateInput}
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Password Again"
+                />
+                {error.confirm_password && <span className='err'>{error.confirm_password}</span>}
               </div>
               <div>
                 <label className="sr-only">Date of Birth</label>
@@ -122,6 +190,7 @@ export default function SignUpPage() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Date of birth"
                 />
+                {error.birthDate && <span className='err'>{error.birthDate}</span>}
               </div>
               <div>
                 <label className="sr-only">Majority</label>
