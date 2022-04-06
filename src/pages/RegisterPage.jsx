@@ -75,9 +75,6 @@ export default function SignUpPage() {
     const { email, userName, majority, birthDate } = inputs;
     console.log(email, userName, majority, birthDate);
 
-    if(!userName) {
-      
-    }
     createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
       .then((userCredential) => {
         const user = userCredential.user;
