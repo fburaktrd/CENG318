@@ -25,26 +25,22 @@ export default function SignUpPage() {
   };
   const validateInput = (event) => {
     let { name, value } = event.target;
-    setError(prev => { 
-      const stateObj = { ...prev, [name]: "" };
+    
    
       switch (name) {
         case "userName":
           if (!value) {
             setError({ isError: true, errorMessage:"Please enter username"});
-            stateObj[name] = "Please enter Username.";
           }
           break;
         case "email":
           if (!value) {
             setError({ isError: true, errorMessage:"Please enter email"});
-            stateObj[name] = "Please enter email.";
           }
           break;
           case "birthDate":
             if (!value) {
               setError({ isError: true, errorMessage:"Please enter birthdate"});
-              stateObj[name] = "Please enter email.";
             }
             break;
         case "password":
@@ -66,10 +62,8 @@ export default function SignUpPage() {
         default:
           break;
       }
-   
-      return stateObj;
-    });
-  }
+       
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const { email, userName, majority, birthDate } = inputs;
