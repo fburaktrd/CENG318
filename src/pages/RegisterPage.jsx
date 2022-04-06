@@ -25,40 +25,41 @@ export default function SignUpPage() {
   };
   const validateInput = (event) => {
     let { name, value } = event.target;
-    setError(prev => {
+    setError(prev => { 
       const stateObj = { ...prev, [name]: "" };
    
       switch (name) {
         case "userName":
           if (!value) {
+            setError({ isError: true, errorMessage:"Please enter username"});
             stateObj[name] = "Please enter Username.";
           }
           break;
         case "email":
           if (!value) {
+            setError({ isError: true, errorMessage:"Please enter email"});
             stateObj[name] = "Please enter email.";
           }
           break;
           case "birthDate":
             if (!value) {
+              setError({ isError: true, errorMessage:"Please enter birthdate"});
               stateObj[name] = "Please enter email.";
             }
             break;
         case "password":
           if (!value) {
-            stateObj[name] = "Please enter Password.";
+            setError({ isError: true, errorMessage:"Please enter password"});
           } else if (inputs.confirmPassword && value !== inputs.confirm_password) {
-            stateObj["confirmPassword"] = "Password and Confirm Password does not match.";
-          } else {
-            stateObj["confirmPassword"] = inputs.confirm_password ? "" : error.confirm_password;
-          }
+            setError({ isError: true, errorMessage:"Password and Confirm Password does not match."});
+          } 
           break;
    
         case "confirm_password":
           if (!value) {
-            stateObj[name] = "Please enter Confirm Password.";
+            setError({ isError: true, errorMessage:"Password and Confirm Password does not match."});
           } else if (inputs.password && value !== inputs.password) {
-            stateObj[name] = "Password and Confirm Password does not match.";
+            setError({ isError: true, errorMessage:"Password and Confirm Password does not match."});
           }
           break;
    
@@ -75,7 +76,7 @@ export default function SignUpPage() {
     console.log(email, userName, majority, birthDate);
 
     if(!userName) {
-      throw new Error("Please anter username");
+      
     }
     createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
       .then((userCredential) => {
@@ -149,7 +150,6 @@ export default function SignUpPage() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                 />
-                {error.email && <span className='err'>{error.email}</span>}
               </div>
               <div>
                 <label className="sr-only">Password</label>
@@ -163,7 +163,6 @@ export default function SignUpPage() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
-                {error.password && <span className='err'>{error.password}</span>}
               </div>
               <div>
                 <label className="sr-only">Password</label>
@@ -177,7 +176,6 @@ export default function SignUpPage() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password Again"
                 />
-                {error.confirm_password && <span className='err'>{error.confirm_password}</span>}
               </div>
               <div>
                 <label className="sr-only">Date of Birth</label>
@@ -190,7 +188,6 @@ export default function SignUpPage() {
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Date of birth"
                 />
-                {error.birthDate && <span className='err'>{error.birthDate}</span>}
               </div>
               <div>
                 <label className="sr-only">Majority</label>
