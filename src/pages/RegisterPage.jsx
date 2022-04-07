@@ -25,44 +25,54 @@ export default function SignUpPage() {
   };
   const validateInput = (event) => {
     let { name, value } = event.target;
-    
-   
-      switch (name) {
-        case "userName":
-          if (!value) {
-            setError({ isError: true, errorMessage:"Please enter username"});
-          }
-          break;
-        case "email":
-          if (!value) {
-            setError({ isError: true, errorMessage:"Please enter email"});
-          }
-          break;
-          case "birthDate":
-            if (!value) {
-              setError({ isError: true, errorMessage:"Please enter birthdate"});
-            }
-            break;
-        case "password":
-          if (!value) {
-            setError({ isError: true, errorMessage:"Please enter password"});
-          } else if (inputs.confirmPassword && value !== inputs.confirm_password) {
-            setError({ isError: true, errorMessage:"Password and Confirm Password does not match."});
-          } 
-          break;
-   
-        case "confirm_password":
-          if (!value) {
-            setError({ isError: true, errorMessage:"Password and Confirm Password does not match."});
-          } else if (inputs.password && value !== inputs.password) {
-            setError({ isError: true, errorMessage:"Password and Confirm Password does not match."});
-          }
-          break;
-   
-        default:
-          break;
-      }
-       
+
+    switch (name) {
+      case "userName":
+        if (!value) {
+          setError({ isError: true, errorMessage: "Please enter username" });
+        }
+        break;
+      case "email":
+        if (!value) {
+          setError({ isError: true, errorMessage: "Please enter email" });
+        }
+        break;
+      case "birthDate":
+        if (!value) {
+          setError({ isError: true, errorMessage: "Please enter birthdate" });
+        }
+        break;
+      case "password":
+        if (!value) {
+          setError({ isError: true, errorMessage: "Please enter password" });
+        } else if (
+          inputs.confirmPassword &&
+          value !== inputs.confirm_password
+        ) {
+          setError({
+            isError: true,
+            errorMessage: "Password and Confirm Password does not match.",
+          });
+        }
+        break;
+
+      case "confirm_password":
+        if (!value) {
+          setError({
+            isError: true,
+            errorMessage: "Password and Confirm Password does not match.",
+          });
+        } else if (inputs.password && value !== inputs.password) {
+          setError({
+            isError: true,
+            errorMessage: "Password and Confirm Password does not match.",
+          });
+        }
+        break;
+
+      default:
+        break;
+    }
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -95,7 +105,6 @@ export default function SignUpPage() {
         });
       });
 
-     
     console.log(inputs);
   };
   return (
@@ -129,7 +138,7 @@ export default function SignUpPage() {
                   placeholder="Username"
                 />
               </div>
-              {error.userName && <span className='err'>{error.userName}</span>}
+              {error.userName && <span className="err">{error.userName}</span>}
               <div>
                 <label className="sr-only">Email address</label>
                 <input

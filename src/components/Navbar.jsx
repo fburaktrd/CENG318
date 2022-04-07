@@ -14,8 +14,8 @@ const Navbar = (props) => {
   const navigation = [
     { name: "Home", to: "/", current: true },
     { name: "Team", to: "/teamPage", current: false },
-    { name: "???", to: "#", current: false },
-    { name: "???", to: "#", current: false },
+    { name: "???1", to: "#", current: false },
+    { name: "???2", to: "#", current: false },
   ];
 
   const unAuthorized = [

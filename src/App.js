@@ -8,6 +8,7 @@ import TeamPage from "./pages/TeamPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import EventPage from "./pages/EventPage";
 import AuthContext from "./store/authContext";
+import CreatePoll from "./pages/CreatePoll";
 
 export default function App() {
   const authCtx = useContext(AuthContext);
@@ -16,29 +17,24 @@ export default function App() {
       <Routes>
         <Route
           path="/"
-          element={<HomePage isLogged={authCtx.isLoggedIn} firstLoginG={authCtx.firstLoginG}/>}
-        />
-        <Route
-          path="/loginPage"
-          element={<LoginPage/>}
-        />
-        <Route
-          path="/registerPage"
-          element={<RegisterPage/>}
-        />
-        <Route
-          path="/forgetPasswordPage"
           element={
-            <ForgetPasswordPage/>
+            <HomePage
+              isLogged={authCtx.isLoggedIn}
+              firstLoginG={authCtx.firstLoginG}
+            />
           }
         />
-        <Route
-          path="/teamPage"
-          element={<TeamPage/>}
-        />
+        <Route path="/loginPage" element={<LoginPage />} />
+        <Route path="/registerPage" element={<RegisterPage />} />
+        <Route path="/forgetPasswordPage" element={<ForgetPasswordPage />} />
+        <Route path="/teamPage" element={<TeamPage />} />
         <Route
           path="/eventPage"
           element={<EventPage isLogged={authCtx.isLoggedIn} />}
+        />
+        <Route
+          path="/createPoll"
+          element={<CreatePoll isLogged={authCtx.isLoggedIn} />}
         />
       </Routes>
     </BrowserRouter>
