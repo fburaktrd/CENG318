@@ -2,11 +2,12 @@ import { Fragment, useEffect, useState } from 'react'
 import { Transition } from '@headlessui/react'
 import { CheckCircleIcon,ExclamationCircleIcon } from '@heroicons/react/outline'
 import { XIcon } from '@heroicons/react/solid'
-export const Notification = ({message,title,status,disappear})=> {
+export const Notification = ({message,title,status,disappearEvents})=> {
     
 
     const [show, setShow] = useState(true)
- 
+    const [disappear,disableGreetingMessage] = disappearEvents;
+  
     useEffect(()=>{
       if(disappear){
         const timeOut = setTimeout(()=>{
@@ -15,6 +16,7 @@ export const Notification = ({message,title,status,disappear})=> {
 
       return ()=>{
           clearTimeout(timeOut);
+          disableGreetingMessage(false); // we did this every time when the component is unmounted. I should change it later for different status it should be checked just for "login" 
       }
       };
     },[])

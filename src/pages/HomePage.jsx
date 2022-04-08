@@ -31,12 +31,12 @@ const HomePage = (props) => {
   return (
     <>
       <Navbar/>
-      {props.firstLoginG && (
+      {props.showGreetingMessage && (
         <Notification
           status="Succ"
           title={`Welcome ${userInfo.userName} !`}
           message="Deneme"
-          disappear={true}
+          disappearEvents={[true,props.setShowGreetingMessage]}
         />
       )}
       {props.isLogged ? (

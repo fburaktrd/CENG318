@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import EventPage from "./pages/EventPage";
 import AuthContext from "./store/authContext";
 import CreatePoll from "./pages/CreatePoll";
+import { auth } from "./database/firebase-config";
 
 export default function App() {
   const authCtx = useContext(AuthContext);
@@ -20,7 +21,8 @@ export default function App() {
           element={
             <HomePage
               isLogged={authCtx.isLoggedIn}
-              firstLoginG={authCtx.firstLoginG}
+              showGreetingMessage={authCtx.showGreetingMessage}
+              setShowGreetingMessage={authCtx.setShowGreetingMessage}
             />
           }
         />
