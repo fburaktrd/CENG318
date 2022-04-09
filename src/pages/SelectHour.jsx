@@ -2,7 +2,8 @@ import React , { useState } from 'react';
 import TimeKeeper from 'react-timekeeper';
 
 function SelectHour(props){
-    const [time, setTime] = useState('12:34pm')
+    const date = new Date();
+    const [time, setTime] = useState(`${date.getHours()}:${date.getMinutes()}`)
     const [showTime, setShowTime] = useState(false)
 
     return (
