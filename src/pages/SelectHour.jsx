@@ -18,7 +18,7 @@ function SelectHour(props){
             }
             
             {!showTime &&
-                <button onClick={() => setShowTime(true)}>Select {props.time}</button>
+                <button onClick={() => setShowTime(true)}>Select {props.time} <span>{props.time} is {time}</span></button>
             }
         </div>
     )
