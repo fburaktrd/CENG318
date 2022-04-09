@@ -17,6 +17,10 @@ const CreatePoll = () => {
     setEnteredDescription(event.target.value);
   };
 
+  const [enteredStartDate, setEnteredStartDate] = useState("");
+  const startDateChangeHandler = (event) => {
+    setEnteredStartDate(event.target.value);
+  }
   const [enteredLocation, setEnteredLocation] = useState("");
   const LocationChangeHandler = (event) => {
     setEnteredLocation(event.target.value);
@@ -179,6 +183,16 @@ const CreatePoll = () => {
         </div>
 
         <div className="pt-8">
+          <label>Date:</label>
+          <input
+                  type="date"
+                  name="birthDate"
+                  value={enteredStartDate}
+                  onChange={startDateChangeHandler}
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Date of birth"
+                />
           <label>Start Time:</label>
           <SelectHour time="Start Time" />
 
