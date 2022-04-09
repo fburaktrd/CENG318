@@ -1,17 +1,25 @@
-import React, {useState} from 'react';
+import React , { useState } from 'react';
 import TimeKeeper from 'react-timekeeper';
 
 function SelectHour(){
-  const [time, setTime] = useState('12:34pm')
+    const [time, setTime] = useState('12:34pm')
+    const [showTime, setShowTime] = useState(true)
 
-  return (
-    <div>
-      <TimeKeeper
-        time={time}
-        onChange={(data) => setTime(data.formatted12)}
-      />
-      <span>Time is {time}</span>
-    </div>
-  )
+    return (
+        <div>
+            {showTime &&
+                <TimeKeeper
+                    time={time}
+                    onChange={(newTime) => setTime(newTime.formatted12)}
+                    onDoneClick={() => setShowTime(false)}
+                    switchToMinuteOnHourSelect
+                />
+            }
+            <span>Time is {time}</span>
+            {!showTime &&
+                <button onClick={() => setShowTime(true)}>Show</button>
+            }
+        </div>
+    )
 }
 export default SelectHour;
