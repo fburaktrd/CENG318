@@ -5,7 +5,7 @@ const EventCard = (props) => {
   return (
     <div>
       <Link to="/EventPage">
-        <button className="w-full flex items-center justify-between ">
+        <button className="w-full flex items-center justify-between border mt-2">
           <div className="w-full flex items-center justify-between p-6 space-x-6">
             <div className="flex-1 truncate">
               <div className="flex flex-col items-center space-x-3">
