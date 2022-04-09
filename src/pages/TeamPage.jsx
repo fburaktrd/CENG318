@@ -29,10 +29,10 @@ const people = [
   {
     name: "Öykü Emirleroğlu",
     role: "Full Stack Developer",
-    imageUrl:
-      "https://pps.whatsapp.net/v/t61.24694-24/152409151_696563571333119_5837813408423025387_n.jpg?ccb=11-4&oh=01_AVxT93wpawjch0weN3KJJPry9HbSsZ2mmntqw-m4G5Kn-w&oe=624EA148",
+    imageUrl: "https://avatars.githubusercontent.com/u/80703075?v=4",
     twitterUrl: "#",
-    linkedinUrl: "https://www.linkedin.com/in/%C3%B6yk%C3%BC-emirlero%C4%9Flu-7a8367147/",
+    linkedinUrl:
+      "https://www.linkedin.com/in/%C3%B6yk%C3%BC-emirlero%C4%9Flu-7a8367147/",
   },
   {
     name: "Nadir Özdemir ",
