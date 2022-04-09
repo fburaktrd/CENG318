@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import SelectHour from "./SelectHour"
-
+import SelectHour from "./SelectHour";
 
 const CreatePoll = () => {
   const navigate = useNavigate();
@@ -20,10 +19,16 @@ const CreatePoll = () => {
   const [enteredStartDate, setEnteredStartDate] = useState("");
   const startDateChangeHandler = (event) => {
     setEnteredStartDate(event.target.value);
-  }
+  };
   const [enteredLocation, setEnteredLocation] = useState("");
   const LocationChangeHandler = (event) => {
     setEnteredLocation(event.target.value);
+  };
+
+  let hours = [];
+  const fullOption = [{ date: enteredStartDate, startFinish: hours }];
+  const timeHandler = (option) => {
+    hours.push(option);
   };
 
   const [cb1, setCB1] = useState(false);
@@ -183,21 +188,43 @@ const CreatePoll = () => {
         </div>
 
         <div className="pt-8">
-          <label>Date:</label>
-          <input
-                  type="date"
-                  name="birthDate"
-                  value={enteredStartDate}
-                  onChange={startDateChangeHandler}
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Date of birth"
-                />
-          <label>Start Time:</label>
-          <SelectHour time="Start Time" />
+          <h1 className="text-lg leading-6 text-xl text-gray-900 font-semibold mb-2">
+            Date and Hours
+          </h1>
+          <div className="flex justify-center ml-16">
+            <label className="block text-sm font-medium text-gray-700 mr-2">
+              Date:
+            </label>
+            <input
+              type="date"
+              name="startDate"
+              value={enteredStartDate}
+              onChange={startDateChangeHandler}
+              required
+              className=" focus:ring-indigo-500 border focus:border-indigo-500 block w-36 h-8 min-w-0 rounded-md sm:text-sm border-gray-300"
+              placeholder="startDate"
+            />
+          </div>
+          <div className="flex justify-around">
+            <label className="block text-sm font-medium text-gray-700">
+              Start Time:
+            </label>
+            <SelectHour time="Start Time" timeHandler={timeHandler} />
 
-          <label>Finish Time:</label>
-          <SelectHour time="Finish Time" />
+            <label className="block text-sm font-medium text-gray-700">
+              Finish Time:
+            </label>
+            <SelectHour time="Finish Time" timeHandler={timeHandler} />
+          </div>
+          <div className="flex justify-center mt-4 ml-24">
+            <button
+              className="flex justify-center py-1 px-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              type="button"
+              onClick
+            >
+              Add Option
+            </button>
+          </div>
         </div>
 
         <div className="pt-8">
