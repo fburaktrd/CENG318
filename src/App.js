@@ -10,7 +10,7 @@ import EventPage from "./pages/EventPage";
 import AuthContext from "./store/authContext";
 import CreatePoll from "./pages/CreatePoll";
 import { auth } from "./database/firebase-config";
-
+import SelectHour from "./pages/SelectHour";
 export default function App() {
   const authCtx = useContext(AuthContext);
   return (
@@ -38,6 +38,7 @@ export default function App() {
           path="/createPoll"
           element={<CreatePoll isLogged={authCtx.isLoggedIn} />}
         />
+        <Route path="/deneme" element= {<SelectHour></SelectHour>} />
       </Routes>
     </BrowserRouter>
   );
