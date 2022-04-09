@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-
+import SelectHour from "./SelectHour"
 
 
 const CreatePoll = () => {
@@ -179,7 +179,11 @@ const CreatePoll = () => {
         </div>
 
         <div className="pt-8">
+          <label>Start Time:</label>
+          <SelectHour time="Start Time" />
 
+          <label>Finish Time:</label>
+          <SelectHour time="Finish Time" />
         </div>
 
         <div className="pt-8">
