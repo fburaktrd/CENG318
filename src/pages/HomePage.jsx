@@ -31,7 +31,7 @@ const HomePage = (props) => {
   return (
     <>
       <Navbar/>
-      {props.showGreetingMessage && (
+      {props.showGreetingMessage && userInfo !== null &&(
         <Notification
           status="Succ"
           title={`Welcome ${userInfo.userName} !`}
