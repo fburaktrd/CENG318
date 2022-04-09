@@ -22,7 +22,7 @@ const CreatePoll = () => {
 
   const [cb1, setCB1] = useState(false);
   const CB1ChangeHandler = (event) => {
-    if (cb1 == false) {
+    if (cb1 === false) {
       setCB1(true);
     } else {
       setCB1(false);
@@ -31,21 +31,22 @@ const CreatePoll = () => {
 
   const [enteredLimit, setEnteredLimit] = useState("");
   const limitChangeHandler = (event) => {
-    if (event.target.value == 0) {
+    if (event.target.value === 0) {
     }
     setEnteredLimit(Number(event.target.value));
   };
 
-  const [enteredParticipants, setEnteredParticipants] = useState();
+  const [enteredParticipants, setEnteredParticipants] = useState({});
   const participantsChangeHandler = (event) => {
     let string = event.target.value;
     const array = string.split(",");
-    setEnteredParticipants(...array);
+    //console.log(array);
+    setEnteredParticipants({...array});
   };
 
   const [cb2, setCB2] = useState(false);
   const CB2ChangeHandler = (event) => {
-    if (cb2 == false) {
+    if (cb2 === false) {
       setCB2(true);
     } else {
       setCB2(false);
@@ -55,7 +56,7 @@ const CreatePoll = () => {
 
   const [cb3, setCB3] = useState(false);
   const CB3ChangeHandler = (event) => {
-    if (cb3 == false) {
+    if (cb3 === false) {
       setCB3(true);
     } else {
       setCB3(false);
