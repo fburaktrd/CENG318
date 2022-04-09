@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import Calendar from "react-awesome-calendar";
+import SelectHour from "./SelectHour"
 
 const events = [
   {
@@ -202,8 +202,11 @@ const CreatePoll = () => {
         </div>
 
         <div className="pt-8">
-          <center>Tarih/saat seçim alanı</center>
-          <Calendar events={events} />
+          <label>Start Time:</label>
+          <SelectHour time="Start Time"/>
+
+          <label>Finish Time:</label>
+          <SelectHour time="Finish Time"/>
         </div>
 
         <div className="pt-8">

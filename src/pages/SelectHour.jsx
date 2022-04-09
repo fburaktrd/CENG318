@@ -1,9 +1,9 @@
 import React , { useState } from 'react';
 import TimeKeeper from 'react-timekeeper';
 
-function SelectHour(){
+function SelectHour(props){
     const [time, setTime] = useState('12:34pm')
-    const [showTime, setShowTime] = useState(true)
+    const [showTime, setShowTime] = useState(false)
 
     return (
         <div>
@@ -15,9 +15,9 @@ function SelectHour(){
                     switchToMinuteOnHourSelect
                 />
             }
-            <span>Time is {time}</span>
+            
             {!showTime &&
-                <button onClick={() => setShowTime(true)}>Show</button>
+                <button onClick={() => setShowTime(true)}>Select {props.time}</button>
             }
         </div>
     )
