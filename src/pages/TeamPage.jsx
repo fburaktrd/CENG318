@@ -13,8 +13,7 @@ const people = [
   {
     name: "Göktürk Turan",
     role: "Front-End Developer",
-    imageUrl:
-      "https://pps.whatsapp.net/v/t61.24694-24/243112546_224219496434599_8425737953244744558_n.jpg?ccb=11-4&oh=01_AVy4dBVlLEe2y0TyoxwBA-zz-cU8wbYwIS4NcEOC_rLzZQ&oe=624F5263",
+    imageUrl: "https://avatars.githubusercontent.com/u/89880316?v=4",
     twitterUrl: "https://twitter.com/gokturk__turan",
     linkedinUrl: "https://www.linkedin.com/in/gokturkturan/",
   },
