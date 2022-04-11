@@ -1,33 +1,55 @@
-import React, { useContext } from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from "../components/Navbar";
 import AuthContext from "../store/authContext";
 import { Notification } from "../UI/Notification";
 import EventCard from "../components/EventCard";
 import { Link } from "react-router-dom";
+import { DatabaseHandler } from "../database/DatabaseHandler";
 
-const HomePage = (props) => {
+const HomePage = (props) => {// too many renders!
   const onClickHandler = () => {
     <Link to="/eventPage"> </Link>;
   };
-  const event = [
-    {
-      title: "Hadi Sinemaya Gidelim",
-      options: 3,
-      participant: 3,
-    },
-    {
-      title: "Hadi Futbol Oynayalım",
-      options: 5,
-      participant: 14,
-    },
-    {
-      title: "Hadi Kahve İçelim",
-      options: 4,
-      participant: 4,
-    },
-    // More event...
-  ];
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  
+  const [events,setEvents] = useState( []);
+  
+  useEffect(async()=>{
+    const result = DatabaseHandler.getUserEventInfos(userInfo.userName)
+   ;(await result).forEach((event)=> event.then((res)=> {
+    if (!(events.includes(res))){
+      setEvents((prev)=> [...prev,res])
+     }
+   }))
+   
+  },[])
+
+  //console.log(a.participants,"asd");// a[0] undefined ??????
+  
+  //console.log(events);
+  // const events = [
+  //   {
+  //     title: "Hadi Sinemaya Gidelim",
+  //     options: 3,
+  //     participant: 3,
+  //   },
+  //   {
+  //     title: "Hadi Futbol Oynayalım",
+  //     options: 5,
+  //     participant: 14,
+  //   },
+  //   {
+  //     title: "Hadi Kahve İçelim",
+  //     options: 4,
+  //     participant: 4,
+  //   },
+  //   // More event...
+  // ];
+  const printEv=()=>{
+    console.log(events);
+  }
+
   return (
     <>
       <Navbar/>
@@ -51,10 +73,11 @@ const HomePage = (props) => {
               <div className="max-w-2xl mx-auto sm:px-8 lg:px-16">
                 <div className="px-4 py-8 sm:px-0">
                   <div className=" flex justify-around">
-                    <Link to="/createPoll">
-                      <button className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-700 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button onClick={printEv} className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-700 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Create Poll
                       </button>
+                    <Link to="/createPoll">
+                      
                     </Link>
                   </div>
                 </div>
@@ -76,7 +99,7 @@ const HomePage = (props) => {
                 role="list"
                 className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 container"
               >
-                {event.map((event, index) => (
+                {events.map((event, index) => (
                   <li
                     key={index}
                     className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 cursor-pointer"

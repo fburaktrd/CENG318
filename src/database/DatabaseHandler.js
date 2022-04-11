@@ -29,6 +29,29 @@ export class DatabaseHandler{
         return exists.uid // it might return true take a look at later
     }
 
+    static async getUserEventIds(userName){
+        let events = (await get(child(ref(this.database),`userEvents/${userName}`))).val();
+        return Object.keys(events)
+
+    }
+
+    static async getEventInfo(eventId){
+        let event_info = (await get(child(ref(this.database),`events/${eventId}`))).val();
+        let event_participants = (await get(child(ref(this.database),`participantsOfEvent/${eventId}`))).val()
+        //console.log(event_participants,"a")
+        event_info = {...event_info,participants:event_participants}
+        //console.log(event_info,`eventId:${eventId} icin`);
+        return event_info;
+    }
+
     
+
+    static async getUserEventInfos(userName){// critical
+        let event_ids = Object.keys((await get(child(ref(this.database),`userEvents/${userName}`))).val());
+        let events_info = [];
+        event_ids.forEach((eventId) => events_info.push(this.getEventInfo(eventId)))
+        ///events_info.forEach(event => console.log(event.title),"asd")
+        return events_info;
+    }
+
 }
-console.log(DatabaseHandler)
