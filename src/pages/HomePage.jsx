@@ -46,10 +46,7 @@ const HomePage = (props) => {// too many renders!
   //   },
   //   // More event...
   // ];
-  const printEv=()=>{
-    console.log(events);
-  }
-
+ 
   return (
     <>
       <Navbar/>
@@ -73,11 +70,11 @@ const HomePage = (props) => {// too many renders!
               <div className="max-w-2xl mx-auto sm:px-8 lg:px-16">
                 <div className="px-4 py-8 sm:px-0">
                   <div className=" flex justify-around">
-                  <button onClick={printEv} className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-700 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  
+                  <Link to="/createPoll">
+                    <button className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-700 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Create Poll
                       </button>
-                    <Link to="/createPoll">
-                      
                     </Link>
                   </div>
                 </div>
