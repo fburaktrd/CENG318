@@ -5,6 +5,9 @@ import SelectHour from "./SelectHour";
 
 const CreatePoll = () => {
   const navigate = useNavigate();
+  const [options,setOptions] = useState([]);
+  
+
 
   const [enteredTitle, setEnteredTitle] = useState("");
   const titleChangeHandler = (event) => {
@@ -16,7 +19,7 @@ const CreatePoll = () => {
     setEnteredDescription(event.target.value);
   };
 
-  const [enteredStartDate, setEnteredStartDate] = useState("");
+  const [enteredStartDate, setEnteredStartDate] = useState();
   const startDateChangeHandler = (event) => {
     setEnteredStartDate(event.target.value);
   };
@@ -25,10 +28,17 @@ const CreatePoll = () => {
     setEnteredLocation(event.target.value);
   };
 
-  let hours = [];
-  const fullOption = [{ date: enteredStartDate, startFinish: hours }];
-  const timeHandler = (option) => {
-    hours.push(option);
+  
+  const addOptionHandler = () => {
+    console.log(currentOpt);
+    let newOpt={date:enteredStartDate,...currentOpt};
+    setOptions((values) => [...values,newOpt])
+    
+  }
+  let currentOpt = {}
+  const timeHandler = (selectedHour) => {
+    currentOpt = {...currentOpt,...selectedHour}
+    console.log(currentOpt);
   };
 
   const [cb1, setCB1] = useState(false);
@@ -40,7 +50,7 @@ const CreatePoll = () => {
     }
   };
 
-  const [enteredLimit, setEnteredLimit] = useState("");
+  const [enteredLimit, setEnteredLimit] = useState();
   const limitChangeHandler = (event) => {
     if (event.target.value === 0) {
     }
@@ -85,10 +95,10 @@ const CreatePoll = () => {
       description: enteredDescription,
       location: enteredLocation,
       checkBox1: cb1,
-      checkBox2: cb2,
       limit: enteredLimit,
-      checkBox3: cb3,
+      hideParticipants: cb3,
       participants: enteredParticipants,
+      options:options
     };
     console.log(poll);
   };
@@ -209,18 +219,18 @@ const CreatePoll = () => {
             <label className="block text-sm font-medium text-gray-700">
               Start Time:
             </label>
-            <SelectHour time="Start Time" timeHandler={timeHandler} />
+            <SelectHour name="Start Time" timeHandler={timeHandler} keyy={"startTime"}/>
 
             <label className="block text-sm font-medium text-gray-700">
               Finish Time:
             </label>
-            <SelectHour time="Finish Time" timeHandler={timeHandler} />
+            <SelectHour name="Finish Time" timeHandler={timeHandler} keyy={"endTime"} />
           </div>
           <div className="flex justify-center mt-4 ml-24">
             <button
               className="flex justify-center py-1 px-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               type="button"
-              onClick
+              onClick={addOptionHandler}
             >
               Add Option
             </button>

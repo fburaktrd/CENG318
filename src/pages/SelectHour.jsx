@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import TimeKeeper from "react-timekeeper";
 
-function SelectHour(props) {
+function SelectHour({name,timeHandler,keyy}) {
   const date = new Date();
   const [time, setTime] = useState("12:30");
   const [showTime, setShowTime] = useState(false);
 
   const timeFunction = () => {
     setShowTime(false);
-    props.timeHandler(time);
+    let selected = {};
+    selected[keyy] = time;
+    timeHandler(selected);
   };
 
   return (
