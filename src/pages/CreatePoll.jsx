@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import SelectHour from "./SelectHour";
+import DateOptionCard from "../components/DateOptionCard";
 
 const CreatePoll = () => {
   const navigate = useNavigate();
   const [options,setOptions] = useState([]);
-  
-
+  const [isOptionEmpty, setIsOptionEmpty] = useState(true);
+  let counter = 0; // might think different way later...
 
   const [enteredTitle, setEnteredTitle] = useState("");
   const titleChangeHandler = (event) => {
@@ -30,9 +31,13 @@ const CreatePoll = () => {
 
   
   const addOptionHandler = () => {
-    console.log(currentOpt);
     let newOpt={date:enteredStartDate,...currentOpt};
     setOptions((values) => [...values,newOpt])
+    if(counter === 0){
+      setIsOptionEmpty(false);
+      counter++
+    }
+    console.log(options);
     
   }
   let currentOpt = {}
@@ -235,8 +240,9 @@ const CreatePoll = () => {
               Add Option
             </button>
           </div>
+          
         </div>
-
+        {!(isOptionEmpty)&& <DateOptionCard options={options}/>}
         <div className="pt-8">
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">
