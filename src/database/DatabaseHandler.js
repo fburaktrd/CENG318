@@ -41,7 +41,8 @@ export class DatabaseHandler{
         set(ref(this.database,'events/'+ event_Id),allEventInfo);
         
         
-
+        set(ref(this.database,'userEvents/'+allEventInfo.creatorName+'/'+event_Id),true);
+        db_event_participants[allEventInfo.creatorName]=true
         Object.values(allEventInfo.participants).forEach((participant)=>{
             db_event_participants[participant]=true
             set(ref(this.database,'userEvents/'+participant+'/'+event_Id),true);
