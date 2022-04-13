@@ -3,8 +3,13 @@ import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import SelectHour from "./SelectHour";
 import DateOptionCard from "../components/DateOptionCard";
+import { DatabaseHandler } from "../database/DatabaseHandler";
 
 const CreatePoll = () => {
+
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+
   const navigate = useNavigate();
   const [options,setOptions] = useState([]);
   const [isOptionEmpty, setIsOptionEmpty] = useState(true);
@@ -55,7 +60,7 @@ const CreatePoll = () => {
     }
   };
 
-  const [enteredLimit, setEnteredLimit] = useState();
+  const [enteredLimit, setEnteredLimit] = useState(0);
   const limitChangeHandler = (event) => {
     if (event.target.value === 0) {
     }
@@ -96,16 +101,20 @@ const CreatePoll = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     let poll = {
+      creatorName: userInfo.userName,
       title: enteredTitle,
       description: enteredDescription,
       location: enteredLocation,
       checkBox1: cb1,
+      isOpen:true,
       limit: enteredLimit,
       hideParticipants: cb3,
       participants: enteredParticipants,
       options:options
     };
     console.log(poll);
+    DatabaseHandler.createEvent(poll);
+    
   };
 
   return (
@@ -344,6 +353,7 @@ const CreatePoll = () => {
             <button
               type="submit"
               className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              
             >
               Create Poll
             </button>

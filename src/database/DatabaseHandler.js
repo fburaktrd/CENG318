@@ -1,4 +1,14 @@
-import { get, getDatabase,child,ref, set } from "firebase/database";
+import { get, getDatabase,child,ref, update, set} from "firebase/database";
+
+
+function generateId() {
+    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var token = '';
+    for(var i = 0; i < 28; i++) {
+        token += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return token;
+}
 
 export class DatabaseHandler{
 
@@ -13,6 +23,33 @@ export class DatabaseHandler{
         majority: majority
     });
     set(ref(this.database,'userNames/'+ userName),{uid:userId});
+    }
+
+    static createEvent(allEventInfo){//participant nodes is being pushed under the eventId node. it must be deleted
+        
+        const event_Id = generateId();
+        console.log(allEventInfo);
+        const db_event_node = {}
+        const db_event_participants = {};
+        
+        const db_options = {}
+
+        allEventInfo.options.map((opt,index)=> db_options[index]=opt)
+        allEventInfo.options = db_options;
+
+
+        set(ref(this.database,'events/'+ event_Id),allEventInfo);
+        
+        
+
+        Object.values(allEventInfo.participants).forEach((participant)=>{
+            db_event_participants[participant]=true
+            set(ref(this.database,'userEvents/'+participant+'/'+event_Id),true);
+        })
+            
+        
+        set(ref(this.database,'participantsOfEvent/'+ event_Id),db_event_participants);// Wrong must be {huxies:true} but {0:true}
+        //it could be addUserToEvent(userName) func to call here to be more modular for the incoming invitations 
     }
 
     static async getUserName(userId){
@@ -53,5 +90,6 @@ export class DatabaseHandler{
         ///events_info.forEach(event => console.log(event.title),"asd")
         return events_info;
     }
+
 
 }
