@@ -217,7 +217,7 @@ export default function SignUpPage() {
           </form>
           <footer></footer>
           {registered && (
-            <Modal userName={inputs.userName} navigate={navigate} route="/" />
+            <Modal route="/" routePageMessage={"Go to Home Page !"} title={`Welcome ${inputs.userName}!`} message={"You have registered Successfully !"}/>
           )}
           {error.isError && (
             <Alert

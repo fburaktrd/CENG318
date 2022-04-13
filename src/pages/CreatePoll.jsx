@@ -4,17 +4,20 @@ import { useNavigate } from "react-router-dom";
 import SelectHour from "./SelectHour";
 import DateOptionCard from "../components/DateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
+import Notify from "../UI/Modal";
 
 const CreatePoll = () => {
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-
   const navigate = useNavigate();
   const [options,setOptions] = useState([]);
   const [isOptionEmpty, setIsOptionEmpty] = useState(true);
-  let counter = 0; // might think different way later...
+  const [showMessage,setShowMessage] = useState(false);
 
+  let counter = 0; // might think different way later...
+  
+  
   const [enteredTitle, setEnteredTitle] = useState("");
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value);
@@ -114,13 +117,13 @@ const CreatePoll = () => {
     };
     console.log(poll);
     DatabaseHandler.createEvent(poll);
-    
+    setShowMessage(true);
   };
 
   return (
     <div>
       <Navbar />
-
+      
       <form
         className="space-y-8 divide-y mr-96 mb-2 ml-96 mt-10 divide-gray-200"
         onSubmit={handleSubmit}
@@ -360,6 +363,7 @@ const CreatePoll = () => {
           </div>
         </div>
       </form>
+      {showMessage && <Notify navigate={navigate} route={'/'} routePageMessage={"Go to Home Page !"} title={`You created event ${userInfo.userName}!`} message={`${enteredTitle} is created! Let's go and check! `}/>}
     </div>
   );
 };
