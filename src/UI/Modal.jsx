@@ -1,10 +1,11 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/outline'
+import { useNavigate } from 'react-router-dom'
 
-export default function Modal({userName,navigate,route}) {
+export default function Modal({route,message,title,routePageMessage}) {
   const [open, setOpen] = useState(true)
-
+  const navigate = useNavigate();
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setOpen}>
@@ -41,11 +42,11 @@ export default function Modal({userName,navigate,route}) {
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
                   <Dialog.Title as="h5" className="text-lg leading-6 font-medium text-gray-900">
-                    {`Welcome ${userName}!`}
+                    {title}
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-b text-gray-500">
-                      You have registered successfully !
+                      {message}
                     </p>
                   </div>
                 </div>
@@ -58,7 +59,7 @@ export default function Modal({userName,navigate,route}) {
                     navigate(route);
                     setOpen(false)}}
                 >
-                  Go to Home Page !
+                  {routePageMessage}
                 </button>
               </div>
             </div>
