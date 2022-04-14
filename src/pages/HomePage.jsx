@@ -85,7 +85,6 @@ const HomePage = (props) => {
                       key={index}
                       className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 cursor-pointer"
                     >
-                      <EventCard items={event} />
                       <EventCard event={event} />
                     </li>
                   ))}
