@@ -77,7 +77,7 @@ export class DatabaseHandler{
         let event_info = (await get(child(ref(this.database),`events/${eventId}`))).val();
         let event_participants = (await get(child(ref(this.database),`participantsOfEvent/${eventId}`))).val()
         //console.log(event_participants,"a")
-        event_info = {...event_info,participants:event_participants}
+        event_info = {...event_info,participants:event_participants,id:eventId}
         //console.log(event_info,`eventId:${eventId} icin`);
         return event_info;
     }

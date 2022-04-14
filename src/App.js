@@ -31,7 +31,7 @@ export default function App() {
         <Route path="/forgetPasswordPage" element={<ForgetPasswordPage />} />
         <Route path="/teamPage" element={<TeamPage />} />
         <Route
-          path="/eventPage"
+          path="/eventPage/:id"
           element={<EventPage isLogged={authCtx.isLoggedIn} />}
         />
         <Route
