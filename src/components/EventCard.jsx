@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const EventCard = (props) => {
   return (
     <div className="border">
-      <Link to={"/eventPage"+"/"+props.event.id} state={props}>
+      <Link to={"/eventPage" + "/" + props.event.id} state={props}>
         <button className="w-full flex items-center justify-between mt-2">
           <div className="w-full flex items-center justify-between p-6 space-x-6">
             <div className="flex-1 truncate">

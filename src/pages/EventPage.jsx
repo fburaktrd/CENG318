@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import OptionsCard from "../components/OptionsCard";
 
 const EventPage = (props) => {
   const { id } = useParams();
@@ -14,11 +15,8 @@ const EventPage = (props) => {
           <h3 className="text-lg leading-6 font-medium text-black-900">
             {eventInfo.title}
           </h3>
-          {/* <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Personal details and application.
-          </p> */}
         </div>
-        <div className="border-t border-gray-200 px-4 py-4 sm:p-0 -mb-1">
+        <div className="border-t border-gray-200 px-4 py-4 -mb-1">
           <dl className="sm:divide-y sm:divide-gray-200">
             <div className="py-2 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm flex mb-3 font-medium text-black-500">
@@ -164,6 +162,16 @@ const EventPage = (props) => {
                 </span>
               </div>
             </div>
+            <ul
+              role="list"
+              className="flex justify-end gap-6 sm:grid-cols-2 lg:grid-cols-3 container"
+            >
+              {Object.keys(eventInfo.participants).map((index) => (
+                <li key={index}>
+                  <OptionsCard option={eventInfo} key={index} />
+                </li>
+              ))}
+            </ul>
             {Object.keys(eventInfo.participants).map((participant, index) => (
               <div key={index}>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
