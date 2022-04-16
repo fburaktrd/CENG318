@@ -10,7 +10,7 @@ const EventPage = (props) => {
   return (
     <div>
       <Navbar />
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg mr-96 ml-96 mt-10">
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg mr-96 ml-96 mt-10 mb-10">
         <div className="px-4 py-4 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-black-900">
             {eventInfo.title}
@@ -166,11 +166,7 @@ const EventPage = (props) => {
               role="list"
               className="flex justify-end gap-6 sm:grid-cols-2 lg:grid-cols-3 container"
             >
-              {Object.keys(eventInfo.participants).map((index) => (
-                <li key={index}>
-                  <OptionsCard option={eventInfo} key={index} />
-                </li>
-              ))}
+              <OptionsCard option={eventInfo} />
             </ul>
             {Object.keys(eventInfo.participants).map((participant, index) => (
               <div key={index}>

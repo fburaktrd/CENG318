@@ -7,17 +7,15 @@ import { DatabaseHandler } from "../database/DatabaseHandler";
 import Notify from "../UI/Modal";
 
 const CreatePoll = () => {
-
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   const navigate = useNavigate();
-  const [options,setOptions] = useState([]);
+  const [options, setOptions] = useState([]);
   const [isOptionEmpty, setIsOptionEmpty] = useState(true);
-  const [showMessage,setShowMessage] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   let counter = 0; // might think different way later...
-  
-  
+
   const [enteredTitle, setEnteredTitle] = useState("");
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value);
@@ -37,20 +35,18 @@ const CreatePoll = () => {
     setEnteredLocation(event.target.value);
   };
 
-  
   const addOptionHandler = () => {
-    let newOpt={date:enteredStartDate,...currentOpt};
-    setOptions((values) => [...values,newOpt])
-    if(counter === 0){
+    let newOpt = { date: enteredStartDate, ...currentOpt };
+    setOptions((values) => [...values, newOpt]);
+    if (counter === 0) {
       setIsOptionEmpty(false);
-      counter++
+      counter++;
     }
     console.log(options);
-    
-  }
-  let currentOpt = {}
+  };
+  let currentOpt = {};
   const timeHandler = (selectedHour) => {
-    currentOpt = {...currentOpt,...selectedHour}
+    currentOpt = { ...currentOpt, ...selectedHour };
     console.log(currentOpt);
   };
 
@@ -109,11 +105,11 @@ const CreatePoll = () => {
       description: enteredDescription,
       location: enteredLocation,
       checkBox1: cb1,
-      isOpen:true,
+      isOpen: true,
       limit: enteredLimit,
       hideParticipants: cb3,
       participants: enteredParticipants,
-      options:options
+      options: options,
     };
     console.log(poll);
     DatabaseHandler.createEvent(poll);
@@ -123,7 +119,7 @@ const CreatePoll = () => {
   return (
     <div>
       <Navbar />
-      
+
       <form
         className="space-y-8 divide-y mr-96 mb-2 ml-96 mt-10 divide-gray-200"
         onSubmit={handleSubmit}
@@ -236,12 +232,20 @@ const CreatePoll = () => {
             <label className="block text-sm font-medium text-gray-700">
               Start Time:
             </label>
-            <SelectHour name="Start Time" timeHandler={timeHandler} keyy={"startTime"}/>
+            <SelectHour
+              name="Start Time"
+              timeHandler={timeHandler}
+              keyy={"startTime"}
+            />
 
             <label className="block text-sm font-medium text-gray-700">
               Finish Time:
             </label>
-            <SelectHour name="Finish Time" timeHandler={timeHandler} keyy={"endTime"} />
+            <SelectHour
+              name="Finish Time"
+              timeHandler={timeHandler}
+              keyy={"endTime"}
+            />
           </div>
           <div className="flex justify-center mt-4 ml-24">
             <button
@@ -252,9 +256,8 @@ const CreatePoll = () => {
               Add Option
             </button>
           </div>
-          
         </div>
-        {!(isOptionEmpty)&& <DateOptionCard options={options}/>}
+        {!isOptionEmpty && <DateOptionCard options={options} />}
         <div className="pt-8">
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -348,22 +351,29 @@ const CreatePoll = () => {
           <div className="flex justify-end">
             <button
               type="button"
-              className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-black bg-white-700 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               onClick={cancelCreate}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              
+              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Create Poll
             </button>
           </div>
         </div>
       </form>
-      {showMessage && <Notify navigate={navigate} route={'/'} routePageMessage={"Go to Home Page !"} title={`You created event ${userInfo.userName}!`} message={`${enteredTitle} is created! Let's go and check! `}/>}
+      {showMessage && (
+        <Notify
+          navigate={navigate}
+          route={"/"}
+          routePageMessage={"Go to Home Page !"}
+          title={`You created event ${userInfo.userName}!`}
+          message={`${enteredTitle} is created! Let's go and check! `}
+        />
+      )}
     </div>
   );
 };
