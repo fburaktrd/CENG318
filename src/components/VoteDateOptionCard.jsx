@@ -1,7 +1,6 @@
 import {
   CheckIcon,
   XIcon,
-  QuestionMarkCircleIcon,
   StarIcon,
 } from "@heroicons/react/solid";
 
@@ -47,6 +46,9 @@ export default function VoteDateOption({ func, optInfo }) {
               <p className="mt-1 text-gray-500 text-sm truncate">
                 {optInfo.date}
               </p>
+              <p className="mt-1 text-gray-500 text-sm truncate">
+                {optInfo.startTime} - {optInfo.endTime}
+              </p>
             </div>
           </div>
           <div>
@@ -61,9 +63,7 @@ export default function VoteDateOption({ func, optInfo }) {
               </div>
               <div className="-ml-px w-0 flex-1 flex">
                 <a
-                  onClick={() => {
-                    console.log("clicked");
-                  }}
+                  onClick={a}
                   className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
                 >
                   <XIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
