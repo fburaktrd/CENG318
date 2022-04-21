@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import OptionsCard from "../components/OptionsCard";
+import VoteDateOption from "../components/VoteDateOptionCard";
 
 const EventPage = (props) => {
   const { id } = useParams();
@@ -162,7 +163,7 @@ const EventPage = (props) => {
                 </span>
               </div>
             </div>
-            <ul
+            {/* <ul
               role="list"
               className="flex justify-end gap-6 sm:grid-cols-2 lg:grid-cols-3 container"
             >
@@ -172,10 +173,14 @@ const EventPage = (props) => {
               <div key={index}>
                 <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   {participant}
+                  <input type="checkbox"></input>
                 </div>
               </div>
-            ))}
+            ))} */}
+          
+          <VoteDateOption></VoteDateOption>
           </dl>
+          
         </div>
       </div>
     </div>
