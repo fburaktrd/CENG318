@@ -7,7 +7,12 @@ import VoteDateOption from "../components/VoteDateOptionCard";
 const EventPage = (props) => {
   const { id } = useParams();
   const eventInfo = useLocation().state["event"];
-  console.log(eventInfo);
+  eventInfo.options.map((opt,index)=> opt["id"] = index)
+  let votedOptions = {}
+
+  const VotedOptionsHandler = (option)=> {
+    votedOptions[option.id] = "asdasd"
+  }
   return (
     <div>
       <Navbar />
@@ -177,8 +182,8 @@ const EventPage = (props) => {
                 </div>
               </div>
             ))} */}
+          {eventInfo.options.map((option)=> <VoteDateOption func={VotedOptionsHandler} optInfo={option}/>)}
           
-          <VoteDateOption></VoteDateOption>
           </dl>
           
         </div>
