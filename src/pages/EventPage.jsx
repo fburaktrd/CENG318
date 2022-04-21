@@ -11,6 +11,7 @@ const EventPage = (props) => {
   let votedOptions = {}
 
   const VotedOptionsHandler = (option)=> {
+    console.log(option);
     votedOptions[option.id] = "asdasd"
   }
   return (

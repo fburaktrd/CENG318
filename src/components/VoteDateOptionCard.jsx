@@ -33,7 +33,7 @@ export default function VoteDateOption({ func, optInfo }) {
       </span>
       {people.map((person) => (
         <li
-          key={person.email}
+          key={optInfo.id}
           className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 mt-4"
         >
           <StarIcon className="w-10 h-10 text-gray-400 mx-auto" aria-hidden="true" />
@@ -41,11 +41,11 @@ export default function VoteDateOption({ func, optInfo }) {
             <div className="flex-1 truncate">
               <div className="flex items-center space-x-3">
                 <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full">
-                  {person.role}
+                  {optInfo.id}
                 </span>
               </div>
               <p className="mt-1 text-gray-500 text-sm truncate">
-                {person.title}
+                {optInfo.date}
               </p>
             </div>
           </div>
