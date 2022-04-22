@@ -1,8 +1,6 @@
-import {
-  CheckIcon,
-  XIcon,
-  StarIcon,
-} from "@heroicons/react/solid";
+import React, { useState } from "react";
+
+import { CheckIcon, XIcon } from "@heroicons/react/solid";
 
 const people = [
   {
@@ -19,6 +17,37 @@ const people = [
 export default function VoteDateOption({ func, optInfo }) {
   // console.log(optInfo,"eventPage")
 
+  // Bu değerler objeden alınmalı. Objede date, start time vs gibi bu değerler de tutulmalı ve oradan set edilmeli.
+  const [yesVote, setYesVote] = useState(0);
+  const [NoVote, setNoVote] = useState(0);
+  
+  const [yesClicked, setYesClicked] = useState(false);
+  const [NoClicked, setNoClicked] = useState(false);
+
+  const voteHandler = (prevVote) => {
+    setYesVote((prevVote) => {
+      if (yesClicked === true) {
+        setYesClicked(false);
+        return [parseInt(prevVote) - 1];
+      } else {
+        setYesClicked(true);
+        return [parseInt(prevVote) + 1];
+      }
+    });
+  };
+
+  const noVoteHandler = (prevVote) => {
+    setNoVote((prevVote) => {
+      if (NoClicked === true) {
+        setNoClicked(false);
+        return [parseInt(prevVote) - 1];
+      } else {
+        setNoClicked(true);
+        return [parseInt(prevVote) + 1];
+      }
+    });
+  };
+
   const a = () => {
     func(optInfo);
   };
@@ -34,8 +63,7 @@ export default function VoteDateOption({ func, optInfo }) {
         <li
           key={optInfo.id}
           className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 mt-4"
-        >
-          <StarIcon className="w-10 h-10 text-gray-400 mx-auto" aria-hidden="true" />
+        >        
           <div className="w-full flex items-center justify-between p-6 space-x-6">
             <div className="flex-1 truncate">
               <div className="flex items-center space-x-3">
@@ -49,25 +77,53 @@ export default function VoteDateOption({ func, optInfo }) {
               <p className="mt-1 text-gray-500 text-sm truncate">
                 {optInfo.startTime} - {optInfo.endTime}
               </p>
+              <div className="flex items-center space-x-3">
+                <CheckIcon className="w-5 h-5 text-green-400" /> {yesVote}
+              </div>
+              <div className="flex items-center space-x-3">
+                <XIcon className="w-5 h-5 text-red-400" /> {NoVote}
+              </div>
             </div>
           </div>
           <div>
             <div className="-mt-px flex divide-x divide-gray-200">
               <div className="w-0 flex-1 flex">
-                <a className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
-                  <CheckIcon
-                    className="w-5 h-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </a>
+                {yesClicked === true ? (
+                  <a className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-green-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
+                    <CheckIcon
+                      className="w-7 h-7 text-green-400"
+                      onClick={voteHandler}
+                      aria-hidden="true"
+                    />
+                  </a>
+                ) : (
+                  <a className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
+                    <CheckIcon
+                      className="w-7 h-7 text-gray-400"
+                      onClick={voteHandler}
+                      aria-hidden="true"
+                    />
+                  </a>
+                )}
               </div>
               <div className="-ml-px w-0 flex-1 flex">
-                <a
-                  onClick={a}
-                  className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
-                >
-                  <XIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
-                </a>
+                {NoClicked === true ? (
+                  <a className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-red-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500">
+                    <XIcon
+                      className="w-7 h-7 text-red-400"
+                      onClick={noVoteHandler}
+                      aria-hidden="true"
+                    />
+                  </a>
+                ) : (
+                  <a className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500">
+                    <XIcon
+                      className="w-7 h-7 text-gray-400"
+                      onClick={noVoteHandler}
+                      aria-hidden="true"
+                    />
+                  </a>
+                )}
               </div>
             </div>
           </div>
