@@ -20,9 +20,11 @@ export default function VoteDateOption({ func, optInfo }) {
   // Bu değerler objeden alınmalı. Objede date, start time vs gibi bu değerler de tutulmalı ve oradan set edilmeli.
   const [yesVote, setYesVote] = useState(0);
   const [NoVote, setNoVote] = useState(0);
-  
+
   const [yesClicked, setYesClicked] = useState(false);
   const [NoClicked, setNoClicked] = useState(false);
+
+  
 
   const voteHandler = (prevVote) => {
     setYesVote((prevVote) => {
@@ -59,11 +61,9 @@ export default function VoteDateOption({ func, optInfo }) {
       <span className="px-3 bg-white text-lg font-medium text-gray-900">
         Date Options{" "}
       </span>
-      {people.map((person) => (
         <li
-          key={optInfo.id}
           className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 mt-4"
-        >        
+        >
           <div className="w-full flex items-center justify-between p-6 space-x-6">
             <div className="flex-1 truncate">
               <div className="flex items-center space-x-3">
@@ -89,46 +89,56 @@ export default function VoteDateOption({ func, optInfo }) {
             <div className="-mt-px flex divide-x divide-gray-200">
               <div className="w-0 flex-1 flex">
                 {yesClicked === true ? (
-                  <a className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-green-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
+                  <button
+                    onClick={voteHandler}
+                    className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-green-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+                  >
                     <CheckIcon
                       className="w-7 h-7 text-green-400"
-                      onClick={voteHandler}
                       aria-hidden="true"
                     />
-                  </a>
+                  </button>
                 ) : (
-                  <a className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
+                  <button
+                    onClick={voteHandler}
+                    disabled={NoClicked}
+                    className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+                  >
                     <CheckIcon
                       className="w-7 h-7 text-gray-400"
-                      onClick={voteHandler}
                       aria-hidden="true"
                     />
-                  </a>
+                  </button>
                 )}
               </div>
               <div className="-ml-px w-0 flex-1 flex">
                 {NoClicked === true ? (
-                  <a className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-red-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500">
+                  <button
+                    onClick={noVoteHandler}
+                    className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-red-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
+                  >
                     <XIcon
                       className="w-7 h-7 text-red-400"
-                      onClick={noVoteHandler}
                       aria-hidden="true"
                     />
-                  </a>
+                  </button>
                 ) : (
-                  <a className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500">
+                  <button
+                    onClick={noVoteHandler}
+                    disabled={yesClicked}
+                    className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
+                  >
                     <XIcon
                       className="w-7 h-7 text-gray-400"
-                      onClick={noVoteHandler}
                       aria-hidden="true"
                     />
-                  </a>
+                  </button>
                 )}
               </div>
             </div>
           </div>
         </li>
-      ))}
+      )
     </ul>
   );
 }
