@@ -184,7 +184,7 @@ export default function SignInPage(props) {
               <div className="text-center text-1xl  text-gray-900">
                 Don't have an account yet? &nbsp;
                 <Link
-                  to="/register"
+                  to="/registerPage"
                   className="font-medium text-blue-700 hover:text-blue-500"
                 >
                   Sign up

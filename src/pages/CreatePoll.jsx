@@ -121,7 +121,7 @@ const CreatePoll = () => {
       <Navbar />
 
       <form
-        className="space-y-8 divide-y divide-gray-200 sm:space-y-5 divide-gray-200 mr-20 ml-20 mb-2"
+        className="sm:w-full md:w-1/2  md:mx-auto space-y-8 divide-y divide-gray-200 sm:space-y-5 divide-gray-200 mr-20 ml-20 mb-2"
         onSubmit={handleSubmit}
       >
         <h1 className="text-lg leading-6 text-xl text-gray-900 font-semibold mt-3">
@@ -214,39 +214,43 @@ const CreatePoll = () => {
           <h1 className="text-lg leading-6 text-xl text-gray-900 font-semibold mb-2">
             Date and Hours
           </h1>
-          <div className="flex justify-center ml-16">
-            <label className="block text-sm font-medium text-gray-700 mr-2">
-              Date:
-            </label>
-            <input
-              type="date"
-              name="startDate"
-              value={enteredStartDate}
-              onChange={startDateChangeHandler}
-              required
-              className=" focus:ring-indigo-500 border focus:border-indigo-500 block w-36 h-8 min-w-0 rounded-md sm:text-sm border-gray-300"
-              placeholder="startDate"
-            />
+          <div className="sm:flex sm:flex-col md:grid md:grid-cols-3">
+            <div className="col-span-1 sm:ml-0 md:ml-16">
+              <label className="block text-sm font-medium text-gray-700 mr-2">
+                Date:
+              </label>
+              <input
+                type="date"
+                name="startDate"
+                value={enteredStartDate}
+                onChange={startDateChangeHandler}
+                required
+                className=" focus:ring-indigo-500 border focus:border-indigo-500 w-2/3 block h-8  rounded-md sm:text-sm border-gray-300"
+                placeholder="startDate"
+              />
+            </div>
+            <div className="col-span-1 sm:ml-0 md:ml-16">
+              <label className="block text-sm font-medium text-gray-700">
+                Start Time:
+              </label>
+              <SelectHour
+                name="Start Time"
+                timeHandler={timeHandler}
+                keyy={"startTime"}
+              />
+            </div>
+            <div className="col-span-1 sm:ml-0 md:ml-16">
+              <label className="block text-sm font-medium text-gray-700">
+                Finish Time:
+              </label>
+              <SelectHour
+                name="Finish Time"
+                timeHandler={timeHandler}
+                keyy={"endTime"}
+              />
+            </div>
           </div>
-          <div className="flex justify-around">
-            <label className="block text-sm font-medium text-gray-700">
-              Start Time:
-            </label>
-            <SelectHour
-              name="Start Time"
-              timeHandler={timeHandler}
-              keyy={"startTime"}
-            />
 
-            <label className="block text-sm font-medium text-gray-700">
-              Finish Time:
-            </label>
-            <SelectHour
-              name="Finish Time"
-              timeHandler={timeHandler}
-              keyy={"endTime"}
-            />
-          </div>
           <div className="flex justify-center mt-4 ml-24">
             <button
               className="flex justify-center py-1 px-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

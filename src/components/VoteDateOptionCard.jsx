@@ -58,11 +58,8 @@ export default function VoteDateOption({ func, optInfo }) {
     func(optInfo);
   };
   return (
-    <ul
-      role="list"
-      className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-    >
-      <li className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 mt-4">
+    <ul role="list" className="col-span-1 px-2 md:p-4 ">
+      <li className=" bg-white rounded-lg shadow divide-y divide-gray-200 mt-4">
         <div className="w-full flex items-center justify-between p-6 space-x-6">
           <div className="flex-1 truncate">
             <div className="flex items-center space-x-3">

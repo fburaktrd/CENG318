@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TimeKeeper from "react-timekeeper";
 
-function SelectHour({name,timeHandler,keyy}) {
+function SelectHour({ name, timeHandler, keyy }) {
   const date = new Date();
   const [time, setTime] = useState("12:30");
   const [showTime, setShowTime] = useState(false);
@@ -26,7 +26,7 @@ function SelectHour({name,timeHandler,keyy}) {
 
       {!showTime && (
         <button
-          className="border rounded-md w-52"
+          className="border rounded-md w-2/3 h-8"
           onClick={() => setShowTime(true)}
         >
           <span className="">{time}</span>

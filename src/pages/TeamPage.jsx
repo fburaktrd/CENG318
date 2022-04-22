@@ -18,10 +18,9 @@ const people = [
     linkedinUrl: "https://www.linkedin.com/in/gokturkturan/",
   },
   {
-    name: "Eşref Çağatay ",
+    name: "Eşref Çağatay Doğan",
     role: "Front-End Developer",
-    imageUrl:
-      "https://pps.whatsapp.net/v/t61.24694-24/189895809_2050957751742382_4566830607694497516_n.jpg?ccb=11-4&oh=f7cec64c789626f3f6677526f71357fa&oe=624E3FB0",
+    imageUrl: "https://avatars.githubusercontent.com/u/101594855?v=4",
     twitterUrl: "#",
     linkedinUrl: "#",
   },
@@ -36,8 +35,7 @@ const people = [
   {
     name: "Nadir Özdemir ",
     role: "Front-End Developer",
-    imageUrl:
-      "https://pps.whatsapp.net/v/t61.24694-24/108583171_3083083185111824_8332456822578466673_n.jpg?ccb=11-4&oh=01_AVxJPSv7cdbkh3qF_KnbnFn45Y9pG9sCxlkvl7yVdq4ysQ&oe=624F31EE",
+    imageUrl: "https://avatars.githubusercontent.com/u/101597820?v=4",
     twitterUrl: "#",
     linkedinUrl: "#",
   },

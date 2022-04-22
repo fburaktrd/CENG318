@@ -38,7 +38,6 @@ export default function App() {
           path="/createPoll"
           element={<CreatePoll isLogged={authCtx.isLoggedIn} />}
         />
-        <Route path="/deneme" element= {<SelectHour></SelectHour>} />
       </Routes>
     </BrowserRouter>
   );

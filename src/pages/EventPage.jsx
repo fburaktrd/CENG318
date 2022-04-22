@@ -23,9 +23,9 @@ const EventPage = (props) => {
             {eventInfo.title}
           </h3>
         </div>
-        <div className="border-t border-gray-200 px-4 py-4 -mb-1">
+        <div className="border-t border-gray-200 sm:p-0 md:p-4 -mb-1">
           <dl className="sm:divide-y sm:divide-gray-200">
-            <div className="py-2 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="py-2 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
               <dt className="text-sm flex mb-3 font-medium text-black-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@ const EventPage = (props) => {
                 {eventInfo.creatorName}
               </dd>
             </div>
-            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
               <dt className="text-sm flex font-medium text-black-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ const EventPage = (props) => {
                 İzmir
               </dd>
             </div>
-            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
               <dt className="text-sm flex font-medium text-black-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +96,7 @@ const EventPage = (props) => {
                 {eventInfo.description}
               </dd>
             </div>
-            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
               <div className="flex mt-8">Availabilities</div>
               <div>
                 <span className="flex">
@@ -178,7 +178,7 @@ const EventPage = (props) => {
               </span>
             </div>
           </div>
-          <div className="flex rounded-lg divide-gray-200">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
             {eventInfo.options.map((option) => (
               <VoteDateOption
                 key={option.id}
