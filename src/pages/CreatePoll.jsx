@@ -121,10 +121,10 @@ const CreatePoll = () => {
       <Navbar />
 
       <form
-        className="space-y-8 divide-y mr-96 mb-2 ml-96 mt-10 divide-gray-200"
+        className="space-y-8 divide-y divide-gray-200 sm:space-y-5 divide-gray-200 mr-20 ml-20 mb-2"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-lg leading-6 text-xl text-gray-900 font-semibold">
+        <h1 className="text-lg leading-6 text-xl text-gray-900 font-semibold mt-3">
           Create Group Poll
         </h1>
         <div className="space-y-8 divide-y divide-gray-200">
