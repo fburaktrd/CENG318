@@ -183,7 +183,7 @@ const EventPage = (props) => {
                 </div>
               </div>
             ))} */}
-          {eventInfo.options.map((option)=> <VoteDateOption func={VotedOptionsHandler} optInfo={option}/>)}
+          {eventInfo.options.map((option)=> <VoteDateOption key={option.id} func={VotedOptionsHandler} optInfo={option}/>)}
           
           </dl>
           

@@ -1,28 +1,18 @@
 import React, { useState } from "react";
 
-import { CheckIcon, XIcon } from "@heroicons/react/solid";
+import { CheckIcon, XIcon, QuestionMarkCircleIcon} from "@heroicons/react/solid";
 
-const people = [
-  {
-    name: "Jane Cooper",
-    title: "Regional Paradigm Technician",
-    role: "Admin",
-    email: "janecooper@example.com",
-    telephone: "+1-202-555-0170",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-];
 
 export default function VoteDateOption({ func, optInfo }) {
   // console.log(optInfo,"eventPage")
 
-  // Bu değerler objeden alınmalı. Objede date, start time vs gibi bu değerler de tutulmalı ve oradan set edilmeli.
   const [yesVote, setYesVote] = useState(0);
   const [NoVote, setNoVote] = useState(0);
+  const [ifNeedBe , setIfNeedBe] = useState(0);
 
   const [yesClicked, setYesClicked] = useState(false);
   const [NoClicked, setNoClicked] = useState(false);
+  const [ifNeedBeClicked, setIfNeedBeClicked] = useState(false);
 
   
 
@@ -36,7 +26,19 @@ export default function VoteDateOption({ func, optInfo }) {
         return [parseInt(prevVote) + 1];
       }
     });
+
   };
+
+  const ifNeedBeVoteHandler = (prevVote) => {
+    if (ifNeedBeClicked === true) {
+      setIfNeedBeClicked(false);
+      return [parseInt(prevVote) - 1];
+    }
+    else {
+      setIfNeedBeClicked(true);
+      return [parseInt(prevVote) + 1];
+    }
+  }
 
   const noVoteHandler = (prevVote) => {
     setNoVote((prevVote) => {
@@ -48,7 +50,10 @@ export default function VoteDateOption({ func, optInfo }) {
         return [parseInt(prevVote) + 1];
       }
     });
+
   };
+
+
 
   const a = () => {
     func(optInfo);
@@ -83,6 +88,9 @@ export default function VoteDateOption({ func, optInfo }) {
               <div className="flex items-center space-x-3">
                 <XIcon className="w-5 h-5 text-red-400" /> {NoVote}
               </div>
+              <div className="flex items-center space-x-3">
+                <QuestionMarkCircleIcon className="w-5 h-5 text-yellow-400" /> {ifNeedBe}
+              </div>
             </div>
           </div>
           <div>
@@ -101,7 +109,7 @@ export default function VoteDateOption({ func, optInfo }) {
                 ) : (
                   <button
                     onClick={voteHandler}
-                    disabled={NoClicked}
+                    disabled={NoClicked || ifNeedBeClicked}
                     className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
                   >
                     <CheckIcon
@@ -125,10 +133,34 @@ export default function VoteDateOption({ func, optInfo }) {
                 ) : (
                   <button
                     onClick={noVoteHandler}
-                    disabled={yesClicked}
+                    disabled={yesClicked || ifNeedBeClicked}
                     className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"
                   >
                     <XIcon
+                      className="w-7 h-7 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </button>
+                )}
+                </div>
+                <div className="-ml-px w-0 flex-1 flex">
+                {ifNeedBeClicked === true ? (
+                  <button
+                    onClick={ifNeedBeVoteHandler}
+                    className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-green-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+                  >
+                    <QuestionMarkCircleIcon
+                      className="w-7 h-7 text-yellow-400"
+                      aria-hidden="true"
+                    />
+                  </button>
+                ) : (
+                  <button
+                    onClick={ifNeedBeVoteHandler}
+                    disabled={NoClicked || yesClicked}
+                    className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500"
+                  >
+                    <QuestionMarkCircleIcon
                       className="w-7 h-7 text-gray-400"
                       aria-hidden="true"
                     />
