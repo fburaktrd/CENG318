@@ -39,7 +39,7 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
       setStatus("If need be");
     }
   };
-  
+
   const [yesVote, setYesVote] = useState(0);
   const [yesClicked, setYesClicked] = useState(comings.includes(userName));
 
@@ -189,7 +189,7 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
           
           
           <div className="flex-1">
-          <ParticipantList />
+          <ParticipantList comings={comings} Ncomings={Ncomings} ifNeed={ifNeed} />
           </div>
         </div>
         <div>
