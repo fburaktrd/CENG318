@@ -11,12 +11,16 @@ const EventPage = (props) => {
   eventInfo.options.map((opt, index) => (opt["id"] = index));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [votes,setVotes] = useState({comings:[],Ncomings:[],ifNeed:[]})
+  const [myVotes,setMyVotes] = useState({});
   const [loading,setLoading] = useState(true)
   let selectedDates = {};
 
   useEffect(async ()=>{
-    const result = await DatabaseHandler.getVotes(eventInfo.id);
-    setVotes(result);
+    const rVotes = await DatabaseHandler.getVotes(eventInfo.id);
+    const rMyVotes = await DatabaseHandler.getUserVote(eventInfo.id,userInfo.userName)
+    console.log(rMyVotes)
+    setVotes(rVotes);
+    setMyVotes(rMyVotes);
     setLoading(false);
     // const {comings,Ncomings,ifNeed} = result;
     // console.log(comings,Ncomings,ifNeed);
@@ -221,6 +225,7 @@ const EventPage = (props) => {
                 <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
             {eventInfo.options.map((option) => (
               <VoteDateOption
+                userName={userInfo.userName}
                 comings={votes["comings"][option.id]}
                 Ncomings={votes["Ncomings"][option.id]}
                 ifNeed={votes["ifNeed"][option.id]}

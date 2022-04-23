@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/solid";
 import ParticipantList from "./ParticipantList";
 
-export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Ncomings,ifNeed}) {
+export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Ncomings,ifNeed,userName}) {
   // console.log(optInfo,"eventPage")
 
   //yesVote, noVote ve ifNeedBe databaseden gelmeli ve tekrar oraya kaydedilmeli.
@@ -41,13 +41,13 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
   };
   
   const [yesVote, setYesVote] = useState(0);
-  const [yesClicked, setYesClicked] = useState(false);
+  const [yesClicked, setYesClicked] = useState(comings.includes(userName));
 
   const [NoVote, setNoVote] = useState(0);
-  const [NoClicked, setNoClicked] = useState(false);
+  const [NoClicked, setNoClicked] = useState(Ncomings.includes(userName));
 
   const [ifNeedBe, setIfNeedBe] = useState(0);
-  const [ifNeedBeClicked, setIfNeedBeClicked] = useState(false);
+  const [ifNeedBeClicked, setIfNeedBeClicked] = useState(ifNeed.includes(userName));
 
   let votedOption = {
     ...optInfo,
