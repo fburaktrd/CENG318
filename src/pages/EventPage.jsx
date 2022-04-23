@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import VoteDateOption from "../components/VoteDateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
+import Banner from "../UI/Banner";
 
 const EventPage = (props) => {
   //const { station } = useParams();
@@ -10,11 +11,13 @@ const EventPage = (props) => {
   eventInfo.options.map((opt, index) => (opt["id"] = index));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [votes,setVotes] = useState({comings:[],Ncomings:[],ifNeed:[]})
+  const [loading,setLoading] = useState(true)
   let selectedDates = {};
 
   useEffect(async ()=>{
     const result = await DatabaseHandler.getVotes(eventInfo.id);
     setVotes(result);
+    setLoading(false);
     // const {comings,Ncomings,ifNeed} = result;
     // console.log(comings,Ncomings,ifNeed);
   },[])
@@ -212,8 +215,10 @@ const EventPage = (props) => {
               </span>
             </div>
           </div>
-
-          <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
+          {loading ? (
+                <Banner message={"Options are loading..."} />
+              ) : (
+                <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
             {eventInfo.options.map((option) => (
               <VoteDateOption
                 comings={votes["comings"][option.id]}
@@ -225,6 +230,8 @@ const EventPage = (props) => {
               />
             ))}
           </div>
+              )}
+          
           <div className="flex justify-center">
             <button
               onClick={submitHandler}
