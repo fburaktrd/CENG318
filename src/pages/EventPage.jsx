@@ -5,27 +5,36 @@ import OptionsCard from "../components/OptionsCard";
 import VoteDateOption from "../components/VoteDateOptionCard";
 
 const EventPage = (props) => {
-  const { id } = useParams();
+  //const { station } = useParams();
   const eventInfo = useLocation().state["event"];
-  eventInfo.options.map((opt, index) => (opt["id"] = index));
-  let votedOptions = {};
-
-  const VotedOptionsHandler = (option) => {
-    console.log(option);
-    votedOptions[option.id] = "asdasd";
-  };
+  eventInfo.options.map((opt,index)=> opt["id"] = index)
+  const [status, setStatus ] = useState('Pending');
+  const VotedOptionsHandler = (votedOption)=> {
+    if(votedOption.isVoteYes === false & votedOption.isVoteNo === false & votedOption.isVoteIfNeedBe === false) {
+      setStatus("Pending");
+    }
+    else if (votedOption.isVoteYes === true) {
+      setStatus("Coming");
+    }
+    else if(votedOption.isVoteNo === true) {
+      setStatus("Not coming");
+    }
+    else if (votedOption.isVoteIfNeedBe === true) {
+      setStatus("If need be");
+    }
+  }
   return (
     <div>
       <Navbar />
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg mr-16 ml-16 mt-10 mb-10">
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg mr-96 ml-96 mt-10 mb-10">
         <div className="px-4 py-4 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-black-900">
             {eventInfo.title}
           </h3>
         </div>
-        <div className="border-t border-gray-200 sm:p-0 md:p-4 -mb-1">
+        <div className="border-t border-gray-200 px-4 py-4 -mb-1">
           <dl className="sm:divide-y sm:divide-gray-200">
-            <div className="py-2 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
+            <div className="py-2 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm flex mb-3 font-medium text-black-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +56,7 @@ const EventPage = (props) => {
                 {eventInfo.creatorName}
               </dd>
             </div>
-            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm flex font-medium text-black-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +83,7 @@ const EventPage = (props) => {
                 İzmir
               </dd>
             </div>
-            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm flex font-medium text-black-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -93,10 +102,10 @@ const EventPage = (props) => {
                 Description
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {eventInfo.description}
+                {eventInfo.descrip}
               </dd>
             </div>
-            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <div className="flex mt-8">Availabilities</div>
               <div>
                 <span className="flex">
@@ -119,14 +128,16 @@ const EventPage = (props) => {
                 <span className="flex">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6"
-                    viewBox="0 0 20 20"
-                    fill="orange"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="Orange"
+                    strokeWidth="2"
                   >
                     <path
-                      fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                      clip-rule="evenodd"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
                     />
                   </svg>
                   if need be
@@ -148,6 +159,23 @@ const EventPage = (props) => {
                   </svg>
                   cannot attend
                 </span>
+                <span className="flex">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="darkgray"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  pending
+                </span>
               </div>
             </div>
             {/* <ul
@@ -164,29 +192,10 @@ const EventPage = (props) => {
                 </div>
               </div>
             ))} */}
+          {eventInfo.options.map((option)=> <VoteDateOption key={option.id} vote={VotedOptionsHandler} optInfo={option} optStatus = {status}/>)}
+          
           </dl>
-          <div className="relative">
-            <div
-              className="absolute inset-0 flex items-center"
-              aria-hidden="true"
-            >
-              <div className="w-full border-t border-gray-300" />
-            </div>
-            <div className="relative flex justify-center">
-              <span className="px-3 bg-white text-lg font-medium text-gray-900">
-                Options
-              </span>
-            </div>
-          </div>
-          <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
-            {eventInfo.options.map((option) => (
-              <VoteDateOption
-                key={option.id}
-                func={VotedOptionsHandler}
-                optInfo={option}
-              />
-            ))}
-          </div>
+          
         </div>
       </div>
     </div>

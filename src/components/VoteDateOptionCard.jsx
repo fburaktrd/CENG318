@@ -6,9 +6,10 @@ import {
   QuestionMarkCircleIcon,
 } from "@heroicons/react/solid";
 
-export default function VoteDateOption({ func, optInfo }) {
+export default function VoteDateOption({ vote, optInfo, optStatus }) {
   // console.log(optInfo,"eventPage")
 
+  //yesVote, noVote ve ifNeedBe databaseden gelmeli ve tekrar oraya kaydedilmeli.
   const [yesVote, setYesVote] = useState(0);
   const [yesClicked, setYesClicked] = useState(false);
 
@@ -17,6 +18,13 @@ export default function VoteDateOption({ func, optInfo }) {
 
   const [ifNeedBe, setIfNeedBe] = useState(0);
   const [ifNeedBeClicked, setIfNeedBeClicked] = useState(false);
+
+  let votedOption = {
+    ...optInfo,
+    isVoteYes: yesClicked,
+    isVoteNo: NoClicked,
+    isVoteIfNeedBe: ifNeedBeClicked,
+  };
 
   const yesVoteHandler = (prevVote) => {
     setYesVote((prevVote) => {
@@ -28,6 +36,8 @@ export default function VoteDateOption({ func, optInfo }) {
         return [parseInt(prevVote) + 1];
       }
     });
+    votedOption.isVoteYes = !yesClicked;
+    vote(votedOption);
   };
 
   const ifNeedBeVoteHandler = (prevVote) => {
@@ -40,6 +50,8 @@ export default function VoteDateOption({ func, optInfo }) {
         return [parseInt(prevVote) + 1];
       }
     });
+    votedOption.isVoteIfNeedBe = !ifNeedBeClicked;
+    vote(votedOption);
   };
 
   const noVoteHandler = (prevVote) => {
@@ -52,21 +64,43 @@ export default function VoteDateOption({ func, optInfo }) {
         return [parseInt(prevVote) + 1];
       }
     });
+    votedOption.isVoteNo = !NoClicked;
+    vote(votedOption);
   };
+  let statusPart = (
+    <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-gray-100 rounded-full">
+      {optStatus}
+    </span>
+  );
+  if (optStatus === "Coming") {
+    statusPart = (
+      <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-green-100 rounded-full">
+        {optStatus}
+      </span>
+    );
+  }
 
-  const a = () => {
-    func(optInfo);
-  };
+  if (optStatus === "Not coming") {
+    statusPart = (
+      <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-red-100 rounded-full">
+        {optStatus}
+      </span>
+    );
+  }
+  if (optStatus === "If need be") {
+    statusPart = (
+      <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-yellow-100 rounded-full">
+        {optStatus}
+      </span>
+    );
+  }
+
   return (
     <ul role="list" className="col-span-1 px-2 md:p-4 ">
       <li className=" bg-white rounded-lg shadow divide-y divide-gray-200 mt-4">
         <div className="w-full flex items-center justify-between p-6 space-x-6">
           <div className="flex-1 truncate">
-            <div className="flex items-center space-x-3">
-              <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full">
-                {optInfo.id}
-              </span>
-            </div>
+            <div className="flex items-center space-x-3">{statusPart}</div>
             <p className="mt-1 text-gray-500 text-sm truncate">
               {optInfo.date}
             </p>
