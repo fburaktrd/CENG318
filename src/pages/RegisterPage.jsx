@@ -92,6 +92,10 @@ export default function SignUpPage() {
         );
         setRegistered(true);
         localStorage.setItem("uid", user.uid);
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({ email: email, userName: userName })
+        );
         authCtx.onLogin(user.uid);
       })
       .catch((error) => {

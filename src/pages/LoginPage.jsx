@@ -77,7 +77,7 @@ export default function SignInPage(props) {
           "userInfo",
           JSON.stringify({
             email: user.email,
-            userName: user.displayName,
+            userName: user.userName,
           })
         );
         authCtx.onLogin();
