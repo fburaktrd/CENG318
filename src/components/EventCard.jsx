@@ -17,7 +17,9 @@ const EventCard = (props) => {
   };
   return (
     <>
-    {isClicked && <DeleteModal eventId={props.event.id} setIsClicked={setIsClicked}/>}
+      {isClicked && (
+        <DeleteModal eventId={props.event.id} setIsClicked={setIsClicked} />
+      )}
       <div
         className="border"
         onMouseEnter={handleSetShowDelete}

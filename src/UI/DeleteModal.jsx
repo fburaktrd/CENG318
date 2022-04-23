@@ -1,20 +1,24 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationIcon, XIcon } from '@heroicons/react/outline'
-import { DatabaseHandler } from '../database/DatabaseHandler'
+import { Fragment, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { ExclamationIcon, XIcon } from "@heroicons/react/outline";
+import { DatabaseHandler } from "../database/DatabaseHandler";
 
 export default function DeleteModal(props) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(true);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const deleteHandler=() => {
-    DatabaseHandler.leaveEvent(props.eventId,userInfo.userName);
-    setOpen(false)
-    props.setIsClicked(false)
-}
+  const deleteHandler = () => {
+    DatabaseHandler.leaveEvent(props.eventId, userInfo.userName);
+    setOpen(false);
+    props.setIsClicked(false);
+  };
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="fixed z-10 inset-0 overflow-y-auto"
+        onClose={setOpen}
+      >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
@@ -29,7 +33,10 @@ export default function DeleteModal(props) {
           </Transition.Child>
 
           {/* This element is to trick the browser into centering the modal contents. */}
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+          <span
+            className="hidden sm:inline-block sm:align-middle sm:h-screen"
+            aria-hidden="true"
+          >
             &#8203;
           </span>
           <Transition.Child
@@ -46,8 +53,10 @@ export default function DeleteModal(props) {
                 <button
                   type="button"
                   className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white-500"
-                  onClick={() => {setOpen(false)
-                props.setIsClicked(false)}}
+                  onClick={() => {
+                    setOpen(false);
+                    props.setIsClicked(false);
+                  }}
                 >
                   <span className="sr-only">Close</span>
                   <XIcon className="h-6 w-6" aria-hidden="true" />
@@ -55,15 +64,22 @@ export default function DeleteModal(props) {
               </div>
               <div className="sm:flex sm:items-start">
                 <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                  <ExclamationIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
+                  <ExclamationIcon
+                    className="h-6 w-6 text-red-600"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg leading-6 font-medium text-gray-900"
+                  >
                     Delete/Leave Event
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Are you sure you want to delete this event ? This action cannot be undone.
+                      Are you sure you want to delete this event ? This action
+                      cannot be undone.
                     </p>
                   </div>
                 </div>
@@ -79,8 +95,10 @@ export default function DeleteModal(props) {
                 <button
                   type="button"
                   className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
-                  onClick={() => {setOpen(false)
-                props.setIsClicked(false)}}
+                  onClick={() => {
+                    setOpen(false);
+                    props.setIsClicked(false);
+                  }}
                 >
                   Cancel
                 </button>
@@ -90,5 +108,5 @@ export default function DeleteModal(props) {
         </div>
       </Dialog>
     </Transition.Root>
-  )
+  );
 }

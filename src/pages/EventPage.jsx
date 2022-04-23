@@ -27,15 +27,15 @@ const EventPage = (props) => {
   return (
     <div>
       <Navbar />
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg mr-96 ml-96 mt-10 mb-10">
+      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-4 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-black-900">
             {eventInfo.title}
           </h3>
         </div>
-        <div className="border-t border-gray-200 px-4 py-4 -mb-1">
+        <div className="border-t border-gray-200 sm:p-0 md:p-4 mb-2">
           <dl className="sm:divide-y sm:divide-gray-200">
-            <div className="py-2 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="py-2 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
               <dt className="text-sm flex mb-3 font-medium text-black-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@ const EventPage = (props) => {
                 {eventInfo.creatorName}
               </dd>
             </div>
-            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
               <dt className="text-sm flex font-medium text-black-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -81,10 +81,10 @@ const EventPage = (props) => {
                 Location
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                İzmir
+                {eventInfo.location}
               </dd>
             </div>
-            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
               <dt className="text-sm flex font-medium text-black-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -103,10 +103,10 @@ const EventPage = (props) => {
                 Description
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {eventInfo.descrip}
+                {eventInfo.description}
               </dd>
             </div>
-            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 px-2">
               <div className="flex mt-8">Availabilities</div>
               <div>
                 <span className="flex">
@@ -193,6 +193,21 @@ const EventPage = (props) => {
                 </div>
               </div>
             ))} */}
+          </dl>
+          <div className="relative">
+            <div
+              className="absolute inset-0 flex items-center"
+              aria-hidden="true"
+            >
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="px-3 bg-white text-lg font-medium text-gray-900">
+                Options
+              </span>
+            </div>
+          </div>
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
             {eventInfo.options.map((option) => (
               <VoteDateOption
                 key={option.id}
@@ -201,7 +216,7 @@ const EventPage = (props) => {
                 optStatus={status}
               />
             ))}
-          </dl>   
+          </div>
         </div>
       </div>
     </div>

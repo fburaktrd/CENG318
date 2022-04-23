@@ -42,7 +42,7 @@ const Navbar = () => {
     </button>,
   ];
   return (
-    <Disclosure as="nav" className="bg-white border">
+    <Disclosure as="nav" className="bg-white border-b">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
