@@ -32,15 +32,20 @@ const Navbar = () => {
   ];
 
   const authorized = [
+    <Link to="/createPoll">
+      <button className="inline-flex items-center px-3 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Create Poll
+      </button>
+    </Link>,
     <Link to="/">
-    <button
-      onClick={() => {
-        authCtx.onLogout();
-      }}
-      className="inline-flex items-center px-3 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-    >
-      Logout
-    </button>
+      <button
+        onClick={() => {
+          authCtx.onLogout();
+        }}
+        className="inline-flex items-center px-3 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Logout
+      </button>
     </Link>,
   ];
   return (
