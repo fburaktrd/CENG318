@@ -8,6 +8,41 @@ import {
 import ParticipantList from "./ParticipantList";
 
 export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Ncomings,ifNeed,userName}) {
+  const icons = {
+    coming: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="green"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    ),
+    not: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="red"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    ),
+    if: <QuestionMarkCircleIcon className="w-5 h-5 text-orange-400" />,
+  };
   // console.log(optInfo,"eventPage")
 
   //yesVote, noVote ve ifNeedBe databaseden gelmeli ve tekrar oraya kaydedilmeli.
@@ -147,42 +182,16 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
               {optInfo.startTime} - {optInfo.endTime}
             </p>
             <div className="flex items-center space-x-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="green"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>{" "}
+              {icons["coming"]}
               {comings.length}
             </div>
             <div className="flex items-center space-x-3">
               
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="red"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>{" "}
+            {icons["not"]}
               {Ncomings.length}
             </div>
             <div className="flex items-center space-x-3">
-              <QuestionMarkCircleIcon className="w-5 h-5 text-orange-400" />{" "}
+              {icons["if"]}
               {ifNeed.length}
             </div>
           </div>
