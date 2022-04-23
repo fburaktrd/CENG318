@@ -7,10 +7,11 @@ import {
 } from "@heroicons/react/solid";
 import ParticipantList from "./ParticipantList";
 
-export default function VoteDateOption({ optInfo}) {
+export default function VoteDateOption({ optInfo, handleSelectedDates}) {
   // console.log(optInfo,"eventPage")
 
   //yesVote, noVote ve ifNeedBe databaseden gelmeli ve tekrar oraya kaydedilmeli.
+
   const [status, setStatus] = useState("Pending");
   const VotedOptionsHandler = (votedOption) => {
     if (
@@ -27,6 +28,7 @@ export default function VoteDateOption({ optInfo}) {
       setStatus("If need be");
     }
   };
+  
   const [yesVote, setYesVote] = useState(0);
   const [yesClicked, setYesClicked] = useState(false);
 
@@ -57,6 +59,7 @@ export default function VoteDateOption({ optInfo}) {
     });
     votedOption.isVoteYes = !yesClicked;
     VotedOptionsHandler(votedOption);
+    handleSelectedDates(optInfo.id,"Coming");
   };
 
   const ifNeedBeVoteHandler = (prevVote) => {
@@ -73,6 +76,7 @@ export default function VoteDateOption({ optInfo}) {
     });
     votedOption.isVoteIfNeedBe = !ifNeedBeClicked;
     VotedOptionsHandler(votedOption);
+    handleSelectedDates(optInfo.id,"If need");
   };
 
   const noVoteHandler = (prevVote) => {
@@ -89,6 +93,7 @@ export default function VoteDateOption({ optInfo}) {
     });
     votedOption.isVoteNo = !NoClicked;
     VotedOptionsHandler(votedOption);
+    handleSelectedDates(optInfo.id,"Not");
   };
   let statusPart = (
     <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-gray-100 rounded-full">

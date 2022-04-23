@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import OptionsCard from "../components/OptionsCard";
 import VoteDateOption from "../components/VoteDateOptionCard";
 
 const EventPage = (props) => {
@@ -9,6 +8,16 @@ const EventPage = (props) => {
   const eventInfo = useLocation().state["event"];
   eventInfo.options.map((opt, index) => (opt["id"] = index));
   
+  let selectedDates = {}
+
+  const selectedDatesHandler = (optId,status) => {
+    selectedDates[optId] = status
+  }
+
+
+  const submitHandler = ()=>{
+    console.log(selectedDates)
+  }
   return (
     <div>
       <Navbar />
@@ -196,7 +205,7 @@ const EventPage = (props) => {
             {eventInfo.options.map((option) => (
               <VoteDateOption
                 key={option.id}
-               
+                handleSelectedDates= {selectedDatesHandler}
                 optInfo={option}
                 
               />
@@ -204,6 +213,7 @@ const EventPage = (props) => {
           </div>
         </div>
       </div>
+      <button onClick={submitHandler}>Submit</button>
     </div>
   );
 };
