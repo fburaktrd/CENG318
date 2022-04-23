@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import NavLogo from "../components/NavLogo.png";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import AuthContext from "../store/authContext";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
@@ -32,6 +32,7 @@ const Navbar = () => {
   ];
 
   const authorized = [
+    <Link to="/">
     <button
       onClick={() => {
         authCtx.onLogout();
@@ -39,7 +40,8 @@ const Navbar = () => {
       className="inline-flex items-center px-3 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     >
       Logout
-    </button>,
+    </button>
+    </Link>,
   ];
   return (
     <Disclosure as="nav" className="bg-white border-b">
