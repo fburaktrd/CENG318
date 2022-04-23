@@ -99,5 +99,49 @@ export class DatabaseHandler{
         });
     }
 
+    static async submitVote(eventId,userName,votes){
+        set(ref(this.database,'participantsOfEvent/'+ eventId + "/"+ userName), votes);
+    }
+
+    static async getVotes(eventId){
+       let votes =  (await get(child(ref(this.database),'participantsOfEvent/'+ eventId))).val();
+       let comings = {}
+       let Ncomings = {}
+       let ifNeed = {}
+       for(const user of Object.keys(votes)){
+        votes[user].forEach((opt,index)=> {
+            //console.log(opt,index);
+            switch(opt){
+                case "Coming":
+                    try{
+                        comings[index].push(user);
+                    }catch{
+                        comings[index]= [user];
+                    }
+                    
+                    break;
+                case "Not":
+                    try{
+                        Ncomings[index].push(user);
+                    }catch{
+                        Ncomings[index]= [user];
+                    }
+                    
+                    break;
+                case "If need":
+                    try{
+                        ifNeed[index].push(user);
+                    }catch{
+                        ifNeed[index]= [user];
+                    }
+            }
+        });
+        }
+       
+           
+             
+       
+       return {comings,Ncomings,ifNeed};
+    }
 
 }

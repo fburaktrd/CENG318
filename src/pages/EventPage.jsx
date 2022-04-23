@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import VoteDateOption from "../components/VoteDateOptionCard";
+import { DatabaseHandler } from "../database/DatabaseHandler";
 
 const EventPage = (props) => {
   //const { station } = useParams();
   const eventInfo = useLocation().state["event"];
   eventInfo.options.map((opt, index) => (opt["id"] = index));
-
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const [votes,setVotes] = useState({comings:[],Ncomings:[],ifNeed:[]})
   let selectedDates = {};
 
+  useEffect(async ()=>{
+    const result = await DatabaseHandler.getVotes(eventInfo.id);
+    setVotes(result);
+    // const {comings,Ncomings,ifNeed} = result;
+    // console.log(comings,Ncomings,ifNeed);
+  },[])
   const selectedDatesHandler = (optId, status) => {
     selectedDates[optId] = status;
   };
 
   const submitHandler = () => {
-    console.log(selectedDates);
+    DatabaseHandler.submitVote(eventInfo.id,userInfo.userName,selectedDates);
+    //modal çıkartılabilir.
+    
+    console.log(userInfo.userName,selectedDates);
   };
   return (
     <div>
@@ -205,6 +216,9 @@ const EventPage = (props) => {
           <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
             {eventInfo.options.map((option) => (
               <VoteDateOption
+                comings={votes["comings"][option.id]}
+                Ncomings={votes["Ncomings"][option.id]}
+                ifNeed={votes["ifNeed"][option.id]}
                 key={option.id}
                 handleSelectedDates={selectedDatesHandler}
                 optInfo={option}

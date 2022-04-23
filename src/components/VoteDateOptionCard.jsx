@@ -7,12 +7,23 @@ import {
 } from "@heroicons/react/solid";
 import ParticipantList from "./ParticipantList";
 
-export default function VoteDateOption({ optInfo, handleSelectedDates}) {
+export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Ncomings,ifNeed}) {
   // console.log(optInfo,"eventPage")
 
   //yesVote, noVote ve ifNeedBe databaseden gelmeli ve tekrar oraya kaydedilmeli.
-
+  
+  //if its undefined we have to initilize as an array.
+  if(comings === undefined){
+    comings =[]
+  }
+  if(Ncomings === undefined){
+    Ncomings =[]
+  }
+  if(ifNeed === undefined){
+    ifNeed = []
+  }
   const [status, setStatus] = useState("Pending");
+
   const VotedOptionsHandler = (votedOption) => {
     if (
       (votedOption.isVoteYes === false) &
@@ -150,7 +161,7 @@ export default function VoteDateOption({ optInfo, handleSelectedDates}) {
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>{" "}
-              {yesVote}
+              {comings.length}
             </div>
             <div className="flex items-center space-x-3">
               <button onClick={()=>{
@@ -171,17 +182,17 @@ export default function VoteDateOption({ optInfo, handleSelectedDates}) {
                 />
               </svg>{" "}
               </button>
-              {NoVote}
+              {Ncomings.length}
             </div>
             <div className="flex items-center space-x-3">
               <QuestionMarkCircleIcon className="w-5 h-5 text-orange-400" />{" "}
-              {ifNeedBe}
+              {ifNeed.length}
             </div>
           </div>
           
           
           <div className="flex-1">
-          <ParticipantList/>
+          <ParticipantList />
           </div>
         </div>
         <div>
