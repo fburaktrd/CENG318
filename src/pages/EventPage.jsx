@@ -8,22 +8,7 @@ const EventPage = (props) => {
   //const { station } = useParams();
   const eventInfo = useLocation().state["event"];
   eventInfo.options.map((opt, index) => (opt["id"] = index));
-  const [status, setStatus] = useState("Pending");
-  const VotedOptionsHandler = (votedOption) => {
-    if (
-      (votedOption.isVoteYes === false) &
-      (votedOption.isVoteNo === false) &
-      (votedOption.isVoteIfNeedBe === false)
-    ) {
-      setStatus("Pending");
-    } else if (votedOption.isVoteYes === true) {
-      setStatus("Coming");
-    } else if (votedOption.isVoteNo === true) {
-      setStatus("Not coming");
-    } else if (votedOption.isVoteIfNeedBe === true) {
-      setStatus("If need be");
-    }
-  };
+  
   return (
     <div>
       <Navbar />
@@ -211,9 +196,9 @@ const EventPage = (props) => {
             {eventInfo.options.map((option) => (
               <VoteDateOption
                 key={option.id}
-                vote={VotedOptionsHandler}
+               
                 optInfo={option}
-                optStatus={status}
+                
               />
             ))}
           </div>

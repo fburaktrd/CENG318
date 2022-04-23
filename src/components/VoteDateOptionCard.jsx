@@ -5,11 +5,28 @@ import {
   XIcon,
   QuestionMarkCircleIcon,
 } from "@heroicons/react/solid";
+import ParticipantList from "./ParticipantList";
 
-export default function VoteDateOption({ vote, optInfo, optStatus }) {
+export default function VoteDateOption({ optInfo}) {
   // console.log(optInfo,"eventPage")
 
   //yesVote, noVote ve ifNeedBe databaseden gelmeli ve tekrar oraya kaydedilmeli.
+  const [status, setStatus] = useState("Pending");
+  const VotedOptionsHandler = (votedOption) => {
+    if (
+      (votedOption.isVoteYes === false) &
+      (votedOption.isVoteNo === false) &
+      (votedOption.isVoteIfNeedBe === false)
+    ) {
+      setStatus("Pending");
+    } else if (votedOption.isVoteYes === true) {
+      setStatus("Coming");
+    } else if (votedOption.isVoteNo === true) {
+      setStatus("Not coming");
+    } else if (votedOption.isVoteIfNeedBe === true) {
+      setStatus("If need be");
+    }
+  };
   const [yesVote, setYesVote] = useState(0);
   const [yesClicked, setYesClicked] = useState(false);
 
@@ -27,6 +44,8 @@ export default function VoteDateOption({ vote, optInfo, optStatus }) {
   };
 
   const yesVoteHandler = (prevVote) => {
+    setNoClicked(false);
+    setIfNeedBeClicked(false);
     setYesVote((prevVote) => {
       if (yesClicked === true) {
         setYesClicked(false);
@@ -37,10 +56,12 @@ export default function VoteDateOption({ vote, optInfo, optStatus }) {
       }
     });
     votedOption.isVoteYes = !yesClicked;
-    vote(votedOption);
+    VotedOptionsHandler(votedOption);
   };
 
   const ifNeedBeVoteHandler = (prevVote) => {
+    setNoClicked(false);
+    setYesClicked(false);
     setIfNeedBe((prevVote) => {
       if (ifNeedBeClicked === true) {
         setIfNeedBeClicked(false);
@@ -51,10 +72,12 @@ export default function VoteDateOption({ vote, optInfo, optStatus }) {
       }
     });
     votedOption.isVoteIfNeedBe = !ifNeedBeClicked;
-    vote(votedOption);
+    VotedOptionsHandler(votedOption);
   };
 
   const noVoteHandler = (prevVote) => {
+    setYesClicked(false);
+    setIfNeedBeClicked(false);
     setNoVote((prevVote) => {
       if (NoClicked === true) {
         setNoClicked(false);
@@ -65,32 +88,32 @@ export default function VoteDateOption({ vote, optInfo, optStatus }) {
       }
     });
     votedOption.isVoteNo = !NoClicked;
-    vote(votedOption);
+    VotedOptionsHandler(votedOption);
   };
   let statusPart = (
     <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-gray-100 rounded-full">
-      {optStatus}
+      {status}
     </span>
   );
-  if (optStatus === "Coming") {
+  if (status === "Coming") {
     statusPart = (
       <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-green-100 rounded-full">
-        {optStatus}
+        {status}
       </span>
     );
   }
 
-  if (optStatus === "Not coming") {
+  if (status === "Not coming") {
     statusPart = (
       <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-red-100 rounded-full">
-        {optStatus}
+        {status}
       </span>
     );
   }
-  if (optStatus === "If need be") {
+  if (status === "If need be") {
     statusPart = (
       <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-yellow-100 rounded-full">
-        {optStatus}
+        {status}
       </span>
     );
   }
@@ -125,6 +148,9 @@ export default function VoteDateOption({ vote, optInfo, optStatus }) {
               {yesVote}
             </div>
             <div className="flex items-center space-x-3">
+              <button onClick={()=>{
+                console.log(NoVote);
+              }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5"
@@ -139,12 +165,18 @@ export default function VoteDateOption({ vote, optInfo, optStatus }) {
                   d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>{" "}
+              </button>
               {NoVote}
             </div>
             <div className="flex items-center space-x-3">
               <QuestionMarkCircleIcon className="w-5 h-5 text-orange-400" />{" "}
               {ifNeedBe}
             </div>
+          </div>
+          
+          
+          <div className="flex-1">
+          <ParticipantList/>
           </div>
         </div>
         <div>
@@ -160,7 +192,7 @@ export default function VoteDateOption({ vote, optInfo, optStatus }) {
               ) : (
                 <button
                   onClick={yesVoteHandler}
-                  disabled={NoClicked || ifNeedBeClicked}
+                  
                   className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border hover:text-gray-500"
                 >
                   <CheckIcon
@@ -181,7 +213,6 @@ export default function VoteDateOption({ vote, optInfo, optStatus }) {
               ) : (
                 <button
                   onClick={noVoteHandler}
-                  disabled={yesClicked || ifNeedBeClicked}
                   className="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-500 font-medium border hover:text-gray-500"
                 >
                   <XIcon
@@ -205,7 +236,6 @@ export default function VoteDateOption({ vote, optInfo, optStatus }) {
               ) : (
                 <button
                   onClick={ifNeedBeVoteHandler}
-                  disabled={NoClicked || yesClicked}
                   className="relative -mr-px w-0 flex-1 inline-flex justify-center py-4 text-sm text-gray-700 font-medium border "
                 >
                   <QuestionMarkCircleIcon
