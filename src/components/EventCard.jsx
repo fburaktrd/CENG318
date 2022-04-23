@@ -8,9 +8,9 @@ const EventCard = (props) => {
   const [showDelete, setShowDelete] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
-  const handleSetShowDelete = () => {
-    setShowDelete(!showDelete);
-  };
+  // const handleSetShowDelete = () => {
+  //   setShowDelete(!showDelete);
+  // };
 
   const clickHandler = () => {
     setIsClicked(true);
@@ -22,8 +22,8 @@ const EventCard = (props) => {
       )}
       <div
         className="border"
-        onMouseEnter={handleSetShowDelete}
-        onMouseLeave={handleSetShowDelete}
+        // onMouseEnter={handleSetShowDelete}
+        // onMouseLeave={handleSetShowDelete}
       >
         {showDelete && (
           <button className="flex items-center" onClick={clickHandler}>
@@ -33,10 +33,17 @@ const EventCard = (props) => {
             />
           </button>
         )}
-        <Link to={"/eventPage" + "/" + props.event.id} state={props}>
+        
           <button className="w-full flex items-center justify-between mt-2">
             <div className="w-full flex items-center justify-between p-6 space-x-6">
+            <button className="flex items-center" onClick={clickHandler}>
+            <XIcon
+              className="w-7 h-7 text-gray-400 hover:text-red-500"
+              aria-hidden="true"
+            />
+          </button>
               <div className="flex-1 truncate">
+              <Link to={"/eventPage" + "/" + props.event.id} state={props}>
                 <div className="flex flex-col items-center space-x-3">
                   <h3 className="text-gray-900 text-sm font-medium truncate">
                     {props.event.title}
@@ -76,10 +83,11 @@ const EventCard = (props) => {
                     {props.event.options.length}
                   </h3>
                 </div>
+              </Link>
               </div>
             </div>
           </button>
-        </Link>
+        
       </div>
     </>
   );
