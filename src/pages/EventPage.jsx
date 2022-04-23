@@ -28,7 +28,7 @@ const EventPage = (props) => {
   const submitHandler = () => {
     DatabaseHandler.submitVote(eventInfo.id,userInfo.userName,selectedDates);
     //modal çıkartılabilir.
-    
+    window.location.reload();
     console.log(userInfo.userName,selectedDates);
   };
   return (
