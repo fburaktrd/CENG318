@@ -125,7 +125,21 @@ export default function SignUpPage() {
             onSubmit={handleSubmit}
           >
             <div className="rounded-md shadow-sm -space-y-px">
-              <div>
+              <div className="flex">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
                 <label className="sr-only">Username</label>
                 <input
                   type="text"
@@ -139,7 +153,21 @@ export default function SignUpPage() {
                 />
               </div>
               {error.userName && <span className="err">{error.userName}</span>}
-              <div>
+              <div className="flex">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                  />
+                </svg>
                 <label className="sr-only">Email address</label>
                 <input
                   type="email"
@@ -151,7 +179,21 @@ export default function SignUpPage() {
                   placeholder="Email address"
                 />
               </div>
-              <div>
+              <div className="flex">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+                  />
+                </svg>
                 <label className="sr-only">Password</label>
                 <input
                   type="password"
@@ -164,8 +206,23 @@ export default function SignUpPage() {
                   placeholder="Password"
                 />
               </div>
-              <div>
+              <div className="flex">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+                  />
+                </svg>
                 <label className="sr-only">Password</label>
+
                 <input
                   type="password"
                   name="confirm_password"
@@ -177,7 +234,21 @@ export default function SignUpPage() {
                   placeholder="Password Again"
                 />
               </div>
-              <div>
+              <div className="flex">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"
+                  />
+                </svg>
                 <label className="sr-only">Date of Birth</label>
                 <input
                   type="date"
@@ -189,7 +260,23 @@ export default function SignUpPage() {
                   placeholder="Date of birth"
                 />
               </div>
-              <div>
+              <div className="flex">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                  />
+                </svg>
                 <label className="sr-only">Majority</label>
                 <input
                   type="text"
@@ -217,7 +304,12 @@ export default function SignUpPage() {
           </form>
           <footer></footer>
           {registered && (
-            <Modal route="/" routePageMessage={"Go to Home Page !"} title={`Welcome ${inputs.userName}!`} message={"You have registered Successfully !"}/>
+            <Modal
+              route="/"
+              routePageMessage={"Go to Home Page !"}
+              title={`Welcome ${inputs.userName}!`}
+              message={"You have registered Successfully !"}
+            />
           )}
           {error.isError && (
             <Alert
