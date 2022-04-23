@@ -92,5 +92,12 @@ export class DatabaseHandler{
         return events_info;
     }
 
+    static async leaveEvent(eventId,username){
+        set(ref(this.database,'participantsOfEvent/'+ eventId + "/"+ username),{
+        });
+        set(ref(this.database,'userEvents/'+ username + "/"+ eventId),{
+        });
+    }
+
 
 }
