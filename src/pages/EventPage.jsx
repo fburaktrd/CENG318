@@ -7,17 +7,16 @@ const EventPage = (props) => {
   //const { station } = useParams();
   const eventInfo = useLocation().state["event"];
   eventInfo.options.map((opt, index) => (opt["id"] = index));
-  
-  let selectedDates = {}
 
-  const selectedDatesHandler = (optId,status) => {
-    selectedDates[optId] = status
-  }
+  let selectedDates = {};
 
+  const selectedDatesHandler = (optId, status) => {
+    selectedDates[optId] = status;
+  };
 
-  const submitHandler = ()=>{
-    console.log(selectedDates)
-  }
+  const submitHandler = () => {
+    console.log(selectedDates);
+  };
   return (
     <div>
       <Navbar />
@@ -188,6 +187,7 @@ const EventPage = (props) => {
               </div>
             ))} */}
           </dl>
+
           <div className="relative">
             <div
               className="absolute inset-0 flex items-center"
@@ -201,19 +201,26 @@ const EventPage = (props) => {
               </span>
             </div>
           </div>
+
           <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
             {eventInfo.options.map((option) => (
               <VoteDateOption
                 key={option.id}
-                handleSelectedDates= {selectedDatesHandler}
+                handleSelectedDates={selectedDatesHandler}
                 optInfo={option}
-                
               />
             ))}
           </div>
+          <div className="flex justify-center">
+            <button
+              onClick={submitHandler}
+              className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-700 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2"
+            >
+              Submit
+            </button>
+          </div>
         </div>
       </div>
-      <button onClick={submitHandler}>Submit</button>
     </div>
   );
 };
