@@ -7,22 +7,23 @@ import VoteDateOption from "../components/VoteDateOptionCard";
 const EventPage = (props) => {
   //const { station } = useParams();
   const eventInfo = useLocation().state["event"];
-  eventInfo.options.map((opt,index)=> opt["id"] = index)
-  const [status, setStatus ] = useState('Pending');
-  const VotedOptionsHandler = (votedOption)=> {
-    if(votedOption.isVoteYes === false & votedOption.isVoteNo === false & votedOption.isVoteIfNeedBe === false) {
+  eventInfo.options.map((opt, index) => (opt["id"] = index));
+  const [status, setStatus] = useState("Pending");
+  const VotedOptionsHandler = (votedOption) => {
+    if (
+      (votedOption.isVoteYes === false) &
+      (votedOption.isVoteNo === false) &
+      (votedOption.isVoteIfNeedBe === false)
+    ) {
       setStatus("Pending");
-    }
-    else if (votedOption.isVoteYes === true) {
+    } else if (votedOption.isVoteYes === true) {
       setStatus("Coming");
-    }
-    else if(votedOption.isVoteNo === true) {
+    } else if (votedOption.isVoteNo === true) {
       setStatus("Not coming");
-    }
-    else if (votedOption.isVoteIfNeedBe === true) {
+    } else if (votedOption.isVoteIfNeedBe === true) {
       setStatus("If need be");
     }
-  }
+  };
   return (
     <div>
       <Navbar />
@@ -192,10 +193,15 @@ const EventPage = (props) => {
                 </div>
               </div>
             ))} */}
-          {eventInfo.options.map((option)=> <VoteDateOption key={option.id} vote={VotedOptionsHandler} optInfo={option} optStatus = {status}/>)}
-          
-          </dl>
-          
+            {eventInfo.options.map((option) => (
+              <VoteDateOption
+                key={option.id}
+                vote={VotedOptionsHandler}
+                optInfo={option}
+                optStatus={status}
+              />
+            ))}
+          </dl>   
         </div>
       </div>
     </div>
