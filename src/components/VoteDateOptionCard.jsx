@@ -22,7 +22,7 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
   if(ifNeed === undefined){
     ifNeed = []
   }
-  const [status, setStatus] = useState("Pending");
+  const [status, setStatus] = useState((comings.includes(userName) ? "Coming" : (Ncomings.includes(userName) ? "Not coming" : (ifNeed.includes(userName) ? "If need be" : "Pending"))));
 
   const VotedOptionsHandler = (votedOption) => {
     if (
