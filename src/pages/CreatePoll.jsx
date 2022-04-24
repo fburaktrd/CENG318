@@ -118,7 +118,6 @@ const CreatePoll = () => {
 
   return (
     <div>
-      <Navbar />
 
       <form
         className="sm:w-full md:w-1/2  md:mx-auto space-y-8 divide-y divide-gray-200 sm:space-y-5 divide-gray-200 mr-20 ml-20 mb-2"

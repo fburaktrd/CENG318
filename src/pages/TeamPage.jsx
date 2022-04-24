@@ -44,7 +44,6 @@ const people = [
 export default function TeamPage() {
   return (
     <div>
-      <Navbar />
       <div className="bg-white">
         <div className="max-w-7xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-3">
           <div className="space-y-8">

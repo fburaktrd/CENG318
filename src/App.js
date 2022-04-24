@@ -9,12 +9,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import EventPage from "./pages/EventPage";
 import AuthContext from "./store/authContext";
 import CreatePoll from "./pages/CreatePoll";
+import Navbar from "./components/Navbar";
 
 export default function App() {
   const authCtx = useContext(AuthContext);
-
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   return (
     <BrowserRouter>
+      <Navbar user={`${userInfo.userName}`} />
       <Routes>
         <Route
           path="/"
