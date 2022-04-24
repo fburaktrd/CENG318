@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/Navbar";
 import AuthContext from "../store/authContext";
 import { Notification } from "../UI/Notification";
 import EventCard from "../components/EventCard";
@@ -90,7 +89,6 @@ const HomePage = (props) => {
         </div>
       ) : (
         <main>
-          <Navbar />
           <div className="relative mt-16">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
               <div className="relative shadow-xl sm:rounded-2xl sm:overflow-hidden">

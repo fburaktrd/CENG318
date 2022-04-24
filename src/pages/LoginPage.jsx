@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import logo from "../components/Logo.png";
-import Navbar from "../components/Navbar";
 import {
   signInWithPopup,
   signInWithEmailAndPassword,

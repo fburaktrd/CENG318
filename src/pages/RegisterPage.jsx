@@ -5,7 +5,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import logo from "../components/Logo.png";
 import "../App.css";
 import Alert from "../UI/Alert";
-import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { DatabaseHandler } from "../database/DatabaseHandler";
 import AuthContext from "../store/authContext";
