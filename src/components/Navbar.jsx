@@ -9,7 +9,10 @@ import { Menu, Transition } from "@headlessui/react";
 
 const Navbar = (props) => {
   const authCtx = useContext(AuthContext);
-
+  let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  if(userInfo === undefined || userInfo === null){
+    userInfo ={userName:"null",email:"null"}
+  }
   const navigation = [
     { name: "Home", to: "/", current: true },
     { name: "Team", to: "/teamPage", current: false },
@@ -33,12 +36,6 @@ const Navbar = (props) => {
       </Link>
     </div>,
   ];
-  let userInfo;
-  try{
-    userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  }catch{
-    userInfo ={userName:"null",email:"null"}
-  }
 
   const authorized = [
     <Link to="/createPoll">

@@ -15,6 +15,10 @@ const EventCard = (props) => {
   const clickHandler = () => {
     setIsClicked(true);
   };
+
+  if(props.event.options === undefined){
+    props.event.options = []
+  }
   return (
     <>
       {isClicked && (
