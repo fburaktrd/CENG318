@@ -100,7 +100,12 @@ export class DatabaseHandler{
     }
 
     static async submitVote(eventId,userName,votes){
-        set(ref(this.database,'participantsOfEvent/'+ eventId + "/"+ userName), votes);
+        for( const date of Object.keys(votes)){
+            //console.log(`id : ${date} -> vote : ${votes[date]}`)
+            set(ref(this.database,'participantsOfEvent/'+ eventId + "/"+ userName + "/" + date), votes[date]);
+        }
+        
+        
     }
 
     static async getVotes(eventId){
