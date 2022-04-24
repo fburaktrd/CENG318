@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
 import AuthContext from "../store/authContext";
 import { Notification } from "../UI/Notification";
 import EventCard from "../components/EventCard";
@@ -8,6 +9,9 @@ import Banner from "../UI/Banner";
 
 const HomePage = (props) => {
   // too many renders!
+  const onClickHandler = () => {
+    <Link to="/eventPage"> </Link>;
+  };
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -20,10 +24,18 @@ const HomePage = (props) => {
       event.then((res) => setEvents((prev) => [...prev, res]))
     );
     setLoading(false);
+    if(!(await result) == 0) {
+      setLoading(false);
+    }
   }, []);
+
+  
+ 
 
   return (
     <>
+      <Navbar />
+
       {props.showGreetingMessage && userInfo !== null && (
         <Notification
           status="Succ"
@@ -62,7 +74,7 @@ const HomePage = (props) => {
                 </div>
                 <div className="relative flex justify-center mb-4">
                   <span className="px-3 bg-white text-lg font-medium text-gray-900">
-                    Your Events
+                    Events and Meetings
                   </span>
                 </div>
               </div>
@@ -74,14 +86,17 @@ const HomePage = (props) => {
                   role="list"
                   className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 container"
                 >
-                  {events.map((event, index) => (
-                    <li
-                      key={index}
-                      className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 cursor-pointer"
-                    >
-                      <EventCard event={event} />
-                    </li>
-                  ))}
+
+                 {events.length ? events.map((event, index) => (
+      <li
+        key={index}
+        className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 cursor-pointer"
+      >
+        <EventCard event={event} />
+
+      </li>
+    )) : <p>You have no event yet.</p>} 
+                 
                 </ul>
               )}
             </main>
