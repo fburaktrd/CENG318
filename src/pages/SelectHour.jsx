@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import TimeKeeper from "react-timekeeper";
 
-function SelectHour({ name, timeHandler, keyy }) {
+function SelectHour({ name, keyy }) {
   const date = new Date();
-  const [time, setTime] = useState("12:30");
+  const minutes = (date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes())
+  const [time, setTime] = useState(`${date.getHours()}:${minutes}`);
   const [showTime, setShowTime] = useState(false);
 
   const timeFunction = () => {
     setShowTime(false);
     let selected = {};
     selected[keyy] = time;
-    timeHandler(selected);
+    localStorage.setItem(keyy,time);
   };
 
   return (
-    <div>
+    <div >
       {showTime && (
         <TimeKeeper
           time={time}
-          onChange={(newTime) => setTime(newTime.formatted12)}
+          onChange={(newTime) => setTime(newTime.formatted24)}
+          hour24Mode={true}
           onDoneClick={timeFunction}
           switchToMinuteOnHourSelect
         />

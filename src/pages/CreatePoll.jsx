@@ -35,18 +35,16 @@ const CreatePoll = () => {
   };
 
   const addOptionHandler = () => {
-    let newOpt = { date: enteredStartDate, ...currentOpt };
+    const sTime = localStorage.getItem("startTime")
+    const eTime = localStorage.getItem("endTime")
+    let newOpt = { date: enteredStartDate, startTime: sTime, endTime: eTime };
     setOptions((values) => [...values, newOpt]);
+    
     if (counter === 0) {
       setIsOptionEmpty(false);
       counter++;
     }
     console.log(options);
-  };
-  let currentOpt = {};
-  const timeHandler = (selectedHour) => {
-    currentOpt = { ...currentOpt, ...selectedHour };
-    console.log(currentOpt);
   };
 
   const [cb1, setCB1] = useState(false);
@@ -233,7 +231,6 @@ const CreatePoll = () => {
               </label>
               <SelectHour
                 name="Start Time"
-                timeHandler={timeHandler}
                 keyy={"startTime"}
               />
             </div>
@@ -243,7 +240,6 @@ const CreatePoll = () => {
               </label>
               <SelectHour
                 name="Finish Time"
-                timeHandler={timeHandler}
                 keyy={"endTime"}
               />
             </div>
