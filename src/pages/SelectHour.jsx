@@ -24,6 +24,7 @@ function SelectHour({ name, keyy }) {
           time={time}
           onChange={(newTime) => setTime(newTime.formatted24)}
           hour24Mode={true}
+          closeOnMinuteSelect={true}
           onDoneClick={timeFunction}
           switchToMinuteOnHourSelect
         />
