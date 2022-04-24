@@ -9,10 +9,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import EventPage from "./pages/EventPage";
 import AuthContext from "./store/authContext";
 import CreatePoll from "./pages/CreatePoll";
-import { auth } from "./database/firebase-config";
-import SelectHour from "./pages/SelectHour";
+
 export default function App() {
   const authCtx = useContext(AuthContext);
+
   return (
     <BrowserRouter>
       <Routes>

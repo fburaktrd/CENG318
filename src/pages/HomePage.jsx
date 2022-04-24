@@ -9,9 +9,6 @@ import Banner from "../UI/Banner";
 
 const HomePage = (props) => {
   // too many renders!
-  const onClickHandler = () => {
-    <Link to="/eventPage"> </Link>;
-  };
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -28,8 +25,6 @@ const HomePage = (props) => {
 
   return (
     <>
-      <Navbar />
-
       {props.showGreetingMessage && userInfo !== null && (
         <Notification
           status="Succ"
@@ -41,6 +36,7 @@ const HomePage = (props) => {
 
       {props.isLogged ? (
         <div>
+          <Navbar user={`${userInfo.userName}`} />
           <div className="py-10">
             <header>
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -95,6 +91,7 @@ const HomePage = (props) => {
         </div>
       ) : (
         <main>
+          <Navbar />
           <div className="relative mt-16">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
               <div className="relative shadow-xl sm:rounded-2xl sm:overflow-hidden">
