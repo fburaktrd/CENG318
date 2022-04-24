@@ -39,15 +39,16 @@ const CreatePoll = () => {
   const addOptionHandler = () => {
     const sTime = localStorage.getItem("startTime")
     const eTime = localStorage.getItem("endTime")
-    let newOpt = { date: enteredStartDate, startTime: sTime, endTime: eTime };
+    if((sTime === undefined || eTime === undefined) || enteredStartDate===undefined){
+      setIsOptionEmptyError(true);
+    }else{
+      let newOpt = { date: enteredStartDate, startTime: sTime, endTime: eTime };
     setOptions((values) => [...values, newOpt]);
     
-    if (counter === 0) {
-      setIsOptionEmpty(false);
-      counter++;
-    }
+    setIsOptionEmpty(false);
     setIsOptionEmptyError(false);
     console.log(options);
+    }
   };
 
   const [cb1, setCB1] = useState(false);
@@ -227,7 +228,6 @@ const CreatePoll = () => {
                 name="startDate"
                 value={enteredStartDate}
                 onChange={startDateChangeHandler}
-                required
                 className=" focus:ring-indigo-500 border focus:border-indigo-500 w-2/3 block h-8  rounded-md sm:text-sm border-gray-300"
                 placeholder="startDate"
               />
