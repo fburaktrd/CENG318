@@ -4,6 +4,7 @@ import SelectHour from "./SelectHour";
 import DateOptionCard from "../components/DateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
 import Notify from "../UI/Modal";
+import Alert from "../UI/Alert";
 
 const CreatePoll = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -11,6 +12,7 @@ const CreatePoll = () => {
   const navigate = useNavigate();
   const [options, setOptions] = useState([]);
   const [isOptionEmpty, setIsOptionEmpty] = useState(true);
+  const [isOptionEmptyError, setIsOptionEmptyError] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
   let counter = 0; // might think different way later...
@@ -44,6 +46,7 @@ const CreatePoll = () => {
       setIsOptionEmpty(false);
       counter++;
     }
+    setIsOptionEmptyError(false);
     console.log(options);
   };
 
@@ -96,21 +99,25 @@ const CreatePoll = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let poll = {
-      creatorName: userInfo.userName,
-      title: enteredTitle,
-      description: enteredDescription,
-      location: enteredLocation,
-      checkBox1: cb1,
-      isOpen: true,
-      limit: enteredLimit,
-      hideParticipants: cb3,
-      participants: enteredParticipants,
-      options: options,
-    };
-    console.log(poll);
-    DatabaseHandler.createEvent(poll);
-    setShowMessage(true);
+    if(isOptionEmpty){
+      setIsOptionEmptyError(true)
+    }else{
+      let poll = {
+        creatorName: userInfo.userName,
+        title: enteredTitle,
+        description: enteredDescription,
+        location: enteredLocation,
+        checkBox1: cb1,
+        isOpen: true,
+        limit: enteredLimit,
+        hideParticipants: cb3,
+        participants: enteredParticipants,
+        options: options,
+      };
+      console.log(poll);
+      DatabaseHandler.createEvent(poll);
+      setShowMessage(true);
+    }
   };
 
   return (
@@ -256,6 +263,7 @@ const CreatePoll = () => {
           </div>
         </div>
         {!isOptionEmpty && <DateOptionCard options={options} />}
+        {isOptionEmptyError && <Alert title="You forgot to add your date options !" messages={["You need to add at least one date option"]}/>}
         <div className="pt-8">
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">

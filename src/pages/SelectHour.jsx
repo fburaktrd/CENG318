@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TimeKeeper from "react-timekeeper";
 
 function SelectHour({ name, keyy }) {
@@ -7,6 +7,9 @@ function SelectHour({ name, keyy }) {
   const [time, setTime] = useState(`${date.getHours()}:${minutes}`);
   const [showTime, setShowTime] = useState(false);
 
+  useEffect(()=>{
+    localStorage.setItem(keyy,time);
+  },[]);
   const timeFunction = () => {
     setShowTime(false);
     let selected = {};
