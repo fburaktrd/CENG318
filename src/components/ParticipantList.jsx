@@ -85,35 +85,51 @@ export default function ParticipantList({ comings, Ncomings, ifNeed }) {
         >
           <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1">
-              {selected !== "Not" && <Menu.Item
-                onClick={() => {
-                  setSelected("Not");
-                }}
-              >
-                <div className="flex items-center space-x-3 text-gray-900">{icons["not"]}Not Coming List</div>
-              </Menu.Item>}
-              { selected !== "If" && <Menu.Item
-                onClick={() => {
-                  setSelected("If");
-                }}
-              >
-                <div className="flex items-center space-x-3 text-gray-900">{icons["if"]}If need be List</div>
-              </Menu.Item>}
-             {selected !=="Coming" && <Menu.Item onClick={()=>{setSelected("Coming")}}>
-              <div className="flex items-center space-x-3 text-gray-900">{icons["coming"]}Coming List</div>
-              </Menu.Item>}
+              {selected !== "Not" && (
+                <Menu.Item
+                  onClick={() => {
+                    setSelected("Not");
+                  }}
+                >
+                  <div className="flex items-center space-x-3 text-gray-900">
+                    {icons["not"]}Not Coming List
+                  </div>
+                </Menu.Item>
+              )}
+              {selected !== "If" && (
+                <Menu.Item
+                  onClick={() => {
+                    setSelected("If");
+                  }}
+                >
+                  <div className="flex items-center space-x-3 text-gray-900">
+                    {icons["if"]}If need be List
+                  </div>
+                </Menu.Item>
+              )}
+              {selected !== "Coming" && (
+                <Menu.Item
+                  onClick={() => {
+                    setSelected("Coming");
+                  }}
+                >
+                  <div className="flex items-center space-x-3 text-gray-900">
+                    {icons["coming"]}Coming List
+                  </div>
+                </Menu.Item>
+              )}
             </div>
           </Menu.Items>
         </Transition>
+        <ul className="border border-transparent rounded-md">
+          {selected === "Coming" &&
+            comings.map((user, index) => <li key={index}>{user}</li>)}
+          {selected === "Not" &&
+            Ncomings.map((user, index) => <li key={index}>{user}</li>)}
+          {selected === "If" &&
+            ifNeed.map((user, index) => <li key={index}>{user}</li>)}
+        </ul>
       </Menu>
-      <ul>
-        {selected === "Coming" &&
-          comings.map((user, index) => <li key={index}>{user}</li>)}
-        {selected === "Not" &&
-          Ncomings.map((user, index) => <li key={index}>{user}</li>)}
-        {selected === "If" &&
-          ifNeed.map((user, index) => <li key={index}>{user}</li>)}
-      </ul>
     </div>
   );
 }
