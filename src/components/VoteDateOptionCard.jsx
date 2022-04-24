@@ -94,35 +94,42 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
   const yesVoteHandler = (prevVote) => {
     setNoClicked(false);
     setIfNeedBeClicked(false);
+    setYesClicked(true);
     setYesVote((prevVote) => {
       if (yesClicked === true) {
         setYesClicked(false);
         return [parseInt(prevVote) - 1];
       } else {
-        setYesClicked(true);
         return [parseInt(prevVote) + 1];
       }
     });
     votedOption.isVoteYes = !yesClicked;
+    votedOption.isVoteNo = false;
+    votedOption.isVoteIfNeedBe = false;
     VotedOptionsHandler(votedOption);
     handleSelectedDates(optInfo.id,"Coming");
+    console.log(ifNeedBeClicked, NoClicked, yesClicked);
   };
 
   const ifNeedBeVoteHandler = (prevVote) => {
     setNoClicked(false);
     setYesClicked(false);
+    setIfNeedBeClicked(true);
     setIfNeedBe((prevVote) => {
       if (ifNeedBeClicked === true) {
         setIfNeedBeClicked(false);
         return [parseInt(prevVote) - 1];
       } else {
-        setIfNeedBeClicked(true);
         return [parseInt(prevVote) + 1];
       }
     });
     votedOption.isVoteIfNeedBe = !ifNeedBeClicked;
+    votedOption.isVoteNo = false;
+    votedOption.isVoteYes = false;
     VotedOptionsHandler(votedOption);
     handleSelectedDates(optInfo.id,"If need");
+    console.log(ifNeedBeClicked, NoClicked, yesClicked);
+
   };
 
   const noVoteHandler = (prevVote) => {
@@ -138,8 +145,12 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
       }
     });
     votedOption.isVoteNo = !NoClicked;
+    votedOption.isVoteYes = false;
+    votedOption.isVoteIfNeedBe = false;
     VotedOptionsHandler(votedOption);
     handleSelectedDates(optInfo.id,"Not");
+    console.log(ifNeedBeClicked, NoClicked, yesClicked);
+
   };
   let statusPart = (
     <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-gray-100 rounded-full">
