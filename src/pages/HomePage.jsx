@@ -24,18 +24,10 @@ const HomePage = (props) => {
       event.then((res) => setEvents((prev) => [...prev, res]))
     );
     setLoading(false);
-    if(!(await result) == 0) {
-      setLoading(false);
-    }
   }, []);
-
-  
- 
 
   return (
     <>
-      <Navbar />
-
       {props.showGreetingMessage && userInfo !== null && (
         <Notification
           status="Succ"
@@ -74,7 +66,7 @@ const HomePage = (props) => {
                 </div>
                 <div className="relative flex justify-center mb-4">
                   <span className="px-3 bg-white text-lg font-medium text-gray-900">
-                    Events and Meetings
+                    Your Events
                   </span>
                 </div>
               </div>
@@ -86,17 +78,18 @@ const HomePage = (props) => {
                   role="list"
                   className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 container"
                 >
-
-                 {events.length ? events.map((event, index) => (
-      <li
-        key={index}
-        className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 cursor-pointer"
-      >
-        <EventCard event={event} />
-
-      </li>
-    )) : <p>You have no event yet.</p>} 
-                 
+                  {events.length ? (
+                    events.map((event, index) => (
+                      <li
+                        key={index}
+                        className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200 cursor-pointer"
+                      >
+                        <EventCard event={event} />
+                      </li>
+                    ))
+                  ) : (
+                    <p>You have no event yet.</p>
+                  )}
                 </ul>
               )}
             </main>
