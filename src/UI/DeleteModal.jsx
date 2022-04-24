@@ -10,6 +10,7 @@ export default function DeleteModal(props) {
   const deleteHandler = () => {
     DatabaseHandler.leaveEvent(props.eventId, userInfo.userName);
     setOpen(false);
+    window.location.reload();
     props.setIsClicked(false);
   };
   return (
