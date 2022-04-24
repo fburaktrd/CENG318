@@ -33,6 +33,12 @@ const Navbar = (props) => {
       </Link>
     </div>,
   ];
+  let userInfo;
+  try{
+    userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  }catch{
+    userInfo ={userName:"null",email:"null"}
+  }
 
   const authorized = [
     <Link to="/createPoll">
@@ -68,7 +74,7 @@ const Navbar = (props) => {
                   " hover:bg-gray-200 block px-4 py-2 text-sm text-gray-700"
                 }
               >
-                {props.user}
+                {userInfo.userName}
               </div>
             </Menu.Item>
             <Menu.Item>

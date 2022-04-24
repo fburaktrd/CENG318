@@ -13,10 +13,10 @@ import Navbar from "./components/Navbar";
 
 export default function App() {
   const authCtx = useContext(AuthContext);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  
   return (
     <BrowserRouter>
-      <Navbar user={`${userInfo.userName}`} />
+      <Navbar/>
       <Routes>
         <Route
           path="/"
