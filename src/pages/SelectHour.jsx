@@ -10,10 +10,13 @@ function SelectHour({ name, keyy }) {
   useEffect(()=>{
     localStorage.setItem(keyy,time);
   },[]);
+
+  const onChangeHandler= (newTime)=>{
+    setTime(newTime.formatted24)
+    localStorage.setItem(keyy,newTime.formatted24);
+  }
   const timeFunction = () => {
     setShowTime(false);
-    let selected = {};
-    selected[keyy] = time;
     localStorage.setItem(keyy,time);
   };
 
@@ -22,7 +25,7 @@ function SelectHour({ name, keyy }) {
       {showTime && (
         <TimeKeeper
           time={time}
-          onChange={(newTime) => setTime(newTime.formatted24)}
+          onChange={onChangeHandler}
           hour24Mode={true}
           closeOnMinuteSelect={true}
           onDoneClick={timeFunction}
