@@ -62,7 +62,7 @@ const HomePage = (props) => {
                 </div>
                 <div className="relative flex justify-center mb-4">
                   <span className="px-3 bg-white text-lg font-medium text-gray-900">
-                    Events and Meetings
+                    Your Events
                   </span>
                 </div>
               </div>

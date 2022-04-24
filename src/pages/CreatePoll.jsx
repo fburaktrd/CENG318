@@ -273,7 +273,7 @@ const CreatePoll = () => {
               Set your event options.
             </p>
           </div>
-          <div>
+          {/* <div>
             <fieldset>
               <div className="mt-4 space-y-4">
                 <div className="relative flex items-start">
@@ -350,7 +350,7 @@ const CreatePoll = () => {
                 </div>
               </div>
             </fieldset>
-          </div>
+          </div> */}
         </div>
 
         <div className="pt-2">
