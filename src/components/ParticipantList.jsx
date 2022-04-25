@@ -5,7 +5,7 @@ import {
   QuestionMarkCircleIcon,
 } from "@heroicons/react/solid";
 
-export default function ParticipantList({ comings, Ncomings, ifNeed }) {
+export default function ParticipantList({userName, comings, Ncomings, ifNeed }) {
   const icons = {
     coming: (
       <svg
@@ -42,7 +42,7 @@ export default function ParticipantList({ comings, Ncomings, ifNeed }) {
     if: <QuestionMarkCircleIcon className="w-5 h-5 text-orange-400" />,
   };
 
-  const [selected, setSelected] = useState("Coming");
+  const [selected, setSelected] = useState((comings.includes(userName) ? "Coming" : (Ncomings.includes(userName) ? "Not" : (ifNeed.includes(userName) ? "If" : "Coming"))));
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left">

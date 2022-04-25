@@ -209,7 +209,7 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
           
           
           <div className="flex-1">
-          <ParticipantList comings={comings} Ncomings={Ncomings} ifNeed={ifNeed} />
+          <ParticipantList userName={userName} comings={comings} Ncomings={Ncomings} ifNeed={ifNeed} />
           </div>
         </div>
         <div>
