@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AuthContext from "../store/authContext";
 import { Notification } from "../UI/Notification";
 import EventCard from "../components/EventCard";
 import { Link } from "react-router-dom";
@@ -42,7 +43,7 @@ const HomePage = (props) => {
         <Notification
           status="Succ"
           title={`Welcome ${userInfo.userName} !`}
-          message="Deneme"
+          message="It's good to see you 👋"
           disappearEvents={[true, props.setShowGreetingMessage]}
         />
       )}
