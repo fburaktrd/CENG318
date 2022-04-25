@@ -76,8 +76,15 @@ export default function SignInPage(props) {
           "userInfo",
           JSON.stringify({
             email: user.email,
-            userName: user.userName,
+            userName: user.displayName,
           })
+        );
+        DatabaseHandler.registerUserData(
+          user.uid,
+          user.displayName,
+          user.email,
+          "null",
+          "null"
         );
         authCtx.onLogin();
         navigate("/");
