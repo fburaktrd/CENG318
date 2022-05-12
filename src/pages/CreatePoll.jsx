@@ -37,17 +37,21 @@ const CreatePoll = () => {
   };
 
   const addOptionHandler = () => {
-    const sTime = localStorage.getItem("startTime")
-    const eTime = localStorage.getItem("endTime")
-    if((sTime === undefined || eTime === undefined) || enteredStartDate===undefined){
+    const sTime = localStorage.getItem("startTime");
+    const eTime = localStorage.getItem("endTime");
+    if (
+      sTime === undefined ||
+      eTime === undefined ||
+      enteredStartDate === undefined
+    ) {
       setIsOptionEmptyError(true);
-    }else{
+    } else {
       let newOpt = { date: enteredStartDate, startTime: sTime, endTime: eTime };
-    setOptions((values) => [...values, newOpt]);
-    
-    setIsOptionEmpty(false);
-    setIsOptionEmptyError(false);
-    console.log(options);
+      setOptions((values) => [...values, newOpt]);
+
+      setIsOptionEmpty(false);
+      setIsOptionEmptyError(false);
+      console.log(options);
     }
   };
 
@@ -100,9 +104,9 @@ const CreatePoll = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(isOptionEmpty){
-      setIsOptionEmptyError(true)
-    }else{
+    if (isOptionEmpty) {
+      setIsOptionEmptyError(true);
+    } else {
       let poll = {
         creatorName: userInfo.userName,
         title: enteredTitle,
@@ -123,7 +127,6 @@ const CreatePoll = () => {
 
   return (
     <div>
-
       <form
         className="sm:w-full md:w-1/2  md:mx-auto space-y-8 divide-y divide-gray-200 sm:space-y-5 divide-gray-200 mr-20 ml-20 mb-2"
         onSubmit={handleSubmit}
@@ -236,19 +239,13 @@ const CreatePoll = () => {
               <label className="block text-sm font-medium text-gray-700">
                 Start Time:
               </label>
-              <SelectHour
-                name="Start Time"
-                keyy={"startTime"}
-              />
+              <SelectHour name="Start Time" keyy={"startTime"} />
             </div>
             <div className="col-span-1 sm:ml-0 md:ml-16">
               <label className="block text-sm font-medium text-gray-700">
                 Finish Time:
               </label>
-              <SelectHour
-                name="Finish Time"
-                keyy={"endTime"}
-              />
+              <SelectHour name="Finish Time" keyy={"endTime"} />
             </div>
           </div>
 
@@ -263,7 +260,12 @@ const CreatePoll = () => {
           </div>
         </div>
         {!isOptionEmpty && <DateOptionCard options={options} />}
-        {isOptionEmptyError && <Alert title="You forgot to add your date options !" messages={["You need to add at least one date option"]}/>}
+        {isOptionEmptyError && (
+          <Alert
+            title="You forgot to add your date options !"
+            messages={["You need to add at least one date option"]}
+          />
+        )}
         <div className="pt-8">
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">

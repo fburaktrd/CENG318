@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import VoteDateOption from "../components/VoteDateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
+import ChatBox from "../components/ChatBox";
 import Banner from "../UI/Banner";
 
 const EventPage = (props) => {
@@ -9,23 +10,22 @@ const EventPage = (props) => {
   const eventInfo = useLocation().state["event"];
   eventInfo.options.map((opt, index) => (opt["id"] = index));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const [votes,setVotes] = useState({comings:[],Ncomings:[],ifNeed:[]})
-  const [loading,setLoading] = useState(true)
+  const [votes, setVotes] = useState({ comings: [], Ncomings: [], ifNeed: [] });
+  const [loading, setLoading] = useState(true);
   let selectedDates = {};
 
-  useEffect(async ()=>{
+  useEffect(async () => {
     const rVotes = await DatabaseHandler.getVotes(eventInfo.id);
     setVotes(rVotes);
     setLoading(false);
     // const {comings,Ncomings,ifNeed} = result;
     // console.log(comings,Ncomings,ifNeed);
-  },[])
+  }, []);
   const selectedDatesHandler = (optId, status) => {
     selectedDates[optId] = status;
   };
-
   const submitHandler = () => {
-    DatabaseHandler.submitVote(eventInfo.id,userInfo.userName,selectedDates);
+    DatabaseHandler.submitVote(eventInfo.id, userInfo.userName, selectedDates);
     //modal çıkartılabilir.
     window.location.reload();
     //console.log(userInfo.userName,selectedDates);
@@ -214,23 +214,25 @@ const EventPage = (props) => {
             </div>
           </div>
           {loading ? (
-                <Banner message={"Options are loading..."} />
-              ) : (
-                <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
-            {eventInfo.options.map((option) => (
-              <VoteDateOption
-                userName={userInfo.userName}
-                comings={votes["comings"][option.id]}
-                Ncomings={votes["Ncomings"][option.id]}
-                ifNeed={votes["ifNeed"][option.id]}
-                key={option.id}
-                handleSelectedDates={selectedDatesHandler}
-                optInfo={option}
-              />
-            ))}
-          </div>
-              )}
-          
+            <Banner message={"Options are loading..."} />
+          ) : (
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
+              {eventInfo.options.map((option) => (
+                <VoteDateOption
+                  userName={userInfo.userName}
+                  comings={votes["comings"][option.id]}
+                  Ncomings={votes["Ncomings"][option.id]}
+                  ifNeed={votes["ifNeed"][option.id]}
+                  key={option.id}
+                  handleSelectedDates={selectedDatesHandler}
+                  optInfo={option}
+                />
+              ))}
+            </div>
+          )}
+
+          <ChatBox user={userInfo} />
+
           <div className="flex justify-center">
             <button
               onClick={submitHandler}
