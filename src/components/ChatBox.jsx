@@ -71,8 +71,8 @@ export default function ChatBox(props) {
     <div className="flex items-start space-x-4">
       {/* <div className="flex-shrink-0">{props.user.userName}</div> */}
       <div className="min-w-0 flex-1">
-        <div className="px-8 py-4 border border-transparent border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500">
-          Yorumları Göster
+        <div className="h-24 px-8 py-4 border border-transparent border-gray-300 rounded-lg shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 overflow-y-scroll">
+          <div>Yorumları Göster</div>
         </div>
         <form action="/" className="relative">
           <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
