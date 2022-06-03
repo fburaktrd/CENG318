@@ -4,11 +4,11 @@ import {
   EmojiSadIcon,
   FireIcon,
   HeartIcon,
-  PaperClipIcon,
   ThumbUpIcon,
   XIcon,
 } from "@heroicons/react/solid";
 import { Listbox, Transition } from "@headlessui/react";
+import Chat from "../components/Chat";
 
 const moods = [
   {
@@ -59,7 +59,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ChatBox(props) {
+export default function ChattBox(props) {
   const [selected, setSelected] = useState(moods[5]);
   let placeholder = "      " + props.user.userName + " add your comment";
 
@@ -71,8 +71,8 @@ export default function ChatBox(props) {
     <div className="flex items-start space-x-4">
       {/* <div className="flex-shrink-0">{props.user.userName}</div> */}
       <div className="min-w-0 flex-1">
-        <div className="h-24 px-8 py-4 border border-transparent border-gray-300 rounded-lg shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 overflow-y-scroll">
-          <div>Yorumları Göster</div>
+        <div className="h-42 px-8 py-4 border border-transparent border-gray-300 rounded-lg shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 overflow-y-scroll">
+          <Chat />
         </div>
         <form action="/" className="relative">
           <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">

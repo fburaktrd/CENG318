@@ -10,13 +10,13 @@ import { Menu, Transition } from "@headlessui/react";
 const Navbar = (props) => {
   const authCtx = useContext(AuthContext);
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  if(userInfo === undefined || userInfo === null){
-    userInfo ={userName:"null",email:"null"}
+  if (userInfo === undefined || userInfo === null) {
+    userInfo = { userName: "null", email: "null" };
   }
   const navigation = [
     { name: "Home", to: "/", current: true },
     { name: "Team", to: "/teamPage", current: false },
-    { name: "???1", to: "#", current: false },
+    { name: "Add Friends", to: "/addfriend", current: false },
     { name: "???2", to: "#", current: false },
   ];
 

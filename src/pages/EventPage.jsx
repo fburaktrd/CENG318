@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import VoteDateOption from "../components/VoteDateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
-import ChatBox from "../components/ChatBox";
+import ChattBox from "../components/ChattBox";
 import Banner from "../UI/Banner";
 
 const EventPage = (props) => {
@@ -231,7 +231,7 @@ const EventPage = (props) => {
             </div>
           )}
 
-          <ChatBox user={userInfo} />
+          <ChattBox user={userInfo} />
 
           <div className="flex justify-center">
             <button
