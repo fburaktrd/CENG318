@@ -71,6 +71,7 @@ export default function ChattBox(props) {
       props.user,
       messageRef.current.value
     );
+    messageRef.current.value = "";
   };
 
   return (
