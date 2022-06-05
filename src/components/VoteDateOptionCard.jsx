@@ -85,6 +85,8 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
   const [ifNeedBe, setIfNeedBe] = useState(0);
   const [ifNeedBeClicked, setIfNeedBeClicked] = useState(ifNeed.includes(userName));
 
+  const [isChecked, setIsChecked] = useState(0);
+
   let votedOption = {
     ...optInfo,
     isVoteYes: yesClicked,
@@ -111,6 +113,16 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
     handleSelectedDates(optInfo.id,"Coming");
     console.log(ifNeedBeClicked, NoClicked, yesClicked);
   };
+
+  const checked = (event) => {
+    if (event.target.checked) {
+      setIsChecked(1);
+      console.log('✅ Checkbox is checked');
+    } else {
+      setIsChecked(0);
+      console.log('⛔️ Checkbox is NOT checked');
+    }
+ }
 
   const ifNeedBeVoteHandler = (prevVote) => {
     setNoClicked(false);
@@ -190,6 +202,7 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
           <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-blue-100 rounded-full">
         {`Created by ${creator}`}
       </span>
+      <div><input id="myCheck" type="checkbox" onChange={checked}/></div>
       
           </div>
             <div className="flex items-center space-x-3">{statusPart}</div>
