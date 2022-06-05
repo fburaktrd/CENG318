@@ -1,4 +1,4 @@
-import { Fragment, useState ,createRef} from "react";
+import { Fragment, useState, createRef } from "react";
 import {
   EmojiHappyIcon,
   EmojiSadIcon,
@@ -66,17 +66,20 @@ export default function ChattBox(props) {
   var messageRef = createRef();
 
   const postHandler = () => {
-    DatabaseHandler.sendMessage(props.eventId,props.user,messageRef.current.value)
+    DatabaseHandler.sendMessage(
+      props.eventId,
+      props.user,
+      messageRef.current.value
+    );
   };
 
   return (
     <div className="flex items-start space-x-4">
       {/* <div className="flex-shrink-0">{props.user.userName}</div> */}
-      
+
       <div className="min-w-0 flex-1">
-      
-        <div className="h-42 px-8 py-4 border border-transparent border-gray-300 rounded-lg shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 overflow-y-scroll">
-          <Chat username={props.user.userName} messages = {props.messages}/>
+        <div className="h-48 px-8 py-4 border border-transparent border-gray-300 rounded-lg shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 overflow-y-scroll">
+          <Chat username={props.user.userName} messages={props.messages} />
         </div>
         <form action="/" className="relative">
           <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
