@@ -6,6 +6,7 @@ import { DatabaseHandler } from "../database/DatabaseHandler";
 import ChattBox from "../components/ChattBox";
 import Banner from "../UI/Banner";
 import { SocialHandler } from "../database/SocialHandler";
+import Alert from "../UI/Alert";
 
 const EventPage = (props) => {
   //const { station } = useParams();
@@ -16,6 +17,7 @@ const EventPage = (props) => {
   const [messages, setMessages] = useState([]);
   const [eventOpt, setEventOpt] = useState(eventInfo.options);
   const [votes, setVotes] = useState({ comings: [], Ncomings: [], ifNeed: [] });
+  const [error,setError] = useState(false);
 
   const [loading, setLoading] = useState(true);
   let selectedDates = {};
@@ -34,12 +36,22 @@ const EventPage = (props) => {
   };
   const submitHandler = () => {
     console.log(selectedDates)
-    DatabaseHandler.submitVote(eventInfo.id, userInfo.userName, selectedDates);
+    if(eventInfo["isOpen"] == true){
+      DatabaseHandler.submitVote(eventInfo.id, userInfo.userName, selectedDates);
     //modal çıkartılabilir.
     window.location.reload();
+    }else{
+
+      setError(true);
+    }
+    
     //console.log(userInfo.userName,selectedDates);
   };
 
+  const endEventHandler = (event)=>{
+    event.prevent.default();
+    console.log()
+  }
   return (
     <div>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -243,32 +255,52 @@ const EventPage = (props) => {
           )}
 
           <div className="flex justify-center mt-4 ml-24">
-          <Link to={"/eventPage" + "/" + eventInfo["id"] +"/addoption"} state={eventInfo}>
-            <button
-              className="flex justify-center py-1 px-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4"
-              type="button"
-              
-            >
-              Add Option
-            </button>
-            </Link>
+          
+          
+          {error ==true ? (
+            <Alert
+              title={"Event is ended"}
+              messages={["This event is ended. You can not submit your votes."]}
+            />
+          ):(
+          <>
+          <button
+            onClick={submitHandler}
+            className="flex justify-center py-2 px-4 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4"
+          >
+            Submit Votes
+          </button>
+        
+        <Link to={"/eventPage" + "/" + eventInfo["id"] +"/addoption"} state={eventInfo}>
+          <button
+            className="flex justify-center py-2 px-4 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4"
+            type="button"
+            
+          >
+            Add New Date Option
+          </button>
+          </Link></>)}
+            
+            
+            
           </div>
-
+          
           <ChattBox
             user={userInfo}
             messages={messages}
             eventId={eventInfo["id"]}
           />
 
-          <div className="flex justify-center">
+          
+        </div>
+        <div className="flex justify-center">
             <button
-              onClick={submitHandler}
-              className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-700 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2"
+              onClick={endEventHandler}
+              className="inline-flex items-center px-6 py-4 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-700 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2"
             >
-              Submit
+              End Event
             </button>
           </div>
-        </div>
       </div>
     </div>
   );
