@@ -15,8 +15,12 @@ export class SocialHandler {
     return (await get(ref(this.database, "friends/" + userId + "/" + recieverUid))).val();
   }
 
-  static async getFriendRequests(userId) {
-    return  (await get(ref(this.database, "friendRequests/" + userId))).val();
+  static async getFriendRequests(username) {
+    return  (await get(ref(this.database, "friendRequests/" + username))).val();
+  }
+
+  static async getFriends(username) {
+    return  (await (get(ref(this.database,`friends/${username}`)))).val()
   }
 
   static async sendFriendRequest(senderUsername, recieverUsername) {
@@ -34,6 +38,7 @@ export class SocialHandler {
   static acceptFriend(username,senderUsername){
       this.removeFriendRequest(username,senderUsername)
       set(ref(this.database,"friends/"+username + "/"+senderUsername),true);
+      set(ref(this.database,"friends/"+senderUsername + "/"+username),true);
   }
 
   static async getUsername(username){

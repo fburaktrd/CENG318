@@ -5,7 +5,6 @@ import EmptyMessage from "../UI/EmptyMessage";
 
 const Chat = ({ messages, username }) => {
   var messageElements = [];
-  console.log(messages);
   if (messages === null) {
     messageElements = [<EmptyMessage></EmptyMessage>];
   } else {

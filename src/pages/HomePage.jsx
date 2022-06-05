@@ -36,7 +36,7 @@ const HomePage = (props) => {
     setIsEventsEmpty(false);
     setLoading(false);
   }, []);
-
+ 
   return (
     <>
       {props.showGreetingMessage && userInfo !== null && (

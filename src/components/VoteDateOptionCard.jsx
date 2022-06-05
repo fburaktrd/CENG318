@@ -7,7 +7,8 @@ import {
 } from "@heroicons/react/solid";
 import ParticipantList from "./ParticipantList";
 
-export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Ncomings,ifNeed,userName}) {
+export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Ncomings,ifNeed,userName,creator}) {
+  console.log(creator);
   const icons = {
     coming: (
       <svg
@@ -185,6 +186,12 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
       <li className=" bg-white rounded-lg shadow divide-y divide-gray-200 mt-4">
         <div className="w-full flex items-center justify-between p-6 space-x-6">
           <div className="flex-1 truncate">
+          <div className="flex items-center space-x-3">
+          <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-blue-100 rounded-full">
+        {`Created by ${creator}`}
+      </span>
+      
+          </div>
             <div className="flex items-center space-x-3">{statusPart}</div>
             <p className="mt-1 text-gray-500 text-sm truncate">
               {optInfo.date}

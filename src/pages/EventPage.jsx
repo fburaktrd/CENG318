@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useParams, useLocation } from "react-router-dom";
 import VoteDateOption from "../components/VoteDateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
@@ -11,14 +11,19 @@ const EventPage = (props) => {
   //const { station } = useParams();
   const eventInfo = useLocation().state["event"];
   eventInfo.options.map((opt, index) => (opt["id"] = index));
+  
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [messages, setMessages] = useState([]);
+  const [eventOpt, setEventOpt] = useState(eventInfo.options);
   const [votes, setVotes] = useState({ comings: [], Ncomings: [], ifNeed: [] });
+
   const [loading, setLoading] = useState(true);
   let selectedDates = {};
 
   useEffect(async () => {
     SocialHandler.listenMessagges(eventInfo["id"], setMessages);
+    DatabaseHandler.listenEventOptions(eventInfo["id"],setEventOpt);
+    
     const rVotes = await DatabaseHandler.getVotes(eventInfo.id);
     console.log(eventInfo["limit"]);
     setVotes(rVotes);
@@ -28,15 +33,11 @@ const EventPage = (props) => {
     selectedDates[optId] = status;
   };
   const submitHandler = () => {
+    console.log(selectedDates)
     DatabaseHandler.submitVote(eventInfo.id, userInfo.userName, selectedDates);
     //modal çıkartılabilir.
     window.location.reload();
     //console.log(userInfo.userName,selectedDates);
-  };
-  const navigate = useNavigate();
-
-  const addOption = () => {
-    navigate("/addoption");
   };
 
   return (
@@ -226,8 +227,9 @@ const EventPage = (props) => {
             <Banner message={"Options are loading..."} />
           ) : (
             <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
-              {eventInfo.options.map((option) => (
+              {eventOpt.map((option) => (
                 <VoteDateOption
+                  creator={option["creatorName"]}
                   userName={userInfo.userName}
                   comings={votes["comings"][option.id]}
                   Ncomings={votes["Ncomings"][option.id]}
@@ -241,13 +243,15 @@ const EventPage = (props) => {
           )}
 
           <div className="flex justify-center mt-4 ml-24">
+          <Link to={"/eventPage" + "/" + eventInfo["id"] +"/addoption"} state={eventInfo}>
             <button
               className="flex justify-center py-1 px-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4"
               type="button"
-              onClick={addOption}
+              
             >
               Add Option
             </button>
+            </Link>
           </div>
 
           <ChattBox

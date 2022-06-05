@@ -43,7 +43,7 @@ y
 
     const db_options = {};
 
-    allEventInfo.options.map((opt, index) => (db_options[index] = opt));
+    allEventInfo.options.forEach((opt, index) => db_options[index] = opt);
     allEventInfo.options = db_options;
 
     set(ref(this.database, "events/" + event_Id), allEventInfo);
@@ -112,7 +112,24 @@ y
     //console.log(event_info,`eventId:${eventId} icin`);
     return event_info;
   }
+  static async listenEventOptions(eventId,setState) {
+    onValue(ref(this.database, "events/" + eventId + "/options"), (snapshot) => {
+      const data = snapshot.val();
+      data.map((opt, index) => (opt["id"] = index));
+      console.log(data);
+      setState(data);
+    });
+  }
+  static async setCustomDateOption(eventId,options,incomingOptions){
+    var index = options.length
+    
+    for(var i in [...Array(incomingOptions.length).keys()]){
+      console.log(i)
+      await set(ref(this.database,"events/" + eventId + "/options/" + `${index + (+i)}`),incomingOptions[i])
+    }
 
+    
+  }
   static async getUserEventInfos(userName) {
     // critical
     let event_ids = Object.keys(
@@ -136,8 +153,8 @@ y
 
   static async submitVote(eventId, userName, votes) {
     for (const date of Object.keys(votes)) {
-      //console.log(`id : ${date} -> vote : ${votes[date]}`)
-      set(
+      console.log(`id : ${date} -> vote : ${votes[date]}`)
+      await set(
         ref(
           this.database,
           "participantsOfEvent/" + eventId + "/" + userName + "/" + date

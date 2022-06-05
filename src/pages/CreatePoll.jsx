@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SelectHour from "./SelectHour";
 import DateOptionCard from "../components/DateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
 import Notify from "../UI/Modal";
 import Alert from "../UI/Alert";
+import { SocialHandler } from "../database/SocialHandler";
 
 const CreatePoll = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -13,7 +14,18 @@ const CreatePoll = () => {
   const [options, setOptions] = useState([]);
   const [isOptionEmpty, setIsOptionEmpty] = useState(true);
   const [isOptionEmptyError, setIsOptionEmptyError] = useState(false);
+  const [isOptionDateError, setIsOptionDateError] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+
+  const[optError,setOptError] = useState(false);
+  const[optHoursError,setOptHoursError] = useState(false);
+  var err = false;
+  useEffect(async ()=>{
+    console.log(userInfo["userName"]);
+    var res = await SocialHandler.getFriends(userInfo["userName"]);
+    console.log(res)
+  },[])
+
 
   let counter = 0; // might think different way later...
 
@@ -44,13 +56,26 @@ const CreatePoll = () => {
       eTime === undefined ||
       enteredStartDate === undefined
     ) {
-      setIsOptionEmptyError(true);
+      setIsOptionDateError(true);
     } else {
       let newOpt = { date: enteredStartDate, startTime: sTime, endTime: eTime };
-      setOptions((values) => [...values, newOpt]);
-
-      setIsOptionEmpty(false);
-      setIsOptionEmptyError(false);
+      options.forEach((option) => {
+        if((option["date"] === enteredStartDate && option["startTime"] === sTime && option["endTime"] === eTime)){
+          err = true;
+          setOptError(true)
+        }
+      })
+      if(!(err)){
+       if(sTime === eTime || sTime > eTime){
+          setOptHoursError(true);
+       }else{
+        setOptions((values) => [...values, newOpt]);
+        isOptionDateError(false);
+        setIsOptionEmpty(false);
+        setIsOptionEmptyError(false);
+       }
+      }
+      
       console.log(options);
     }
   };
@@ -119,11 +144,16 @@ const CreatePoll = () => {
         participants: enteredParticipants,
         options: options,
       };
-      console.log(poll);
+      Object.keys(poll.options).forEach((key)=> poll.options[key]["creatorName"] = userInfo.userName)
       DatabaseHandler.createEvent(poll);
       setShowMessage(true);
     }
   };
+
+
+
+
+
 
   return (
     <div>
@@ -259,11 +289,14 @@ const CreatePoll = () => {
             </button>
           </div>
         </div>
+        {optError && isOptionEmpty && <Alert title={"Opps!"} messages={["You can not add same option again"]}/>}
+        {optHoursError && <Alert title={"Opps!"} messages={["There is inconsistency with the times."]}/>}
         {!isOptionEmpty && <DateOptionCard options={options} />}
+        {isOptionDateError && <Alert title={"Opps!"} messages={["Please set the date."]}/>}
         {isOptionEmptyError && (
           <Alert
             title="You forgot to add your date options !"
-            messages={["You need to add at least one date option"]}
+            messages={["Please add at least one  date option."]}
           />
         )}
         <div className="pt-8">
