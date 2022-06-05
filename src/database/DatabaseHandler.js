@@ -6,7 +6,7 @@ import {
   update,
   set,
   onValue,
-  onChildChanged,
+
 } from "firebase/database";
 
 function generateId() {
@@ -30,6 +30,7 @@ export class DatabaseHandler {
     });
     set(ref(this.database, "userNames/" + userName), { uid: userId });
   }
+
 
   static sendMessage(eventId,userInfo,message){
       

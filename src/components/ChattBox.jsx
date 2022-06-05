@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/solid";
 import { Listbox, Transition } from "@headlessui/react";
 import Chat from "../components/Chat";
-import { DatabaseHandler } from "../database/DatabaseHandler";
+import { SocialHandler } from "../database/SocialHandler";
 
 const moods = [
   {
@@ -66,7 +66,7 @@ export default function ChattBox(props) {
   var messageRef = createRef();
 
   const postHandler = () => {
-    DatabaseHandler.sendMessage(
+    SocialHandler.sendMessage(
       props.eventId,
       props.user,
       messageRef.current.value

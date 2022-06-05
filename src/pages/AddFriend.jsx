@@ -1,44 +1,54 @@
 import { set } from "firebase/database";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { SocialHandler } from "../database/SocialHandler";
 import Alert from "../UI/Alert";
+import Banner from "../UI/Banner";
+import FriendList from "../UI/FriendList";
 
-const users = [
-  "ali",
-  "ahmet",
-  "mehmet",
-  "ayşe",
-  "göktürk",
-  "burak",
-  "öykü",
-  "nadir",
-  "çağatay",
-];
 
-const addedUsers = ["ali", "ahmet", "mehmet", "ayşe"];
 
 const Addfriend = () => {
   const [isError, setError] = useState(false);
   const [isFriend, setFriend] = useState(true);
   const [isUser, setUser] = useState(true);
+  const [isUserSelf, setIsUserisUserSelf] = useState(false);
   const [enteredUsername, setEnteredUsername] = useState("");
+  const [isLoading,setIsLoading] = useState(false);
+  const [requests,setRequests] = useState([]);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   const usernameChangeHandler = (event) => {
     setEnteredUsername(event.target.value);
   };
 
   /*const sendRequest = () => {};*/
+  
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
-    if (users.includes(enteredUsername)) {
+    var res = await SocialHandler.getUsername(enteredUsername);
+    //console.log(res);
+    setIsLoading(false);
+    if (res != null) {
       setUser(true);
-      if (addedUsers.includes(enteredUsername)) {
+      var getFriend = await SocialHandler.getFriend(enteredUsername,userInfo["userName"]);
+      console.log("get",getFriend)
+      if (getFriend != null) {
         console.log("You are already friends");
         setFriend(true);
         setError(true);
-      } else if (!addedUsers.includes(enteredUsername)) {
+      } else{
         console.log("Request Sent");
-        setFriend(false);
+        if(enteredUsername !== userInfo["userName"]){
+          SocialHandler.sendFriendRequest(userInfo["userName"],enteredUsername);
+          setFriend(false);
+        }else{
+          
+          setIsUserisUserSelf(true)
+        }
+        
       }
     } else {
       console.log("There is no such user.");
@@ -48,28 +58,10 @@ const Addfriend = () => {
     }
 
     event.target.value = " ";
-
-    /*if (
-      users.includes(enteredUsername) &&
-      addedUsers.includes(enteredUsername)
-    ) {
-      setUser(true);
-      setFriend(true);
-    } else if (!users.includes(enteredUsername)) {
-      console.log("There is no such user.");
-      setUser(false);
-      setFriend(false);
-    } else if (
-      users.includes(enteredUsername) &&
-      !addedUsers.includes(enteredUsername)
-    ) {
-      console.log("Request Sent");
-      setUser(true);
-      setFriend(false);
-    }*/
   };
 
   return (
+    <>
     <form
       className="sm:w-full md:w-1/2  md:mx-auto space-y-8 divide-y divide-gray-200 sm:space-y-5 divide-gray-200 mr-20 ml-20 mt-36"
       onSubmit={handleSubmit}
@@ -98,25 +90,33 @@ const Addfriend = () => {
         </div>
         <div className="pt-2">
           <div className="flex justify-end">
-            <button
+            {isLoading ? <Banner message={"Wait a second..."} />:<button
               type="submit"
               className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Send Request
-            </button>
+            </button>}
           </div>
         </div>
-        {isError && isFriend && (
-          <Alert title="Error" messages={["You are already friends"]} />
+        {( !(isLoading) && isError) && isFriend && (
+          <Alert title="Error" messages={[`You are already friends with ${enteredUsername}`]} status={"err"}/>
         )}
-        {!isFriend && isUser && (
-          <Alert title="Friendship" messages={["Friendship request sent"]} />
+        {(!isFriend && !(isLoading)) && isUser && (
+          <Alert title="Friendship" messages={["Friendship request sent"]} status={"succ"}/>
         )}
-        {isError && !isUser && (
-          <Alert title="Error" messages={["There is no such user"]} />
+        {( !(isLoading) && isError) && !isUser && (
+          <Alert title="Error" messages={["There is no such user"]} status={"err"}/>
+        )}{( !(isLoading)&& isUserSelf ) && isUser && (
+          <Alert title="Error" messages={["This is you."]} status={"err"}/>
         )}
       </div>
     </form>
+    <div className="sm:w-full md:w-1/2  md:mx-auto space-y-8 divide-y divide-gray-200 sm:space-y-5 divide-gray-200 mr-20 ml-20 mt-10">
+    <label>
+            </label>
+            <FriendList username={userInfo["userName"]}></FriendList>
+    </div>
+    </>
   );
 };
 export default Addfriend;

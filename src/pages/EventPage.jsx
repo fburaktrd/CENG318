@@ -4,6 +4,7 @@ import VoteDateOption from "../components/VoteDateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
 import ChattBox from "../components/ChattBox";
 import Banner from "../UI/Banner";
+import { SocialHandler } from "../database/SocialHandler";
 
 const EventPage = (props) => {
   //const { station } = useParams();
@@ -17,9 +18,9 @@ const EventPage = (props) => {
 
   
   useEffect(async () => {
-    DatabaseHandler.listenMessagges(eventInfo["id"],setMessages)
+    SocialHandler.listenMessagges(eventInfo["id"],setMessages)
     const rVotes = await DatabaseHandler.getVotes(eventInfo.id);
-    
+    console.log(eventInfo["limit"])
     setVotes(rVotes);
     setLoading(false);
     
