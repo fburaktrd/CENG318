@@ -19,6 +19,9 @@ const EventCard = (props) => {
   if(props.event.options === undefined){
     props.event.options = []
   }
+  if(props.event.participants === null || props.event.participants === undefined){
+    props.event.participants = {}
+  }
   return (
     <>
       {isClicked && (

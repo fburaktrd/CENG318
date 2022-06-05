@@ -32,19 +32,7 @@ export class DatabaseHandler {
   }
 
 
-  static sendMessage(eventId,userInfo,message){
-      
-      set(ref(this.database,"eventComments/" + eventId + "/" + `${+new Date}`),{username:userInfo.userName,message:message})
-  }
-  static  listenMessagges(eventId,setState) {
-    
-    onValue(ref(this.database, "eventComments/" + eventId),(snapshot)=>{
-        const data = snapshot.val()
-        
-        setState(data)
-    })
-    
-  }
+y
   static createEvent(allEventInfo) {
     //participant nodes is being pushed under the eventId node. it must be deleted
 
