@@ -11,6 +11,7 @@ import AuthContext from "./store/authContext";
 import CreatePoll from "./pages/CreatePoll";
 import Navbar from "./components/Navbar";
 import Addfriend from "./pages/AddFriend";
+import AddOption from "./pages/AddOption";
 
 export default function App() {
   const authCtx = useContext(AuthContext);
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="/forgetPasswordPage" element={<ForgetPasswordPage />} />
         <Route path="/teamPage" element={<TeamPage />} />
         <Route path="/addfriend" element={<Addfriend />} />
+        <Route path="/addoption" element={<AddOption />} />
         <Route
           path="/eventPage/:id"
           element={<EventPage isLogged={authCtx.isLoggedIn} />}

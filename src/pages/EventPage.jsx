@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams, useLocation } from "react-router-dom";
 import VoteDateOption from "../components/VoteDateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
@@ -11,21 +12,17 @@ const EventPage = (props) => {
   const eventInfo = useLocation().state["event"];
   eventInfo.options.map((opt, index) => (opt["id"] = index));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const [messages,setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [votes, setVotes] = useState({ comings: [], Ncomings: [], ifNeed: [] });
   const [loading, setLoading] = useState(true);
   let selectedDates = {};
 
-  
   useEffect(async () => {
-    SocialHandler.listenMessagges(eventInfo["id"],setMessages)
+    SocialHandler.listenMessagges(eventInfo["id"], setMessages);
     const rVotes = await DatabaseHandler.getVotes(eventInfo.id);
-    console.log(eventInfo["limit"])
+    console.log(eventInfo["limit"]);
     setVotes(rVotes);
     setLoading(false);
-    
-   
-    
   }, []);
   const selectedDatesHandler = (optId, status) => {
     selectedDates[optId] = status;
@@ -36,6 +33,12 @@ const EventPage = (props) => {
     window.location.reload();
     //console.log(userInfo.userName,selectedDates);
   };
+  const navigate = useNavigate();
+
+  const addOption = () => {
+    navigate("/addoption");
+  };
+
   return (
     <div>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -237,7 +240,21 @@ const EventPage = (props) => {
             </div>
           )}
 
-          <ChattBox user={userInfo} messages={messages} eventId={eventInfo["id"]} />
+          <div className="flex justify-center mt-4 ml-24">
+            <button
+              className="flex justify-center py-1 px-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4"
+              type="button"
+              onClick={addOption}
+            >
+              Add Option
+            </button>
+          </div>
+
+          <ChattBox
+            user={userInfo}
+            messages={messages}
+            eventId={eventInfo["id"]}
+          />
 
           <div className="flex justify-center">
             <button
