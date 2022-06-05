@@ -72,12 +72,13 @@ const CreatePoll = () => {
        if(sTime === eTime || sTime > eTime){
           setOptHoursError(true);
        }else{
-         console.log("asdasdasdasdads")
+        
         setOptions((values) => [...values, newOpt]);
         setIsOptionDateError(false);
         setIsOptionEmpty(false);
         setIsOptionEmptyError(false);
         setOptHoursError(false);
+        setOptError(false);
        }
       }
       
@@ -295,7 +296,7 @@ const CreatePoll = () => {
           </div>
         </div>
         {!isOptionEmpty && <DateOptionCard options={options} />}
-        {optError && isOptionEmpty && <Alert title={"Opps!"} messages={["You can not add same option again"]}/>}
+        {optError && <Alert title={"Opps!"} messages={["You can not add same option again"]}/>}
         {optHoursError && <Alert title={"Opps!"} messages={["There is inconsistency with the times."]}/>}
         {isOptionDateError && <Alert title={"Opps!"} messages={["Please set the date."]}/>}
         {isOptionEmptyError && (
