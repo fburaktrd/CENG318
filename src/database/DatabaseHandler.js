@@ -35,7 +35,7 @@ export class DatabaseHandler {
       
       set(ref(this.database,"eventComments/" + eventId + "/" + `${+new Date}`),{username:userInfo.userName,message:message})
   }
-  static  getMessagges(eventId,setState) {
+  static  listenMessagges(eventId,setState) {
     
     onValue(ref(this.database, "eventComments/" + eventId),(snapshot)=>{
         const data = snapshot.val()

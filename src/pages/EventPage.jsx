@@ -17,7 +17,7 @@ const EventPage = (props) => {
 
   
   useEffect(async () => {
-    DatabaseHandler.getMessagges(eventInfo["id"],setMessages)
+    DatabaseHandler.listenMessagges(eventInfo["id"],setMessages)
     const rVotes = await DatabaseHandler.getVotes(eventInfo.id);
     
     setVotes(rVotes);
