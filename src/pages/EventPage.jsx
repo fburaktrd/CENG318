@@ -18,6 +18,19 @@ const EventPage = (props) => {
   const [eventOpt, setEventOpt] = useState(eventInfo.options);
   const [votes, setVotes] = useState({ comings: [], Ncomings: [], ifNeed: [] });
   const [error,setError] = useState(false);
+  const[isChecked, setIsChecked] = useState(false);
+
+  const checkedOrNot = (isCheckedFromChild) => {
+    if(isCheckedFromChild == 1) {
+      setIsChecked(false);
+      console.log(isChecked);
+    }
+    else {
+      setIsChecked(true);
+      console.log(isChecked);
+    }
+  }
+
 
   const [loading, setLoading] = useState(true);
   let selectedDates = {};
@@ -241,6 +254,7 @@ const EventPage = (props) => {
             <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
               {eventOpt.map((option) => (
                 <VoteDateOption
+                  Checked = {checkedOrNot}
                   creator={option["creatorName"]}
                   userName={userInfo.userName}
                   comings={votes["comings"][option.id]}

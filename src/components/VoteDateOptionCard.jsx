@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/solid";
 import ParticipantList from "./ParticipantList";
 
-export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Ncomings,ifNeed,userName,creator}) {
+export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Ncomings,ifNeed,userName,creator, Checked}) {
   console.log(creator);
   const icons = {
     coming: (
@@ -116,11 +116,9 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
 
   const checked = (event) => {
     if (event.target.checked) {
-      setIsChecked(1);
-      console.log('✅ Checkbox is checked');
+      Checked(1);
     } else {
-      setIsChecked(0);
-      console.log('⛔️ Checkbox is NOT checked');
+      Checked(0);
     }
  }
 
