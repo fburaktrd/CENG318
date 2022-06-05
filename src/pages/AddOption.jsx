@@ -23,7 +23,7 @@ const AddOption = () => {
     if (
       sTime === undefined ||
       eTime === undefined ||
-      enteredStartDate === undefined
+      (enteredStartDate === undefined || enteredStartDate === "")
     ) {
       setIsOptionEmptyError(true);
     } else {

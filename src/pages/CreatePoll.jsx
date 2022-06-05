@@ -42,6 +42,8 @@ const CreatePoll = () => {
   const [enteredStartDate, setEnteredStartDate] = useState();
   const startDateChangeHandler = (event) => {
     setEnteredStartDate(event.target.value);
+    console.log(event.target.value)
+    setIsOptionDateError(false);
   };
   const [enteredLocation, setEnteredLocation] = useState("");
   const LocationChangeHandler = (event) => {
@@ -54,7 +56,7 @@ const CreatePoll = () => {
     if (
       sTime === undefined ||
       eTime === undefined ||
-      enteredStartDate === undefined
+      (enteredStartDate === undefined || enteredStartDate === "")
     ) {
       setIsOptionDateError(true);
     } else {
@@ -66,13 +68,16 @@ const CreatePoll = () => {
         }
       })
       if(!(err)){
+
        if(sTime === eTime || sTime > eTime){
           setOptHoursError(true);
        }else{
+         console.log("asdasdasdasdads")
         setOptions((values) => [...values, newOpt]);
-        isOptionDateError(false);
+        setIsOptionDateError(false);
         setIsOptionEmpty(false);
         setIsOptionEmptyError(false);
+        setOptHoursError(false);
        }
       }
       
@@ -289,9 +294,9 @@ const CreatePoll = () => {
             </button>
           </div>
         </div>
+        {!isOptionEmpty && <DateOptionCard options={options} />}
         {optError && isOptionEmpty && <Alert title={"Opps!"} messages={["You can not add same option again"]}/>}
         {optHoursError && <Alert title={"Opps!"} messages={["There is inconsistency with the times."]}/>}
-        {!isOptionEmpty && <DateOptionCard options={options} />}
         {isOptionDateError && <Alert title={"Opps!"} messages={["Please set the date."]}/>}
         {isOptionEmptyError && (
           <Alert
