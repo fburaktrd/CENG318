@@ -26,11 +26,11 @@ import EmptyFriend from "./EmptyFriend";
             var keys = Object.keys(res)
             setRequests(keys)
             setEmpty(false);
-            setIsLoading(false);
+            
         }else{
             setEmpty(true);
         }
-      
+        setIsLoading(false);
     },[])
     return (
         <Fragment>
