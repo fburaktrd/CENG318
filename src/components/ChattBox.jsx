@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState ,createRef} from "react";
 import {
   EmojiHappyIcon,
   EmojiSadIcon,
@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/solid";
 import { Listbox, Transition } from "@headlessui/react";
 import Chat from "../components/Chat";
+import { DatabaseHandler } from "../database/DatabaseHandler";
 
 const moods = [
   {
@@ -62,17 +63,20 @@ function classNames(...classes) {
 export default function ChattBox(props) {
   const [selected, setSelected] = useState(moods[5]);
   let placeholder = "      " + props.user.userName + " add your comment";
+  var messageRef = createRef();
 
   const postHandler = () => {
-    let string = "hello";
+    DatabaseHandler.sendMessage(props.eventId,props.user,messageRef.current.value)
   };
 
   return (
     <div className="flex items-start space-x-4">
       {/* <div className="flex-shrink-0">{props.user.userName}</div> */}
+      
       <div className="min-w-0 flex-1">
+      
         <div className="h-42 px-8 py-4 border border-transparent border-gray-300 rounded-lg shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 overflow-y-scroll">
-          <Chat />
+          <Chat username={props.user.userName} messages = {props.messages}/>
         </div>
         <form action="/" className="relative">
           <div className="border border-gray-300 rounded-lg shadow-sm overflow-hidden focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
@@ -83,6 +87,7 @@ export default function ChattBox(props) {
               rows={3}
               name="comment"
               id="comment"
+              ref={messageRef}
               className="block w-full py-3 border-0 resize-none focus:ring-0 sm:text-sm"
               placeholder={placeholder}
               defaultValue={""}
@@ -186,7 +191,7 @@ export default function ChattBox(props) {
             </div>
             <div className="flex-shrink-0">
               <button
-                type="submit"
+                type="button"
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 onClick={postHandler}
               >

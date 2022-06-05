@@ -2,20 +2,29 @@ import React from "react";
 import { Avatar } from "@mui/material";
 import { ChatBox, ReceiverMessage, SenderMessage } from "mui-chat-box";
 
-const Chat = () => (
+const Chat = ({messages,username}) => {
+  const keys = Object.keys(messages);
+  var messageElements = []
+  keys.forEach((messageKey) => {
+    const avatar = messages[messageKey]["username"][0].toUpperCase()
+    if(messages[messageKey]["username"] === username){
+      messageElements.push(<SenderMessage avatar={<Avatar>{avatar}</Avatar>}>
+        {messages[messageKey]["message"]}
+      </SenderMessage>)
+    }else{
+      messageElements.push(<ReceiverMessage avatar={<Avatar>{avatar}</Avatar>}>
+        {messages[messageKey]["message"]}
+      </ReceiverMessage>)
+    }
+  })
+  return(
+    
   <div>
     <ChatBox>
-      <ReceiverMessage avatar={<Avatar>KS</Avatar>}>
-        Hello how are you?
-      </ReceiverMessage>
-      <SenderMessage avatar={<Avatar>NA</Avatar>}>
-        I'm good thanks you?
-      </SenderMessage>
-      <ReceiverMessage avatar={<Avatar>KS</Avatar>}>
-        I'm good too!
-      </ReceiverMessage>
+      
+      {messageElements}
     </ChatBox>
-  </div>
-);
+  </div>)
+};
 
 export default Chat;

@@ -10,16 +10,21 @@ const EventPage = (props) => {
   const eventInfo = useLocation().state["event"];
   eventInfo.options.map((opt, index) => (opt["id"] = index));
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const [messages,setMessages] = useState([]);
   const [votes, setVotes] = useState({ comings: [], Ncomings: [], ifNeed: [] });
   const [loading, setLoading] = useState(true);
   let selectedDates = {};
 
+  
   useEffect(async () => {
+    DatabaseHandler.getMessagges(eventInfo["id"],setMessages)
     const rVotes = await DatabaseHandler.getVotes(eventInfo.id);
+    
     setVotes(rVotes);
     setLoading(false);
-    // const {comings,Ncomings,ifNeed} = result;
-    // console.log(comings,Ncomings,ifNeed);
+    
+   
+    
   }, []);
   const selectedDatesHandler = (optId, status) => {
     selectedDates[optId] = status;
@@ -231,7 +236,7 @@ const EventPage = (props) => {
             </div>
           )}
 
-          <ChattBox user={userInfo} />
+          <ChattBox user={userInfo} messages={messages} eventId={eventInfo["id"]} />
 
           <div className="flex justify-center">
             <button
