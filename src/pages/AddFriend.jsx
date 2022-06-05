@@ -1,4 +1,6 @@
+import { set } from "firebase/database";
 import React, { useState } from "react";
+import Alert from "../UI/Alert";
 
 const users = [
   "ali",
@@ -15,27 +17,56 @@ const users = [
 const addedUsers = ["ali", "ahmet", "mehmet", "ayşe"];
 
 const Addfriend = () => {
+  const [isError, setError] = useState(false);
+  const [isFriend, setFriend] = useState(true);
+  const [isUser, setUser] = useState(true);
   const [enteredUsername, setEnteredUsername] = useState("");
   const usernameChangeHandler = (event) => {
     setEnteredUsername(event.target.value);
   };
 
+  /*const sendRequest = () => {};*/
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (
+    if (users.includes(enteredUsername)) {
+      setUser(true);
+      if (addedUsers.includes(enteredUsername)) {
+        console.log("You are already friends");
+        setFriend(true);
+        setError(true);
+      } else if (!addedUsers.includes(enteredUsername)) {
+        console.log("Request Sent");
+        setFriend(false);
+      }
+    } else {
+      console.log("There is no such user.");
+      setError(true);
+      setUser(false);
+      setFriend(false);
+    }
+
+    event.target.value = " ";
+
+    /*if (
       users.includes(enteredUsername) &&
       addedUsers.includes(enteredUsername)
     ) {
-      console.log("You are already friends");
+      setUser(true);
+      setFriend(true);
     } else if (!users.includes(enteredUsername)) {
       console.log("There is no such user.");
+      setUser(false);
+      setFriend(false);
     } else if (
       users.includes(enteredUsername) &&
       !addedUsers.includes(enteredUsername)
     ) {
       console.log("Request Sent");
-    }
+      setUser(true);
+      setFriend(false);
+    }*/
   };
 
   return (
@@ -65,7 +96,6 @@ const Addfriend = () => {
             </div>
           </div>
         </div>
-
         <div className="pt-2">
           <div className="flex justify-end">
             <button
@@ -76,6 +106,15 @@ const Addfriend = () => {
             </button>
           </div>
         </div>
+        {isError && isFriend && (
+          <Alert title="Error" messages={["You are already friends"]} />
+        )}
+        {!isFriend && isUser && (
+          <Alert title="Friendship" messages={["Friendship request sent"]} />
+        )}
+        {isError && !isUser && (
+          <Alert title="Error" messages={["There is no such user"]} />
+        )}
       </div>
     </form>
   );
