@@ -161,6 +161,8 @@ const CreatePoll = () => {
     if (isOptionEmpty) {
       setIsOptionEmptyError(true);
     } else {
+      var array = textParticipant.split(",");
+      console.log(array.splice(array.length - 1,array.length))
       let poll = {
         creatorName: userInfo.userName,
         title: enteredTitle,
@@ -170,7 +172,7 @@ const CreatePoll = () => {
         isOpen: true,
         limit: enteredLimit,
         hideParticipants: cb3,
-        participants: textParticipant,
+        participants: (array),
         options: options,
       };
       Object.keys(poll.options).forEach((key)=> poll.options[key]["creatorName"] = userInfo.userName)

@@ -32,7 +32,6 @@ export class DatabaseHandler {
   }
 
 
-y
   static createEvent(allEventInfo) {
     //participant nodes is being pushed under the eventId node. it must be deleted
 
@@ -45,7 +44,7 @@ y
 
     allEventInfo.options.forEach((opt, index) => db_options[index] = opt);
     allEventInfo.options = db_options;
-
+    console.log(allEventInfo.participants)
     set(ref(this.database, "events/" + event_Id), allEventInfo);
 
     set(
