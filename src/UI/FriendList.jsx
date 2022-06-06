@@ -64,7 +64,7 @@ export default function FriendList({ username }) {
 
                         <th
                           scope="col"
-                          className="sticky top-0 z-10 hidden border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-green-900 backdrop-blur backdrop-filter lg:table-cell"
+                          className="sticky top-0 z-10 border-b border-gray-300 bg-gray-50 bg-opacity-75 px-3 py-3.5 text-left text-sm font-semibold text-green-900 backdrop-blur backdrop-filter lg:table-cell"
                         >
                           Accept
                         </th>
@@ -94,7 +94,7 @@ export default function FriendList({ username }) {
                               personIdx !== requests.length - 1
                                 ? "border-b border-gray-200"
                                 : "",
-                              "whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden sm:table-cell"
+                              "whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell"
                             )}
                           >
                             <button
@@ -115,7 +115,7 @@ export default function FriendList({ username }) {
                               personIdx !== requests.length - 1
                                 ? "border-b border-gray-200"
                                 : "",
-                              "whitespace-nowrap px-3 py-4 text-sm text-gray-500 hidden lg:table-cell"
+                              "whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell"
                             )}
                           >
                             <button
