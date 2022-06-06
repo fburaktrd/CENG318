@@ -20,7 +20,12 @@ export class SocialHandler {
   }
 
   static async getFriends(username) {
-    return  (await (get(ref(this.database,`friends/${username}`)))).val()
+    var res = (await (get(ref(this.database,`friends/${username}`)))).val()
+    if(res != null){
+      return res
+    }else{
+      return []
+    }
   }
 
   static async sendFriendRequest(senderUsername, recieverUsername) {

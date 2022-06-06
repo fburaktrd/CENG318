@@ -6,15 +6,20 @@ import { DatabaseHandler } from "../database/DatabaseHandler";
 import Notify from "../UI/Modal";
 import Alert from "../UI/Alert";
 import { SocialHandler } from "../database/SocialHandler";
+import FriendLists from "../UI/FriendLists";
 
 const CreatePoll = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   const navigate = useNavigate();
   const [options, setOptions] = useState([]);
+  const [friends, setFriends] = useState([]);
   const [isOptionEmpty, setIsOptionEmpty] = useState(true);
   const [isOptionEmptyError, setIsOptionEmptyError] = useState(false);
   const [isOptionDateError, setIsOptionDateError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [textParticipant, setTextParticipant] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
 
@@ -24,7 +29,9 @@ const CreatePoll = () => {
   useEffect(async ()=>{
     console.log(userInfo["userName"]);
     var res = await SocialHandler.getFriends(userInfo["userName"]);
-    console.log(res)
+    
+    setFriends(res);
+    setIsLoading(false);
   },[])
 
 
@@ -50,6 +57,20 @@ const CreatePoll = () => {
   const LocationChangeHandler = (event) => {
     setEnteredLocation(event.target.value);
   };
+
+  const focusHandler = () => {
+    setIsFocused(true)
+  }
+
+  const addHandler = (friend) => {
+    if(textParticipant[textParticipant.length - 1] != "," && textParticipant.length != 0){
+      setTextParticipant((prev)=> prev+`,${friend},`)
+    }else{
+      setTextParticipant((prev)=> prev+`${friend},`)
+    }
+    
+    
+  }
 
   const addOptionHandler = () => {
     const sTime = localStorage.getItem("startTime");
@@ -105,9 +126,10 @@ const CreatePoll = () => {
 
   const [enteredParticipants, setEnteredParticipants] = useState({});
   const participantsChangeHandler = (event) => {
-    let string = event.target.value;
+    let string = textParticipant;
+    setTextParticipant(event.target.value)
     const array = string.split(",");
-    //console.log(array);
+    array.splice(array.length - 1 ,array.length)
     setEnteredParticipants({ ...array });
   };
 
@@ -245,10 +267,15 @@ const CreatePoll = () => {
                 <input
                   type="text"
                   name="partcpnts"
+                  onFocus={focusHandler}
+                  value={textParticipant}
                   id="partcpnts"
                   onChange={participantsChangeHandler}
                   className="flex-1 focus:ring-indigo-500 border focus:border-indigo-500 block w-full h-8 min-w-0 rounded-md sm:text-sm border-gray-300"
                 />
+              </div>
+              <div>
+              { isFocused && <FriendLists isLoading={isLoading} friends={Object.keys(friends)} addHandler={addHandler} participants={textParticipant}/>}
               </div>
             </div>
           </div>
