@@ -4,6 +4,7 @@ import { useParams, useLocation } from "react-router-dom";
 import VoteDateOption from "../components/VoteDateOptionCard";
 import { DatabaseHandler } from "../database/DatabaseHandler";
 import ChattBox from "../components/ChattBox";
+import Notify from "../UI/Modal";
 import Banner from "../UI/Banner";
 import { SocialHandler } from "../database/SocialHandler";
 import Alert from "../UI/Alert";
@@ -12,22 +13,26 @@ const EventPage = (props) => {
   //const { station } = useParams();
   const eventInfo = useLocation().state["event"];
   eventInfo.options.map((opt, index) => (opt["id"] = index));
-  
+  const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [messages, setMessages] = useState([]);
   const [eventOpt, setEventOpt] = useState(eventInfo.options);
   const [votes, setVotes] = useState({ comings: [], Ncomings: [], ifNeed: [] });
   const [error,setError] = useState(false);
+  const [showMessage,setShowMessage] = useState(false);
   const[isChecked, setIsChecked] = useState(false);
+  const [checkedOptId, setCheckedOptId] = useState();
 
-  const checkedOrNot = (isCheckedFromChild) => {
+  const checkedOrNot = (isCheckedFromChild,dateId) => {
+    setCheckedOptId(dateId);
+
     if(isCheckedFromChild == 1) {
       setIsChecked(false);
-      console.log(isChecked);
+      console.log(dateId);
     }
     else {
       setIsChecked(true);
-      console.log(isChecked);
+      console.log(dateId);
     }
   }
 
@@ -38,7 +43,9 @@ const EventPage = (props) => {
   useEffect(async () => {
     SocialHandler.listenMessagges(eventInfo["id"], setMessages);
     DatabaseHandler.listenEventOptions(eventInfo["id"],setEventOpt);
-    
+    if(eventInfo.endOptionId != undefined){
+      setCheckedOptId(eventInfo.endOptionId.id)
+    }
     const rVotes = await DatabaseHandler.getVotes(eventInfo.id);
     console.log(eventInfo["limit"]);
     setVotes(rVotes);
@@ -62,15 +69,32 @@ const EventPage = (props) => {
   };
 
   const endEventHandler = (event)=>{
-    event.prevent.default();
-    console.log()
+    event.preventDefault();
+    //console.log(eventInfo["options"][checkedOptId])
+    DatabaseHandler.endEvent(eventInfo["id"],eventInfo["options"][checkedOptId])
+    setShowMessage(true)
+    
   }
+
+  
   return (
     <div>
+      {showMessage && (
+        <Notify
+          navigate={navigate}
+          route={"/"}
+          routePageMessage={"Go to Home Page !"}
+          title={`You end the event.`}
+          message={`You decided ${eventInfo["options"][checkedOptId]["date"]} date for this event.`}
+        />
+      )}
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-4 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-black-900">
             {eventInfo.title}
+            {!(eventInfo.isOpen) && <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-red-100 rounded-full ml-3">
+      {"The date of this event has been set"}
+    </span>}
           </h3>
         </div>
         <div className="border-t border-gray-200 sm:p-0 md:p-4 mb-2">
@@ -254,6 +278,7 @@ const EventPage = (props) => {
             <div className="grid sm:grid-cols-1 md:grid-cols-3 rounded-lg divide-gray-200">
               {eventOpt.map((option) => (
                 <VoteDateOption
+                  eventInfo={eventInfo}
                   Checked = {checkedOrNot}
                   creator={option["creatorName"]}
                   userName={userInfo.userName}
@@ -261,6 +286,7 @@ const EventPage = (props) => {
                   Ncomings={votes["Ncomings"][option.id]}
                   ifNeed={votes["ifNeed"][option.id]}
                   key={option.id}
+                  selectedDateId={checkedOptId}
                   handleSelectedDates={selectedDatesHandler}
                   optInfo={option}
                 />
@@ -273,8 +299,8 @@ const EventPage = (props) => {
           
           {error ==true ? (
             <Alert
-              title={"Event is ended"}
-              messages={["This event is ended. You can not submit your votes."]}
+              title={"Final date has been set"}
+              messages={["Event's date has been set.You can not submit your votes."]}
             />
           ):(
           <>
@@ -308,12 +334,12 @@ const EventPage = (props) => {
           
         </div>
         <div className="flex justify-center">
-            <button
+            {userInfo["userName"] === eventInfo["creatorName"] && <button
               onClick={endEventHandler}
               className="inline-flex items-center px-6 py-4 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-700 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2"
             >
-              End Event
-            </button>
+              Set the final date
+            </button>}
           </div>
       </div>
     </div>

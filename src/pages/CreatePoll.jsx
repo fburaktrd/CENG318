@@ -17,6 +17,7 @@ const CreatePoll = () => {
   const [isOptionDateError, setIsOptionDateError] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
+
   const[optError,setOptError] = useState(false);
   const[optHoursError,setOptHoursError] = useState(false);
   var err = false;
@@ -314,28 +315,11 @@ const CreatePoll = () => {
               Set your event options.
             </p>
           </div>
-          {/* <div>
+          <div>
             <fieldset>
               <div className="mt-4 space-y-4">
                 <div className="relative flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="???"
-                      name="checkbox"
-                      type="checkbox"
-                      onChange={CB1ChangeHandler}
-                      className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label htmlFor="???" className="font-medium text-gray-700">
-                      ???
-                    </label>
-                    <p className="text-gray-500">???</p>
-                  </div>
-                </div>
-                <div className="relative flex items-start">
-                  <div className="flex items-center h-5">
+                {/* {<div className="flex items-center h-5">
                     <input
                       id="limitCheckBox"
                       name="limitCheckBox"
@@ -365,7 +349,7 @@ const CreatePoll = () => {
                     <p className="text-gray-500">
                       We'll remove a time when it hits the participant limit.
                     </p>
-                  </div>
+                  </div>} */}
                 </div>
                 <div className="relative flex items-start">
                   <div className="flex items-center h-5">
@@ -391,7 +375,7 @@ const CreatePoll = () => {
                 </div>
               </div>
             </fieldset>
-          </div> */}
+          </div>
         </div>
 
         <div className="pt-2">

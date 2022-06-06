@@ -4,11 +4,12 @@ import {
   CheckIcon,
   XIcon,
   QuestionMarkCircleIcon,
+  CalendarIcon,
 } from "@heroicons/react/solid";
 import ParticipantList from "./ParticipantList";
+import { ClockIcon } from "@heroicons/react/outline";
 
-export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Ncomings,ifNeed,userName,creator, Checked}) {
-  console.log(creator);
+export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handleSelectedDates,comings,Ncomings,ifNeed,userName,creator, Checked}) {
   const icons = {
     coming: (
       <svg
@@ -44,10 +45,16 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
     ),
     if: <QuestionMarkCircleIcon className="w-5 h-5 text-orange-400" />,
   };
-  // console.log(optInfo,"eventPage")
 
-  //yesVote, noVote ve ifNeedBe databaseden gelmeli ve tekrar oraya kaydedilmeli.
-  
+  var showCheckBox ;
+  if(creator != userName ){
+    showCheckBox = false;
+    if(selectedDateId == optInfo.id){
+        showCheckBox = true
+    }
+  }else{
+    showCheckBox =true;
+  }
   //if its undefined we have to initilize as an array.
   if(comings === undefined){
     comings =[]
@@ -111,14 +118,14 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
     votedOption.isVoteIfNeedBe = false;
     VotedOptionsHandler(votedOption);
     handleSelectedDates(optInfo.id,"Coming");
-    console.log(ifNeedBeClicked, NoClicked, yesClicked);
+    //console.log(ifNeedBeClicked, NoClicked, yesClicked);
   };
 
   const checked = (event) => {
     if (event.target.checked) {
-      Checked(1);
+      Checked(1,optInfo.id);
     } else {
-      Checked(0);
+      Checked(0,optInfo.id);
     }
  }
 
@@ -139,7 +146,7 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
     votedOption.isVoteYes = false;
     VotedOptionsHandler(votedOption);
     handleSelectedDates(optInfo.id,"If need");
-    console.log(ifNeedBeClicked, NoClicked, yesClicked);
+    //console.log(ifNeedBeClicked, NoClicked, yesClicked);
 
   };
 
@@ -160,7 +167,7 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
     votedOption.isVoteIfNeedBe = false;
     VotedOptionsHandler(votedOption);
     handleSelectedDates(optInfo.id,"Not");
-    console.log(ifNeedBeClicked, NoClicked, yesClicked);
+    //console.log(ifNeedBeClicked, NoClicked, yesClicked);
 
   };
   let statusPart = (
@@ -197,19 +204,32 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
         <div className="w-full flex items-center justify-between p-6 space-x-6">
           <div className="flex-1 truncate">
           <div className="flex items-center space-x-3">
-          <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-blue-100 rounded-full">
+          {!(eventInfo.hideParticipants) && <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-blue-100 rounded-full">
         {`Created by ${creator}`}
-      </span>
-      <div><input id="myCheck" type="checkbox" onChange={checked}/></div>
+      </span>}
+
+      {showCheckBox &&<div><input id="myCheck" type="checkbox" checked={(selectedDateId === optInfo.id)} onChange={checked}/></div>}
       
           </div>
             <div className="flex items-center space-x-3">{statusPart}</div>
-            <p className="mt-1 text-gray-500 text-sm truncate">
-              {optInfo.date}
-            </p>
-            <p className="mt-1 text-gray-500 text-sm truncate">
+            <div className="flex items-center space-x-1">
+              <CalendarIcon height={15} width={15}/>
+                <h3 className="text-gray-900 text-sm font-medium truncate">
+                
+                  Date: {optInfo.date}
+                </h3>
+                {/* <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full">
+                  {person.role}
+                </span> */}
+              </div>
+              <div className="flex items-center space-x-1">
+              <ClockIcon height={15} width={15}/>
+              <p className="mt-1 text-gray-500 text-sm truncate">
               {optInfo.startTime} - {optInfo.endTime}
             </p>
+              </div>
+            
+           
             <div className="flex items-center space-x-3">
               {icons["coming"]}
               {comings.length}
@@ -223,11 +243,12 @@ export default function VoteDateOption({ optInfo, handleSelectedDates,comings,Nc
               {icons["if"]}
               {ifNeed.length}
             </div>
+            
           </div>
           
           
           <div className="flex-1">
-          <ParticipantList userName={userName} comings={comings} Ncomings={Ncomings} ifNeed={ifNeed} />
+          {!(eventInfo.hideParticipants) && <ParticipantList userName={userName} comings={comings} Ncomings={Ncomings} ifNeed={ifNeed} />}
           </div>
         </div>
         <div>

@@ -71,6 +71,20 @@ y
     //it could be addUserToEvent(userName) func to call here to be more modular for the incoming invitations
   }
 
+  static async getUserVote(eventId,username){
+      var res =  (await (get(ref(this.database,"participantsOfEvent/"+eventId +"/"+username)))).val()
+      var returnedList = [];
+      if (res!=null){
+        res.forEach((vote)=> {
+          if(vote != ""){
+            returnedList.push(vote);
+          }
+        })
+      }
+      
+      return returnedList
+    }
+
   static async getUserName(userId) {
     let userName = (
       await get(child(ref(this.database), `users/${userId}/userName`))
@@ -149,6 +163,11 @@ y
       {}
     );
     set(ref(this.database, "userEvents/" + username + "/" + eventId), {});
+  }
+
+  static async endEvent(event_Id,optionId){
+     set(ref(this.database,"events/"+ event_Id + "/isOpen"),false);
+     set(ref(this.database,"events/"+ event_Id + "/endOptionId"),optionId);
   }
 
   static async submitVote(eventId, userName, votes) {

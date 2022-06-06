@@ -7,7 +7,7 @@ import Modal from "../UI/Modal";
 const EventCard = (props) => {
   const [showDelete, setShowDelete] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-
+  const status = "The date of this event has been set"
   // const handleSetShowDelete = () => {
   //   setShowDelete(!showDelete);
   // };
@@ -52,6 +52,9 @@ const EventCard = (props) => {
               <div className="flex-1 truncate">
               <Link to={"/eventPage" + "/" + props.event.id} state={props}>
                 <div className="flex flex-col items-center space-x-3">
+                {!(props.event.isOpen) && <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-red-100 rounded-full">
+      {status}
+    </span>}
                   <h3 className="text-gray-900 text-sm font-medium truncate">
                     {props.event.title}
                   </h3>
