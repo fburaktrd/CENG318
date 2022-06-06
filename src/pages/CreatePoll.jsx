@@ -170,7 +170,7 @@ const CreatePoll = () => {
         isOpen: true,
         limit: enteredLimit,
         hideParticipants: cb3,
-        participants: enteredParticipants,
+        participants: textParticipant,
         options: options,
       };
       Object.keys(poll.options).forEach((key)=> poll.options[key]["creatorName"] = userInfo.userName)
