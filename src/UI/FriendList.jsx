@@ -33,7 +33,7 @@ export default function FriendList({ username }) {
       ) : empty ? (
         <EmptyFriend />
       ) : (
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8 -ml-10">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-xl font-semibold text-gray-900">
