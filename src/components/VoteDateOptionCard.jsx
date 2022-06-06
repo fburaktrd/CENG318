@@ -9,7 +9,18 @@ import {
 import ParticipantList from "./ParticipantList";
 import { ClockIcon } from "@heroicons/react/outline";
 
-export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handleSelectedDates,comings,Ncomings,ifNeed,userName,creator, Checked}) {
+export default function VoteDateOption({
+  eventInfo,
+  selectedDateId,
+  optInfo,
+  handleSelectedDates,
+  comings,
+  Ncomings,
+  ifNeed,
+  userName,
+  creator,
+  Checked,
+}) {
   const icons = {
     coming: (
       <svg
@@ -46,26 +57,34 @@ export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handl
     if: <QuestionMarkCircleIcon className="w-5 h-5 text-orange-400" />,
   };
 
-  var showCheckBox ;
-  if(eventInfo.creatorName != userName ){
+  var showCheckBox;
+  if (eventInfo.creatorName != userName) {
     showCheckBox = false;
-    if(selectedDateId == optInfo.id){
-        showCheckBox = true
+    if (selectedDateId == optInfo.id) {
+      showCheckBox = true;
     }
-  }else{
-    showCheckBox =true;
+  } else {
+    showCheckBox = true;
   }
   //if its undefined we have to initilize as an array.
-  if(comings === undefined){
-    comings =[]
+  if (comings === undefined) {
+    comings = [];
   }
-  if(Ncomings === undefined){
-    Ncomings =[]
+  if (Ncomings === undefined) {
+    Ncomings = [];
   }
-  if(ifNeed === undefined){
-    ifNeed = []
+  if (ifNeed === undefined) {
+    ifNeed = [];
   }
-  const [status, setStatus] = useState((comings.includes(userName) ? "Coming" : (Ncomings.includes(userName) ? "Not coming" : (ifNeed.includes(userName) ? "If need be" : "Pending"))));
+  const [status, setStatus] = useState(
+    comings.includes(userName)
+      ? "Coming"
+      : Ncomings.includes(userName)
+      ? "Not coming"
+      : ifNeed.includes(userName)
+      ? "If need be"
+      : "Pending"
+  );
 
   const VotedOptionsHandler = (votedOption) => {
     if (
@@ -90,7 +109,9 @@ export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handl
   const [NoClicked, setNoClicked] = useState(Ncomings.includes(userName));
 
   const [ifNeedBe, setIfNeedBe] = useState(0);
-  const [ifNeedBeClicked, setIfNeedBeClicked] = useState(ifNeed.includes(userName));
+  const [ifNeedBeClicked, setIfNeedBeClicked] = useState(
+    ifNeed.includes(userName)
+  );
 
   const [isChecked, setIsChecked] = useState(0);
 
@@ -117,17 +138,17 @@ export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handl
     votedOption.isVoteNo = false;
     votedOption.isVoteIfNeedBe = false;
     VotedOptionsHandler(votedOption);
-    handleSelectedDates(optInfo.id,"Coming");
+    handleSelectedDates(optInfo.id, "Coming");
     //console.log(ifNeedBeClicked, NoClicked, yesClicked);
   };
 
   const checked = (event) => {
     if (event.target.checked) {
-      Checked(1,optInfo.id);
+      Checked(1, optInfo.id);
     } else {
-      Checked(0,optInfo.id);
+      Checked(0, optInfo.id);
     }
- }
+  };
 
   const ifNeedBeVoteHandler = (prevVote) => {
     setNoClicked(false);
@@ -145,9 +166,8 @@ export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handl
     votedOption.isVoteNo = false;
     votedOption.isVoteYes = false;
     VotedOptionsHandler(votedOption);
-    handleSelectedDates(optInfo.id,"If need");
+    handleSelectedDates(optInfo.id, "If need");
     //console.log(ifNeedBeClicked, NoClicked, yesClicked);
-
   };
 
   const noVoteHandler = (prevVote) => {
@@ -166,9 +186,8 @@ export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handl
     votedOption.isVoteYes = false;
     votedOption.isVoteIfNeedBe = false;
     VotedOptionsHandler(votedOption);
-    handleSelectedDates(optInfo.id,"Not");
+    handleSelectedDates(optInfo.id, "Not");
     //console.log(ifNeedBeClicked, NoClicked, yesClicked);
-
   };
   let statusPart = (
     <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-gray-100 rounded-full">
@@ -203,52 +222,64 @@ export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handl
       <li className=" bg-white rounded-lg shadow divide-y divide-gray-200 mt-4">
         <div className="w-full flex items-center justify-between p-6 space-x-6">
           <div className="flex-1 truncate">
-          <div className="flex items-center space-x-3">
-          {!(eventInfo.hideParticipants) && <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-blue-100 rounded-full">
-        {`Created by ${creator}`}
-      </span>}
+            <div className="flex items-center space-x-3">
+              {!eventInfo.hideParticipants && (
+                <span className="flex-shrink-0 inline-block px-2 py-0.5 text-black-800 text-xs font-medium bg-blue-100 rounded-full">
+                  {`Created by ${creator}`}
+                </span>
+              )}
 
-      {showCheckBox &&<div><input id="myCheck" type="checkbox" checked={(selectedDateId === optInfo.id)} onChange={checked}/></div>}
-      
-          </div>
+              {showCheckBox && (
+                <div>
+                  <input
+                    id="myCheck"
+                    type="checkbox"
+                    checked={selectedDateId === optInfo.id}
+                    onChange={checked}
+                  />
+                </div>
+              )}
+            </div>
             <div className="flex items-center space-x-3">{statusPart}</div>
             <div className="flex items-center space-x-1">
-              <CalendarIcon height={15} width={15}/>
-                <h3 className="text-gray-900 text-sm font-medium truncate">
-                
-                  Date: {optInfo.date}
-                </h3>
-                {/* <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full">
+              <CalendarIcon height={15} width={15} />
+              <h3 className="text-gray-900 text-sm font-medium truncate">
+                Date: {optInfo.date}
+              </h3>
+              {/* <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full">
                   {person.role}
                 </span> */}
-              </div>
-              <div className="flex items-center space-x-1">
-              <ClockIcon height={15} width={15}/>
+            </div>
+            <div className="flex items-center space-x-1">
+              <ClockIcon height={15} width={15} />
               <p className="mt-1 text-gray-500 text-sm truncate">
-              {optInfo.startTime} - {optInfo.endTime}
-            </p>
-              </div>
-            
-           
+                {optInfo.startTime} - {optInfo.endTime}
+              </p>
+            </div>
+
             <div className="flex items-center space-x-3">
               {icons["coming"]}
               {comings.length}
             </div>
             <div className="flex items-center space-x-3">
-              
-            {icons["not"]}
+              {icons["not"]}
               {Ncomings.length}
             </div>
             <div className="flex items-center space-x-3">
               {icons["if"]}
               {ifNeed.length}
             </div>
-            
           </div>
-          
-          
+
           <div className="flex-1">
-          {!(eventInfo.hideParticipants) && <ParticipantList userName={userName} comings={comings} Ncomings={Ncomings} ifNeed={ifNeed} />}
+            {!eventInfo.hideParticipants && (
+              <ParticipantList
+                userName={userName}
+                comings={comings}
+                Ncomings={Ncomings}
+                ifNeed={ifNeed}
+              />
+            )}
           </div>
         </div>
         <div>
@@ -264,7 +295,6 @@ export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handl
               ) : (
                 <button
                   onClick={yesVoteHandler}
-                  
                   className="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border hover:text-gray-500"
                 >
                   <CheckIcon

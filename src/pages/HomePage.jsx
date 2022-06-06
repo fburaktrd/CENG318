@@ -17,17 +17,15 @@ const HomePage = (props) => {
   const [events, setEvents] = useState([]);
   const [isEventsEmpty, setIsEventsEmpty] = useState(true);
   const [loading, setLoading] = useState(true);
-  useEffect(()=>{
-    
-    const timeOut = setTimeout(()=>{
-        setLoading(false);
-    },3000)
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
 
-    return ()=>{
-        clearTimeout(timeOut);
-        
-    }
-  },[])
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, []);
   useEffect(async () => {
     const result = DatabaseHandler.getUserEventInfos(userInfo.userName);
     (await result).forEach((event) =>
@@ -36,7 +34,7 @@ const HomePage = (props) => {
     setIsEventsEmpty(false);
     setLoading(false);
   }, []);
- 
+
   return (
     <>
       {props.showGreetingMessage && userInfo !== null && (
@@ -89,7 +87,7 @@ const HomePage = (props) => {
                   role="list"
                   className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 container"
                 >
-                  {!(isEventsEmpty) ? (
+                  {!isEventsEmpty ? (
                     events.map((event, index) => (
                       <li
                         key={index}
