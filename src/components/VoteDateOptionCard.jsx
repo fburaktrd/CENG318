@@ -47,7 +47,7 @@ export default function VoteDateOption({ eventInfo,selectedDateId,optInfo, handl
   };
 
   var showCheckBox ;
-  if(creator != userName ){
+  if(eventInfo.creatorName != userName ){
     showCheckBox = false;
     if(selectedDateId == optInfo.id){
         showCheckBox = true
