@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import { LockClosedIcon } from "@heroicons/react/solid";
@@ -7,11 +7,14 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
+  signInWithRedirect,
+  getRedirectResult,
 } from "firebase/auth";
 import { auth, provider } from "../database/firebase-config";
 import AuthContext from "../store/authContext";
 import { DatabaseHandler } from "../database/DatabaseHandler";
 import Alert from "../UI/Alert";
+import RedirectinBanner from "../UI/RedirectingBanner";
 
 const initialError = {
   isError: false,
@@ -22,9 +25,51 @@ const initialError = {
 export default function SignInPage(props) {
   const [inputs, setInputs] = useState({});
   const [error, setError] = useState(initialError);
+  const [redirecting, setRedirecting] = useState(true);
 
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    getRedirectResult(auth)
+        .then((result) => {
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+          const user = result.user;
+               localStorage.setItem("uid", user.uid);
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            email: user.email,
+            userName: user.displayName,
+          })
+        );
+        DatabaseHandler.registerUserData(
+          user.uid,
+          user.displayName,
+          user.email,
+          "null",
+          "null"
+        );
+        authCtx.onLogin();
+        navigate("/");
+        setRedirecting(false)
+        })
+        .catch((e) => {
+          setRedirecting(false);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.customData.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          setError((error) => ({
+            isError: true,
+            errorCode: errorCode,
+            errorMessages: [...error.errorMessages, errorMessage],
+          }));
+        });
+  },[])
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -65,41 +110,43 @@ export default function SignInPage(props) {
   };
 
   const googleHandler = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
-        console.log(user, user.uid);
-        localStorage.setItem("uid", user.uid);
-        localStorage.setItem(
-          "userInfo",
-          JSON.stringify({
-            email: user.email,
-            userName: user.displayName,
-          })
-        );
-        DatabaseHandler.registerUserData(
-          user.uid,
-          user.displayName,
-          user.email,
-          "null",
-          "null"
-        );
-        authCtx.onLogin();
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(errorCode, errorMessage, email, credential);
-      });
+    signInWithRedirect(auth, provider);
+    // signInWithPopup(auth, provider)
+    //   .then((result) => {
+    //     const credential = GoogleAuthProvider.credentialFromResult(result);
+    //     const token = credential.accessToken;
+    //     const user = result.user;
+    //     console.log(user, user.uid);
+    //     localStorage.setItem("uid", user.uid);
+    //     localStorage.setItem(
+    //       "userInfo",
+    //       JSON.stringify({
+    //         email: user.email,
+    //         userName: user.displayName,
+    //       })
+    //     );
+    //     DatabaseHandler.registerUserData(
+    //       user.uid,
+    //       user.displayName,
+    //       user.email,
+    //       "null",
+    //       "null"
+    //     );
+    //     authCtx.onLogin();
+    //     navigate("/");
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     const email = error.email;
+    //     const credential = GoogleAuthProvider.credentialFromError(error);
+    //     console.log(errorCode, errorMessage, email, credential);
+    //   });
   };
 
   return (
     <>
+      {redirecting && <RedirectinBanner/>}
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
